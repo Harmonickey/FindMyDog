@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/index.js"></script>
+    <title>Find My Dog</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Find My Dog</a>
+
+        <div class="pull-right">
+          <ul class="nav navbar-nav">
+            <li class="pull-left"><a href="#">Turn ON</a></li>
+            <li class="pull-left"><a href="#">Login</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="mapwrap">
+        </div>
+      </div>
+    </div>
+
+  <!-- add in jQuery Animate and modal stuffs -->
+  <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse bot-nav" role="navigation">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- figure out this alignment -->
+        <p class="text-center"> <i class="fa fa-bars pull-left" id="settings-toggle"> </i> Settings </p>
+      </div>
+      <div class="row text-center" id="settings-hide">
+        <button type="button" class="btn btn-default"> Change Base Location </button>
+        <br/>
+        <button type="button" class="btn btn-default"> Change Radius </button>
+        <br/>
+        <button type="button" class="btn btn-default"> Change Phone Number </button>
+        <br/>
+        <button type="button" class="btn btn-default"> "Follow My Device" Mode </button>
+      </div>
+  </nav>
+  </body>
+</html>
