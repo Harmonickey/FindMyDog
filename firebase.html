@@ -3,30 +3,33 @@
   <head>
     <script src='https://cdn.firebase.com/js/client/1.0.11/firebase.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
-    <link rel='stylesheet' type='text/css' href='../css/example.css'>
+    
   </head>
   <body>
     <div id='messagesDiv'></div>
-    <input type='text' id='nameInput' placeholder='Name'>
-    <input type='text' id='messageInput' placeholder='Message'>
+    <input type='text' id='User_IDInput' placeholder='User_ID'>
+    <input type='text' id='LocationInput' placeholder='Locations'>
+    <input type='text' id='ThresholdInput' placeholder='Threshold'>
+    <input type='text' id='Current_DistanceInput' placeholder='Current_Distance'>
+    <input type='text' id='Phone_NumberInput' placeholder='Phone_Number'>
+    
     <script>
       var myDataRef = new Firebase('https://fqtqakbj8yl.firebaseio-demo.com/');
-      $('#messageInput').keypress(function (e) {
+      $('#Phone_NumberInput').keypress(function (e) {
         if (e.keyCode == 13) {
-          var name = $('#nameInput').val();
-          var text = $('#messageInput').val();
-          myDataRef.push({name: name, text: text});
-          $('#messageInput').val('');
+          var User_ID = $('#User_IDInput').val();
+          var Locations = $('#LocationInput').val();
+          var Threshold = $('#ThresholdInput').val();
+          var Current_Distance = $('#Current_DistanceInput').val();
+          var Phone_Number = $('#Phone_NumberInput').val();
+          myDataRef.push({User_ID: User_ID, Locations: Locations, Threshold: Threshold, Current_Distance: Current_Distance,Phone_Number: Phone_Number});
+          $('#Phone_NumberInput').val('');
         }
       });
-      myDataRef.on('child_added', function(snapshot) {
-        var message = snapshot.val();
-        displayChatMessage(message.name, message.text);
-      });
-      function displayChatMessage(name, text) {
-        $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
-        $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
-      };
+       
     </script>
   </body>
-</html> 
+</html>
+<!-- Hosting24 Analytics Code -->
+<script type="text/javascript" src="http://stats.hosting24.com/count.php"></script>
+<!-- End Of Analytics Code -->
