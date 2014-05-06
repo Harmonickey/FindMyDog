@@ -27,9 +27,10 @@
           var Threshold = $('#ThresholdInput').val();
           var Current_Distance = $('#Current_DistanceInput').val();
           var Phone_Number = $('#Phone_NumberInput').val();
-          myDataRef.push({User_ID: User_ID, Locations: Locations, Threshold: Threshold, Current_Distance: Current_Distance,Phone_Number: Phone_Number});
-
-          myDataRef.
+          myDataRef.child('user').child(User_ID).child('Locations').set(Locations);
+          myDataRef.child('user').child(User_ID).child('Threshold').set(Threshold);
+          myDataRef.child('user').child(User_ID).child('Current_Distance').set(Current_Distance);
+          myDataRef.child('user').child(User_ID).child('Phone_Number').set(Phone_Number);
        }); 
     });
        
