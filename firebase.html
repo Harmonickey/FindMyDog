@@ -12,20 +12,24 @@
     <input type='text' id='ThresholdInput' placeholder='Threshold'>
     <input type='text' id='Current_DistanceInput' placeholder='Current_Distance'>
     <input type='text' id='Phone_NumberInput' placeholder='Phone_Number'>
+    <br>
+
+    <button id="button_change">Submit</button>
     
     <script>
       var myDataRef = new Firebase('https://findmydeardog.firebaseio.com/');
-      $('#Phone_NumberInput').keypress(function (e) {
-        if (e.keyCode == 13) {
-          var User_ID = $('#User_IDInput').val();
+      $(document).ready(function() {
+       var button = $("#button_change");
+       $(button).click(function() {
+
+        var User_ID = $('#User_IDInput').val();
           var Locations = $('#LocationInput').val();
           var Threshold = $('#ThresholdInput').val();
           var Current_Distance = $('#Current_DistanceInput').val();
           var Phone_Number = $('#Phone_NumberInput').val();
           myDataRef.push({User_ID: User_ID, Locations: Locations, Threshold: Threshold, Current_Distance: Current_Distance,Phone_Number: Phone_Number});
-          $('#Phone_NumberInput').val('');
-        }
-      });
+       }); 
+    });
        
     </script>
   </body>
