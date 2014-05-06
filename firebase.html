@@ -22,12 +22,14 @@
        var button = $("#button_change");
        $(button).click(function() {
 
-        var User_ID = $('#User_IDInput').val();
+          var User_ID = $('#User_IDInput').val();
           var Locations = $('#LocationInput').val();
           var Threshold = $('#ThresholdInput').val();
           var Current_Distance = $('#Current_DistanceInput').val();
           var Phone_Number = $('#Phone_NumberInput').val();
           myDataRef.push({User_ID: User_ID, Locations: Locations, Threshold: Threshold, Current_Distance: Current_Distance,Phone_Number: Phone_Number});
+
+          myDataRef.
        }); 
     });
        
