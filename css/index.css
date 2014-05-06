@@ -19,3 +19,9 @@
 	width: 95%;
 	margin: 5px auto 5px auto;
 }
+
+html, body, #map-canvas {
+height: 100%;
+margin: 0px;
+padding: 0px
+}
