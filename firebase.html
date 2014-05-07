@@ -15,11 +15,12 @@
     <br>
 
     <button id="button_change">Submit</button>
-    
+    <button id="button_test">Test</button>
     <script>
       var myDataRef = new Firebase('https://findmydeardog.firebaseio.com/');
       $(document).ready(function() {
        var button = $("#button_change");
+       var button1 = $("#button_test");
        $(button).click(function() {
 
           var User_ID = $('#User_IDInput').val();
@@ -32,6 +33,23 @@
           myDataRef.child('user').child(User_ID).child('Current_Distance').set(Current_Distance);
           myDataRef.child('user').child(User_ID).child('Phone_Number').set(Phone_Number);
        }); 
+
+       $(button1).click(function getLocation() {
+          var city;
+          var state;
+          var UserID = $('#User_IDInput').val();
+          //console.log(position.coords.latitude)
+          var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + UserID +"/.json";
+          $.ajax ({
+            dataType : "jsonp",
+            url : firebaseAPI,
+            async : false,
+            success : function(data) {
+              alert(data["Locations"])
+              
+            }
+          });
+        });
     });
        
     </script>
