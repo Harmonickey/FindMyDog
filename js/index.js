@@ -136,9 +136,6 @@ function getUserFromFirebase(username, password, module)
 			}
 		});
 		
-		while (!success) {
-			
-		}
 		console.log(ret_val);
 		return ret_val;
 		//if there is a user then fill in the appropriate information on the frontpage elements and store variables
