@@ -20,6 +20,24 @@
 	margin: 5px auto 5px auto;
 }
 
+#radiusSelection,
+#phoneNumberSelection {
+	width: 95%;
+	margin: 5px auto;	
+}
+
+#radiusBtn,
+#phoneNumberBtn {
+	width: 80%;
+	margin: 0;
+}
+
+#radius,
+#phoneNumber {
+	border-radius: 5px;
+	margin-left: 10px;
+}
+
 html, body, #map-canvas {
 height: 100%;
 margin: 0px;

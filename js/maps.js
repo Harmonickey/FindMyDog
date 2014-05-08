@@ -45,7 +45,7 @@ function initialize() {
 setInterval(trackLocation, 3000);
 
 function trackLocation() {
-  console.log("Updating location");
+  //console.log("Updating location");
   navigator.geolocation.getCurrentPosition(function(position) {
     var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     getDistance(static_loc, pos);
