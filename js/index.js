@@ -89,12 +89,13 @@ function getUserFromFirebase(username, password, module)
 	{
 		//check firebase for the user
 		var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username+ "/.json";
-		var ret_val = false;
+		var ret_val;
+		var success = false;
 		$.ajax ({
-			dataType : "jsonp",
-			url : firebaseAPI,
-			async : false,
-			success : function(data) {
+			dataType: "jsonp",
+			url: firebaseAPI,
+			async: false,
+			success: function(data) {
 				console.log("Data: " + data);
 		  		if (data != 'null' && data != null)
 				{
@@ -131,8 +132,13 @@ function getUserFromFirebase(username, password, module)
 						console.log("Set Val: " + ret_val);
 					}
 				}
+				success = true;
 			}
 		});
+		
+		while (!success) {
+			
+		}
 		console.log(ret_val);
 		return ret_val;
 		//if there is a user then fill in the appropriate information on the frontpage elements and store variables
