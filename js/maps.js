@@ -187,13 +187,9 @@ function sendAlert() {
 //create the map upon loading teh page
 google.maps.event.addDomListener(window, 'load', initialize);
 
-window.addEventListener("load",function() {
-  // Set a timeout...
-  setTimeout(function(){
-    // Hide the address bar!
-    window.scrollTo(0, 1);
-  }, 0);
-});
+window.onload = function() {
+    setTimeout(function() { window.scrollTo(0, 1) }, 100);
+};
 
 
 
