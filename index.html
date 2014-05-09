@@ -27,7 +27,7 @@
         <div class="pull-right">
           <ul class="nav navbar-nav">
             <li class="pull-left"><a href="#">Turn ON</a></li>
-            <li class="pull-left"><a href="#" onclick="showLoginModal()" >Login</a></li>
+            <li class="pull-left"><a href="#" id="loginBtn" onclick="checkLogInOrOut()" >Login</a></li>
           </ul>
         </div>
       </div>
@@ -44,16 +44,16 @@
           <p class="text-center"> <i class="fa fa-bars pull-left" id="settings-toggle"> </i> Settings </p>
         </div>
         <div class="row text-center" id="settings-hide">
-          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#baseModal"> Change Base Location </button>
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#baseLocationModal"> Change Base Location </button>
           <br/>
-          <button type="button" class="btn btn-default" id="radiusBtn"> Change Radius </button>
+          <button type="button" class="btn btn-default" id="radiusBtn" data-toggle="modal" data-target="#radiusModal"> Change Radius </button>
           <br/>
-          <button type="button" class="btn btn-default" id="phoneNumberBtn"> Change Phone Number </button> 
+          <button type="button" class="btn btn-default" id="phoneNumberBtn" data-toggle="modal" data-target="#phoneNumberModal"> Change Phone Number </button> 
           <br/>
-          <button type="button" class="btn btn-default"> "Follow My Device" Mode </button>
+          <button type="button" class="btn btn-default" > "Follow My Device" Mode </button>
         </div>
     </nav>
-    <div class="modal fade" id="baseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="baseLocationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -62,14 +62,14 @@
           </div>
           <div class="modal-body">
             <p>Please Enter a New Base Location</p>
-            <input type="text" id="locations" class="btn btn-default" placeholder='Ex. 2060 Ridge Ave.'/>
+            <input type="text" id="new_baselocation" placeholder='Ex. 2060 Ridge Ave.'/>
           </div>
           <div class="modal-body">
           	<label id="base_error" style="display: none;"></label>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-primary" onclick="hideModal('#baseLocationModal'); updateBaseLocation();">Save changes</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -83,9 +83,9 @@
           </div>
           <div class="modal-body">
             <p>Username</p>
-            <input type="text" id="username" class="btn btn-default"/>
+            <input type="text" id="username"/>
             <p>Password</p>
-            <input type="text" id="password" class="btn btn-default"/>
+            <input type="text" id="password"/>
           </div>
           <div class="modal-body">
           	<label id="login_error" style="display: none;"></label>
@@ -93,7 +93,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" onclick="login()">Login</button>
-            <button type="button" class="btn btn-primary" onclick="showRegisterModal()">Register</button>
+            <button type="button" class="btn btn-primary" onclick="hideModal('#loginModal');showModal('#registerModal');">Register</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -117,6 +117,48 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" onclick="register();">Create Account</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal fade" id="radisModal" tabindex="-1" role="dialog" aria-labelledby="radiusLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Change Radius</h4>
+          </div>
+          <div class="modal-body">
+            <p>Radius</p>
+            <input type="text" id="new_radius" />
+          </div>
+          <div class="modal-body">
+          	<label id="register_error" style="display: none;"></label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-default" onclick="hideModal('#radiusModal'); updateRadius();">Save Changes</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal fade" id="phoneNumberModal" tabindex="-1" role="dialog" aria-labelledby="phoneNumberLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Change Phone Number</h4>
+          </div>
+          <div class="modal-body">
+            <p>Phone Number</p>
+            <input type="text" id="new_phonenumber" />
+          </div>
+          <div class="modal-body">
+          	<label id="register_error" style="display: none;"></label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="hideModal('#phoneNumberModal'); updatePhoneNumber();"> Save Changes</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

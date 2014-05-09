@@ -13,6 +13,12 @@ $(function () {
 	var username = getCookie("username");
 	var password = getCookie("password");
 	getUserFromFirebase(username, password, 'mainscreen');
+	
+	var phoneNumber = getCookie("phoneNumber");
+	var radius = getCookie("radius");
+	var baseLocation = getCookie("baseLocation");
+	if (phoneNumber && radius && baseLocation)
+		fillInFrontpage(phoneNumber, radius, baseLocation)
 });
 
 function getCookie(cname)
@@ -36,15 +42,19 @@ function setCookie(cname,cvalue,exdays)
 	document.cookie = cname + "=" + cvalue + "; " + expires;
 }
 
-function showLoginModal()
+function checkLogInOrOut()
 {
-	$('#loginModal').modal('show');
-}
-
-function hideLoginModal()
-{
-	//called on success of login
-	$('#loginModal').modal('hide');	
+	if ($("#loginBtn").html() == "Logout")
+	{
+		$("#loginBtn").html("Login");
+		//this erases the cookies
+		setCookie("username", "", 0);
+		setCookie("password", "", 0);
+	}
+	else
+	{
+		showModal('#loginModal');
+	}
 }
 
 function checkFirebaseForLogin(username, password, module)
@@ -55,8 +65,7 @@ function checkFirebaseForLogin(username, password, module)
 		//if good then change the Login to Logout and set variables, close loginModal
 		if (module == 'login')
 		{
-			fillInFrontPage(phoneNumber, radius, baseLocation);
-			hideLoginModal();
+			hideModal('#loginModal');
 		}
 		return true;
 	}
@@ -71,16 +80,37 @@ function createFirebaseUser(username, password)
 {
 	 if (checkFirebaseForLogin(username, password, 'register'))
 	 {
-	 	myDataRef.child('user').child(username).set({'password': password});
+	 	myDataRef.child('user').child(username).set({'Password': password});
 		return true;
 	 }
 	 
 	 return false;
 }
 
+function updateFirebase(username, phoneNumber, radius, baseLocation)
+{
+	myDataRef.child('user').child(username).update(
+		{
+		 'Phone_Number': phoneNumber,
+		 'Threshold': radius,
+		 'Base_Location': baseLocation
+		});
+	setCookie('radius', radius, 30);
+	setCookie('phoneNumber', phoneNumber, 30);
+	setCookie('baseLocation', baseLocation, 30);
+	
+}
+
+function updateSingleFirebaseAttribute(username, attrname, attr)
+{
+	myDataRef.child('user').child(username).update({attrname: attr});
+}
+
 function fillInFrontpage(phoneNumber, radius, baseLocation)
 {
-	
+	$("#new_radius").val(radius);
+	$("#new_phonenumber").val(phoneNumber);
+	$("#new_baselocation").val(baseLocation);
 }
 
 function getUserFromFirebase(username, password, module)
@@ -88,70 +118,66 @@ function getUserFromFirebase(username, password, module)
 	if (username && password && module)
 	{
 		//check firebase for the user
-		var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username+ "/.json";
-		var ret_val;
-		var success = false;
+		var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username+ ".json";
+		var result;
 		$.ajax ({
-			dataType: "jsonp",
+			dataType: "json",
 			url: firebaseAPI,
 			async: false,
 			success: function(data) {
-				console.log("Data: " + data);
-		  		if (data != 'null' && data != null)
-				{
-					console.log("Module: " + module);
-					if (module == 'login')
-					{
-						if (data['Password'] == password)
-						{
-							setUser(username, data['Location'], data['Phone_Number'], data['Threshold']);
-							ret_val = true;
-						}
-						else
-						{
-							setError('no_pass', module);
-							ret_val = false;
-						}
-					}
-					else if (module == 'register')
-					{
-						ret_val = false;
-					}
-				}
-				else
-				{
-					console.log("Module: " + module);
-					if (module == 'login')
-					{
-						setError('no_user', module);
-						ret_val = false;
-					}
-					else if (module == 'register') 
-					{
-						ret_val = true;
-						console.log("Set Val: " + ret_val);
-					}
-				}
-				success = true;
+				result = data
 			}
 		});
 		
-		console.log(ret_val);
-		return ret_val;
-		//if there is a user then fill in the appropriate information on the frontpage elements and store variables
-		//fillInFrontpage(phoneNumber, radius, baseLocation);
+		if (result != 'null' && result != null)
+		{
+			if (module == 'login')
+			{
+				if (result['Password'] == password)
+				{
+					setUser(username, result['Phone_Number'], result['Threshold'], result['Base_Location']);
+					return true;
+				}
+				else
+				{
+					setError('no_pass', module);
+					return false;
+				}
+			}
+			else if (module == 'register' || module == 'mainscreen')
+			{
+				
+				setUser(username, result['Phone_Number'], result['Threshold'], result['Base_Location']);
+				return false;
+			}
+		}
+		else
+		{
+			if (module == 'login')
+			{
+				setError('no_user', module);
+				return false;
+			}
+			else if (module == 'register' || module == 'mainscreen') 
+			{
+				
+				$("#loginBtn").html("Logout");
+				setCookie("loggedIn", false);
+				return true;
+			}
+		}
 	} 
 	else 
 	{
 		setError('no_user', module);
-		return false;
-		//if no user, then fill in defaults	
+		return false;	
 	}
 }
 
-function setUser(username, phoneNumber, radius)
+function setUser(username, phoneNumber, radius, baseLocation)
 {
-	
+	fillInProperties(phoneNumber, radius, baseLocation);
+	updateFirebase(username, phoneNumber, radius, baseLocation);
 }
 
 function login()
@@ -173,7 +199,7 @@ function register()
 	
 	if(createFirebaseUser(username, password))
 	{
-		hideRegisterModal();	
+		hideModal("#registerModal");	
 	}
 	else
 	{
@@ -183,15 +209,14 @@ function register()
 	
 }
 
-function showRegisterModal()
+function showModal(modal)
 {
-	hideLoginModal();
-	$('#registerModal').modal('show');
+	$(modal).modal('show');
 }
 
-function hideRegisterModal()
+function hideModal(modal)
 {
-	$('#registerModal').modal('hide');
+	$(modal).modal('hide');	
 }
 
 function setError(error, module)
@@ -209,4 +234,28 @@ function setError(error, module)
 				$("#register_error").html("Username already taken");
 		case 'mainscreen':
 	}
+}
+
+function updateRadius()
+{
+	var radius = $("#new_radius").val();
+	var username = getCookie("username");
+	updateSingleFirebaseAttribute(username, "Threshold", radius);
+	hideModal("#radiusModal");
+}
+
+function updateBaseLocation()
+{
+	var baseLocation = $("#new_baselocation").val();
+	var username = getCookie("username");
+	updateSingleFirebaseAttribute(username, "Base_Location", baseLocation);
+	hideModal("#baseLocationModal");	
+}
+
+function updatePhoneNumber()
+{
+	var phoneNumber = $("#new_phoneNumber").val();
+	var username = getCookie("username");
+	updateSingleFirebaseAttribute(username, "Phone_Number", phoneNumber);
+	hideModal("#phoneNumberModal");	
 }
