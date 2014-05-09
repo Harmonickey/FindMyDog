@@ -25,3 +25,7 @@ height: 100%;
 margin: 0px;
 padding: 0px
 }
+
+#map-canvas {
+	margin-top: 55px;
+}
