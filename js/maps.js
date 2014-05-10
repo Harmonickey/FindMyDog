@@ -180,7 +180,7 @@ function parseDistance(dist) {
 
 //send alert to user
 function sendAlert() {
-  //alert("Dog is running away!");
+  alert("Dog is running away!");
   
   $.ajax({
 	 type: 'POST',
