@@ -1,13 +1,13 @@
 var map; //will be used for map on page
 
 //#### static location at Ford ####
-//var slat = 42.056918;
-//var slong = -87.676703;
-//var static_loc = new google.maps.LatLng(slat, slong);
-
-var slat = 42.060517;
-var slong = -87.675879;
+var slat = 42.056918;
+var slong = -87.676703;
 var static_loc = new google.maps.LatLng(slat, slong);
+
+//var slat = 42.060517;
+//var slong = -87.675879;
+//var static_loc = new google.maps.LatLng(slat, slong);
 
 //#### dog location, starting in Ford ####
 var pet_lat = 42.056800;
@@ -105,7 +105,7 @@ setInterval(trackLocation, 3000); //regularly update the position of the dog on 
 /*
 #### Code for simulated dog, so position moves during test ####
 */
-//setInterval(alterLocation, 2000); //regularly change the location of the simulated dog
+setInterval(alterLocation, 2000); //regularly change the location of the simulated dog
 function alterLocation() {
   var num = Math.round(Math.random()); //randomly choose 0 or 1
   switch(num) {
@@ -126,7 +126,7 @@ function trackLocation() {
     var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     getDistance(static_loc, pos);
   */
-  pullDogLocation();
+  //pullDogLocation();
   pet_marker.setPosition(static_dog); //update the dog's position on the map
   line.setPath([static_loc, static_dog]); //update the line on the map
   getDistance(static_loc, static_dog); //get the distance between the home location and the dog
