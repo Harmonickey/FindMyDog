@@ -1,8 +1,12 @@
 var map; //will be used for map on page
 
 //#### static location at Ford ####
-var slat = 42.056918;
-var slong = -87.676703;
+//var slat = 42.056918;
+//var slong = -87.676703;
+//var static_loc = new google.maps.LatLng(slat, slong);
+
+var slat = 42.060517;
+var slong = -87.675879;
 var static_loc = new google.maps.LatLng(slat, slong);
 
 //#### dog location, starting in Ford ####
@@ -94,7 +98,6 @@ function initialize() {
   });
   //put the line on the map
   line.setMap(map);
-
 }
 
 setInterval(trackLocation, 3000); //regularly update the position of the dog on the map
@@ -102,7 +105,7 @@ setInterval(trackLocation, 3000); //regularly update the position of the dog on 
 /*
 #### Code for simulated dog, so position moves during test ####
 */
-setInterval(alterLocation, 2000); //regularly change the location of the simulated dog
+//setInterval(alterLocation, 2000); //regularly change the location of the simulated dog
 function alterLocation() {
   var num = Math.round(Math.random()); //randomly choose 0 or 1
   switch(num) {
@@ -123,6 +126,7 @@ function trackLocation() {
     var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     getDistance(static_loc, pos);
   */
+  pullDogLocation();
   pet_marker.setPosition(static_dog); //update the dog's position on the map
   line.setPath([static_loc, static_dog]); //update the line on the map
   getDistance(static_loc, static_dog); //get the distance between the home location and the dog
@@ -184,12 +188,44 @@ function sendAlert() {
   */
 }
 
-//create the map upon loading teh page
+//create the map upon loading the page
 google.maps.event.addDomListener(window, 'load', initialize);
 
 window.onload = function() {
     setTimeout(function() { window.scrollTo(0, 1) }, 100);
 };
+
+
+
+
+
+
+
+
+function pullDogLocation() {
+  var userInfo = "https://findmydeardog.firebaseio.com/user/Harmonickey.json";
+  var result;
+  $.ajax ({
+    dataType: "json",
+    url: userInfo,
+    async: false,
+    success: function(data) {
+      result = data;
+    }
+  });
+
+  if (result!='null' && result!=null) {
+    if(result['password']=="harmony1") {
+      var long1 = result['dogLocation']['A'];
+      var lat1 = result['dogLocation']['k'];
+      static_dog = new google.maps.LatLng(lat1, long1);
+      console.log(result['dogLocation']);
+    }
+  }
+  else {
+    console.log("fail");
+  }
+}
 
 
 

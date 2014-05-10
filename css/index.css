@@ -6,8 +6,12 @@
 
 .mapwrap {
 	width: 100%;
-	height: 1000px; /* SHOULD BE CHANGEDDDD */
+	height: auto; /* SHOULD BE CHANGEDDDD */
 	background-color: purple;
+}
+
+#tracking-map {
+	height: 750px;
 }
 
 .bot-nav {
