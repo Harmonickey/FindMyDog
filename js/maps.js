@@ -184,6 +184,7 @@ function sendAlert() {
   
   $.ajax({
 	 type: 'POST',
+         dataType: 'jsonp',
 	 url: 'text.php',
 	 data: {
 		'To': '(269) 267-3752',
