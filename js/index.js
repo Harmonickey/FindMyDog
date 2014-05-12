@@ -9,16 +9,21 @@ $(function () {
 	  });
 	});
 	
-	//first grab the user cookie if there is one
+	//if there is a username and password, then there must be a phonenumber, radius, and baselocation
 	var username = getCookie("username");
 	var password = getCookie("password");
-	getUserFromFirebase(username, password, 'mainscreen');
+	if (getUserFromFirebase(username, password, 'mainscreen'))
+	{
 	
-	var phoneNumber = getCookie("phoneNumber");
-	var radius = getCookie("radius");
-	var baseLocation = getCookie("baseLocation");
-	if (phoneNumber && radius && baseLocation)
-		fillInFrontpage(phoneNumber, radius, baseLocation)
+		var phoneNumber = getCookie("phoneNumber");
+		var radius = getCookie("radius");
+		var baseLocation = getCookie("baseLocation");
+		
+		if (phoneNumber && radius && baseLocation)
+		{
+			changeStatus("Login");
+		}	
+	}
 });
 
 function getCookie(cname)
@@ -42,6 +47,25 @@ function setCookie(cname,cvalue,exdays)
 	document.cookie = cname + "=" + cvalue + "; " + expires;
 }
 
+function changeStatus(status)
+{
+	
+	if (status == "Login")
+	{
+		$("#loginBtn").html("Logout");
+	}
+	else if (status == "Logout")
+	{
+		$("#loginBtn").html("Login");
+		//this erases the cookies
+		setCookie("username", "", 0);
+		setCookie("password", "", 0);
+		setCookie("radius", "", 0);
+		setCookie("phoneNumber", "", 0);
+		setCookie("baseLocation", "", 0);
+	}
+}
+
 function setAllCookies(username, password, radius, phoneNumber, baseLocation)
 {
 	setCookie('username', username, 30);
@@ -55,10 +79,8 @@ function checkLogInOrOut()
 {
 	if ($("#loginBtn").html() == "Logout")
 	{
-		$("#loginBtn").html("Login");
-		//this erases the cookies
-		setCookie("username", "", 0);
-		setCookie("password", "", 0);
+		var res = confirm("Are you sure you want to logout?");
+		if (res) changeStatus("Logout");
 	}
 	else
 	{
@@ -94,8 +116,8 @@ function createFirebaseUser(username, password, phoneNumber, radius, baseLocatio
 			'Phone_Number': phoneNumber,
 			'Threshold': radius
 			});
+			
 		setAllCookies(username, password, radius, phoneNumber, baseLocation);
-		
 		return true;
 	 }
 	 
@@ -110,8 +132,6 @@ function updateFirebase(username, password, phoneNumber, radius, baseLocation)
 		 'Threshold': radius,
 		 'Base_Location': baseLocation
 		});
-	setAllCookies(username, password, radius, phoneNumber, baseLocation);
-	
 }
 
 function updateSingleFirebaseAttribute(username, attrname, attr)
@@ -193,6 +213,7 @@ function setUser(username, password, phoneNumber, radius, baseLocation)
 {
 	fillInFrontpage(phoneNumber, radius, baseLocation);
 	updateFirebase(username, password, phoneNumber, radius, baseLocation);
+	setAllCookies(username, password, radius, phoneNumber, baseLocation);
 }
 
 function login()
@@ -200,11 +221,7 @@ function login()
 	var username = $("#username").val();
 	var password = $("#password").val();
 	
-	if (checkFirebaseForLogin(username, password, 'login'))
-	{
-		setCookie("username", username, 30);
-		setCookie("password", password, 30);
-	}
+	checkFirebaseForLogin(username, password, 'login');	
 }
 
 function register()
