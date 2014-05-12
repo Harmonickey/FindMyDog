@@ -180,12 +180,18 @@ function getUserFromFirebase(username, password, module)
 					return false;
 				}
 			}
-			else if (module == 'register' || module == 'mainscreen')
+			else if (module == 'register')
 			{
 				
 				setUser(username, password, result['Phone_Number'], result['Threshold'], result['Base_Location']);
 				return false;
 			}
+			else if (module == 'mainscreen')
+			{
+				setUser(username, password, result['Phone_Number'], result['Threshold'], result['Base_Location']);
+				return true;	
+			}
+			
 		}
 		else
 		{
@@ -194,12 +200,13 @@ function getUserFromFirebase(username, password, module)
 				setError('no_user', module);
 				return false;
 			}
-			else if (module == 'register' || module == 'mainscreen') 
+			else if (module == 'register') 
 			{
-				
-				$("#loginBtn").html("Logout");
-				setCookie("loggedIn", false);
 				return true;
+			}
+			else if (module == 'mainscreen')
+			{
+				return false;
 			}
 		}
 	} 
