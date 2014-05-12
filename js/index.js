@@ -14,13 +14,14 @@ $(function () {
 	var password = getCookie("password");
 	if (getUserFromFirebase(username, password, 'mainscreen'))
 	{
-	
+		console.log("Found User");
 		var phoneNumber = getCookie("phoneNumber");
 		var radius = getCookie("radius");
 		var baseLocation = getCookie("baseLocation");
 		
 		if (phoneNumber && radius && baseLocation)
 		{
+			console.log("Changing Status");
 			changeStatus("Login");
 		}	
 	}
@@ -240,8 +241,6 @@ function register()
 	{
 		setError('no_user', 'register');	
 	}
-	
-	
 }
 
 function showModal(modal)
