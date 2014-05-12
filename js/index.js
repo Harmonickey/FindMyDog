@@ -12,6 +12,8 @@ $(function () {
 	//first grab the user cookie if there is one
 	var username = getCookie("username");
 	var password = getCookie("password");
+	console.log(username);
+	console.log(password);
 	getUserFromFirebase(username, password, 'mainscreen');
 	
 	var phoneNumber = getCookie("phoneNumber");
@@ -81,6 +83,7 @@ function checkFirebaseForLogin(username, password, module)
 	else
 	{
 		//if bad then send error message and do nothing else
+		console.log("Firebase Check bad");
 		return false;
 	}
 }
@@ -190,7 +193,7 @@ function getUserFromFirebase(username, password, module)
 
 function setUser(username, password, phoneNumber, radius, baseLocation)
 {
-	fillInProperties(phoneNumber, radius, baseLocation);
+	fillInFrontpage(phoneNumber, radius, baseLocation);
 	updateFirebase(username, password, phoneNumber, radius, baseLocation);
 }
 
@@ -199,8 +202,12 @@ function login()
 	var username = $("#username").val();
 	var password = $("#password").val();
 	
+	console.log("Login - Username: " + username);
+	console.log("Login - Password: " + password);
+	
 	if (checkFirebaseForLogin(username, password, 'login'))
 	{
+		console.log("Setting cookies");
 		setCookie("username", username, 30);
 		setCookie("password", password, 30);
 	}
@@ -271,8 +278,11 @@ function updateBaseLocation()
 
 function updatePhoneNumber()
 {
-	var phoneNumber = $("#new_phoneNumber").val();
+	var phoneNumber = $("#new_phonenumber").val();
+	console.log("Phone Number: " + phoneNumber);
 	var username = getCookie("username");
-	updateSingleFirebaseAttribute(username, "Phone_Number", phoneNumber);
+	console.log("Username: " + username);
+	
+	//updateSingleFirebaseAttribute(username, "Phone_Number", phoneNumber);
 	hideModal("#phoneNumberModal");	
 }

@@ -108,9 +108,9 @@
           </div>
           <div class="modal-body">
             <p>New Username</p>
-            <input type="text" id="reg_username" class="btn btn-default"/>
+            <input type="text" id="reg_username"/>
             <p>New Password</p>
-            <input type="text" id="reg_password" class="btn btn-default"/>
+            <input type="text" id="reg_password"/>
             <p>Phone Number</p>
             <input type="text" id="reg_phone"/>
             <p>Radius</p>
@@ -144,7 +144,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-default" onclick="hideModal('#radiusModal'); updateRadius();">Save Changes</button>
+            <button type="button" class="btn btn-default" onclick="updateRadius();">Save Changes</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -165,7 +165,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onclick="hideModal('#phoneNumberModal'); updatePhoneNumber();"> Save Changes</button>
+            <button type="button" class="btn btn-primary" onclick="updatePhoneNumber();"> Save Changes</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
