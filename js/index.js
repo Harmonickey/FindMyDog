@@ -229,7 +229,11 @@ function login()
 	var username = $("#username").val();
 	var password = $("#password").val();
 	
-	checkFirebaseForLogin(username, password, 'login');	
+	if (checkFirebaseForLogin(username, password, 'login'))
+	{
+		changeStatus("Login");	
+	}
+	
 }
 
 function register()
