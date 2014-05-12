@@ -187,7 +187,7 @@ function sendAlert() {
          dataType: 'jsonp',
 	 url: 'text.php',
 	 data: {
-		'To': '(269) 267-3752',
+		'To': getCookie("phoneNumber"),
 		'From':'+12692042709',
 		'Body':'Dog is running away!'	 
 	 },
@@ -212,7 +212,7 @@ window.onload = function() {
 
 
 function pullDogLocation() {
-  var userInfo = "https://findmydeardog.firebaseio.com/user/Harmonickey.json";
+  var userInfo = "https://findmydeardog.firebaseio.com/user/dcs592.json";
   var result;
   $.ajax ({
     dataType: "json",
@@ -224,7 +224,7 @@ function pullDogLocation() {
   });
 
   if (result!='null' && result!=null) {
-    if(result['password']=="harmony1") {
+    if(result['password']=="testpassword") {
       var long1 = result['dogLocation']['A'];
       var lat1 = result['dogLocation']['k'];
       static_dog = new google.maps.LatLng(lat1, long1);
