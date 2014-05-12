@@ -116,7 +116,9 @@ function updateFirebase(username, password, phoneNumber, radius, baseLocation)
 
 function updateSingleFirebaseAttribute(username, attrname, attr)
 {
-	myDataRef.child('user').child(username).update({attrname: attr});
+	var newAttr = {};
+	newAttr[attrname] = attr;
+	myDataRef.child('user').child(username).update(newAttr);
 }
 
 function fillInFrontpage(phoneNumber, radius, baseLocation)
