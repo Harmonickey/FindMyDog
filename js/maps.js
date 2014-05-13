@@ -190,16 +190,11 @@ function parseDistance(dist) {
 }
 
 function toggleON_OFF() {
-  var current = $("#on_off").html();
-  if(current=="Turn ON") {
-    $("#on_off").html("Turn OFF");
-    turned_on = true;
+  if(turned_on) {
+    turned_on = false;
   }
   else {
-    $("#on_off").html("Turn ON");
-    turned_on = false;
-    out_counter = 0;
-    in_counter = 0;
+    turned_on = true;
   }
 }
 

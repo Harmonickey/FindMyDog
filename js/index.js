@@ -14,6 +14,7 @@ $(function () {
 	//if there is a username and password, then there must be a phonenumber, radius, and baselocation
 	var username = getCookie("username");
 	var password = getCookie("password");
+
 	if (getUserFromFirebase(username, password, 'mainscreen'))
 	{
 		initialize(username, password);
@@ -153,7 +154,7 @@ function createFirebaseUser(username, password, phoneNumber, radius, baseLocatio
 			'Password': password, 
 			'Base_Location': baseLocation,
 			'baseLat': baseLat,
-			'base_Long': baseLong,
+			'baseLong': baseLong,
 			'Phone_Number': phoneNumber,
 			'Threshold': radius,
 			'dogLat': null,
@@ -267,7 +268,7 @@ function getUserFromFirebase(username, password, module)
 function setUser(username, password, phoneNumber, radius, baseLocation, baseLat, baseLong)
 {
 	fillInFrontpage(phoneNumber, radius, baseLocation);
-	updateFirebase(username, password, phoneNumber, radius, baseLocation, baseLat, baseLong);
+	//updateFirebase(username, password, phoneNumber, radius, baseLocation, baseLat, baseLong);
 	setAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong);
 }
 
