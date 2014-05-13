@@ -9,26 +9,26 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+    <link rel="stylesheet" type="text/css"  href="css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/iphone-style-checkbox.css">
 
     <script type="text/javascript" src='https://cdn.firebase.com/js/client/1.0.11/firebase.js'></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/iphone-style-checkbox.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script type="text/javascript" src="js/maps.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
 
   </head>
-  <body>
+  <body onload="checkLogIn()">
     <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Find My Dog</a>
-
         <div class="pull-right">
           <ul class="nav navbar-nav">
-            <li class="pull-left" onclick="toggleON_OFF()"><a id="on_off" href="#">Turn ON</a></li>
-            <li class="pull-left"><a href="#" id="loginBtn" onclick="checkLogInOrOut()" >Login</a></li>
+            <li class="pull-left on-off"><input type="checkbox" id="on-off"/></li>
           </ul>
         </div>
       </div>
@@ -38,7 +38,7 @@
 
 
     <!-- add in jQuery Animate and modal stuffs -->
-    <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse bot-nav" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse" role="navigation">
       <div class="container-fluid">
         <div class="row">
           <!-- figure out this alignment -->
@@ -52,6 +52,8 @@
           <button type="button" class="btn btn-default" id="phoneNumberBtn" data-toggle="modal" data-target="#phoneNumberModal"> Change Phone Number </button> 
           <br/>
           <button type="button" class="btn btn-default" > "Follow My Device" Mode </button>
+          <br/>
+          <button type="button" class="btn btn-default" id="logout" onclick="checkLogInOrOut()"> Logout </button>
         </div>
     </nav>
     <div class="modal fade" id="baseLocationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -144,7 +146,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-default" onclick="updateRadius();">Save Changes</button>
+            <button type="button" class="btn btn-primary" onclick="updateRadius();">Save Changes</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

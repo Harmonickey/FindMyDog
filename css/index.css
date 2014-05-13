@@ -4,19 +4,20 @@
 	opacity: 0.9;
 }
 
-.mapwrap {
-	width: 100%;
-	height: auto; /* SHOULD BE CHANGEDDDD */
-	background-color: purple;
+.navbar-fixed-top {
+	margin-bottom: 50px;
 }
+
+.navbar-fixed-bottom {
+	color: white;
+	font-size: 20px;
+	margin-bottom: 0px;
+	min-height: 0px;
+}
+
 
 #tracking-map {
 	height: 750px;
-}
-
-.bot-nav {
-	color: white;
-	font-size: 20px;
 }
 
 .btn {
@@ -25,12 +26,30 @@
 }
 
 html, body, #map-canvas {
-height: 100%;
-margin: 0px;
-padding: 0px
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+	padding: 0px
+}
+
+body {
+	padding-top: 50px;
+}
+
+#settings-hide {
+	display: none;
+	margin-bottom: 10px;
+}
+
+p {
+	margin: 5px;
 }
 
 #settings-toggle {
 	margin-left: 2%;
 	margin-top: 5px;
+}
+
+.on-off {
+	margin-top: 12px;
 }
