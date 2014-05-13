@@ -190,11 +190,13 @@ function parseDistance(dist) {
 }
 
 function toggleON_OFF() {
-  if(turned_on) {
+  if(turned_on==true) {
     turned_on = false;
   }
   else {
     turned_on = true;
+    out_counter = 0;
+    in_counter = 0;
   }
 }
 
