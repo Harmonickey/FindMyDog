@@ -8,7 +8,7 @@ $token = "93e934c729223531780d8a0851d14ab3";
 $client = new Services_Twilio($sid, $token);
 
 // From - To - Body
-//$client->account->messages->sendMessage($_POST['From'], $_POST['To'], $_POST['Body']);
+$client->account->messages->sendMessage($_POST['From'], $_POST['To'], $_POST['Body']);
 
 $host="localhost";
 $port=3306;
