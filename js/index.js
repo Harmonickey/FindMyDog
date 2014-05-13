@@ -55,11 +55,11 @@ function changeStatus(status)
 	
 	if (status == "Login")
 	{
-		$("#loginBtn").html("Logout");
+		$("#loginout").html("Logout"); //enable the button
 	}
 	else if (status == "Logout")
 	{
-		$("#loginBtn").html("Login");
+		$("#loginout").html("Login");
 		//this erases the cookies
 		setCookie("username", "", 0);
 		setCookie("password", "", 0);
@@ -80,14 +80,31 @@ function setAllCookies(username, password, radius, phoneNumber, baseLocation)
 
 function checkLogInOrOut()
 {
-	if ($("#loginBtn").html() == "Logout")
+	var username = getCookie("username");
+	
+	if (!username)
 	{
-		var res = confirm("Are you sure you want to logout?");
-		if (res) changeStatus("Logout");
+		//means it's showing "Login"
+		showModal('#loginModal');	
 	}
 	else
 	{
-		showModal('#loginModal');
+		//means it's showing "Logout"
+		logout();
+	}
+}
+
+function checkLogIn()
+{
+	var username = getCookie("username");
+	
+	if (!username)
+	{
+		showModal('#loginModal');	
+	}
+	else
+	{
+		changeStatus("Login");	
 	}
 }
 
@@ -235,7 +252,12 @@ function login()
 	{
 		changeStatus("Login");	
 	}
-	
+}
+
+function logout()
+{
+	var res = confirm("Are you sure you want to logout?");
+	if (res) changeStatus("Logout");	
 }
 
 function register()

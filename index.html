@@ -22,7 +22,7 @@
     <script type="text/javascript" src="js/index.js"></script>
 
   </head>
-  <body>
+  <body onload="checkLogIn()">
     <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Find My Dog</a>
@@ -52,6 +52,8 @@
           <button type="button" class="btn btn-default" id="phoneNumberBtn" data-toggle="modal" data-target="#phoneNumberModal"> Change Phone Number </button> 
           <br/>
           <button type="button" class="btn btn-default" > "Follow My Device" Mode </button>
+          <br/>
+          <button type="button" class="btn btn-default" id="logout" onclick="checkLogInOrOut()"> Logout </button>
         </div>
     </nav>
     <div class="modal fade" id="baseLocationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

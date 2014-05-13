@@ -184,10 +184,10 @@ function sendAlert() {
   
   $.ajax({
 	 type: 'POST',
-         dataType: 'jsonp',
+     dataType: 'jsonp',
 	 url: 'text.php',
 	 data: {
-		'To': getCookie("phoneNumber"),
+		'To': getCookie("phoneNumber"),  //dynamic phone number usage
 		'From':'+12692042709',
 		'Body':'Dog is running away!'	 
 	 },
