@@ -68,8 +68,8 @@ function changeStatus(status)
 		setCookie("radius", "", 0);
 		setCookie("phoneNumber", "", 0);
 		setCookie("baseLocation", "", 0);
-		setCookie('baseLat', baseLat, 30);
-		setCookie('baseLong', baseLong, 30);
+		setCookie("baseLat", "", 0);
+		setCookie("baseLong", "", 0);
 	}
 }
 

@@ -40,9 +40,9 @@
     <!-- add in jQuery Animate and modal stuffs -->
     <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse" role="navigation">
       <div class="container-fluid">
-        <div class="row">
+        <div class="row" id="settings-toggle">
           <!-- figure out this alignment -->
-          <p class="text-center"> <i class="fa fa-bars pull-left" id="settings-toggle"> </i> Settings </p>
+          <p class="text-center"> <i class="fa fa-bars pull-left"> </i> Settings </p>
         </div>
         <div class="row text-center" id="settings-hide">
           <button type="button" class="btn btn-default" data-toggle="modal" data-target="#baseLocationModal"> Change Base Location </button>
@@ -86,7 +86,7 @@
           </div>
           <div class="modal-body">
             <p>Username</p>
-            <input type="text" id="username" autofocus="autofocus"/>
+            <input type="text" id="username" autofocus/>
             <p>Password</p>
             <input type="password" id="password"/>
           </div>
