@@ -17,15 +17,39 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script type="text/javascript" src="js/tracker.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
 
   </head>
-  <body>
+  <body onload="checkLogInOrOut()">
     <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Find My Dog</a>
+        <a class="navbar-brand" href="#">Find My Dog - Tracker</a>
         </div>
     </nav>
 
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Login</h4>
+          </div>
+          <div class="modal-body">
+            <p>Username</p>
+            <input type="text" id="username" autofocus="autofocus"/>
+            <p>Password</p>
+            <input type="password" id="password"/>
+          </div>
+          <div class="modal-body">
+            <label id="login_error" style="display: none;"></label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="loginTracker()">Login</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <div id="tracking-map"></div>
 </body>
 </html>

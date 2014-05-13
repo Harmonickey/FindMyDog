@@ -1,18 +1,13 @@
 var map; //will be used for map on page
 
-//#### static location at Ford ####
-var slat = 42.056918;
-var slong = -87.676703;
-var static_loc = new google.maps.LatLng(slat, slong);
+var initialized = false;
+var turned_on = false;
+var username;
+var password;
 
-//var slat = 42.060517;
-//var slong = -87.675879;
-//var static_loc = new google.maps.LatLng(slat, slong);
-
-//#### dog location, starting in Ford ####
-var pet_lat = 42.056800;
-var pet_long = -87.676600;
-var static_dog = new google.maps.LatLng(pet_lat, pet_long);
+var static_loc;
+var static_dog;
+var threshold;
 
 //#### markers and lines that will be needed as global variables####
 var dog;
@@ -20,29 +15,81 @@ var pet_marker;
 var line;
 
 
-function initialize() {
-  //options for the displayed map
-  var mapOptions = {
-  	zoom: 18,
-  	center: static_loc
-  }
-  //create the map
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-  	mapOptions);
+function initialize(user, pass) {
+  username = user;
+  password = pass;
+  getUserFromFirebase(username, password, 'login');
 
-  //get original geolocation
-/*  if(navigator.geolocation) {
-  	navigator.geolocation.getCurrentPosition(function(position) {
-  		var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-  		dog = new google.maps.Marker( {
-  			position: pos,
-  			map: map,
-  			title: "My Location",
-  		});
-  	});
-  }
-*/
+  var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username+ ".json";
+  var result;
+  $.ajax ({
+    dataType: "json",
+    url: firebaseAPI,
+    async: false,
+    success: function(data) {
+      result = data;
+      static_loc = new google.maps.LatLng(result['baseLat'], result['baseLong']);
+      threshold = result['Threshold'];
 
+      //options for the displayed map
+      var mapOptions = {
+        zoom: 18,
+        center: static_loc
+      }
+      //create the map
+      map = new google.maps.Map(document.getElementById('map-canvas'),
+        mapOptions);
+      initialized = true;
+
+      //set a marker for the home location
+      var static_marker = new google.maps.Marker({
+        position: static_loc,
+        map: map,
+        title: "Home",
+        icon: 'images/home.png'
+      });
+      //create a circle around the home location
+      var large = parseFloat(threshold)/3.28084;
+      var static_circle1 = new google.maps.Circle({
+        map: map,
+        radius: large,
+        fillColor: '#333333',
+        fillOpacity: 0.2,
+        strokeWeight: 0,
+        strokeOpacity: 0.5
+      });
+      static_circle1.bindTo('center', static_marker, 'position');
+      //create a circle around the home location
+      var mid = parseFloat(threshold)/3.28084 - (parseFloat(threshold)/(3*3.28084));
+      var static_circle2 = new google.maps.Circle({
+        map: map,
+        radius: mid,
+        fillColor: '#333333',
+        fillOpacity: 0.2,
+        strokeWeight: 0,
+        strokeOpacity: 0.5
+      });
+      static_circle2.bindTo('center', static_marker, 'position');
+      //create a circle around the home location
+      var small = parseFloat(threshold)/3.28084 - 2*(parseFloat(threshold)/(3*3.28084));
+      var static_circle3 = new google.maps.Circle({
+        map: map,
+        radius: small,
+        fillColor: '#333333',
+        fillOpacity: 0.2,
+        strokeWeight: 0,
+        strokeOpacity: 0.5
+      });
+      static_circle3.bindTo('center', static_marker, 'position');
+    }
+  });
+  if(result['dogLat']!=null) {
+    addDog(result['dogLat'], result['dogLng']);
+  }
+}
+
+function addDog(lat, lng) {
+  static_dog = new google.maps.LatLng(lat, lng);
   //set a marker for the dog
   pet_marker = new google.maps.Marker({
     position: static_dog,
@@ -51,43 +98,6 @@ function initialize() {
     icon: 'images/pets2.png',
     animation: google.maps.Animation.DROP,
   })
-  //set a marker for the home location
-  var static_marker = new google.maps.Marker({
-  	position: static_loc,
-  	map: map,
-  	title: "Home",
-    icon: 'images/home.png'
-  });
-  //create a circle around the home location at 150ft radius
-  var static_circle1 = new google.maps.Circle({
-  	map: map,
-  	radius: 45,
-  	fillColor: '#333333',
-    fillOpacity: 0.2,
-  	strokeWeight: 0,
-    strokeOpacity: 0.5
-  });
-  static_circle1.bindTo('center', static_marker, 'position');
-  //create a circle around the home location at 100ft radius
-  var static_circle2 = new google.maps.Circle({
-    map: map,
-    radius: 30,
-    fillColor: '#333333',
-    fillOpacity: 0.2,
-    strokeWeight: 0,
-    strokeOpacity: 0.5
-  });
-  static_circle2.bindTo('center', static_marker, 'position');
-  //create a circle around the home location at 50ft radius
-  var static_circle3 = new google.maps.Circle({
-    map: map,
-    radius: 15,
-    fillColor: '#333333',
-    fillOpacity: 0.2,
-    strokeWeight: 0,
-    strokeOpacity: 0.5
-  });
-  static_circle3.bindTo('center', static_marker, 'position');
   //draw a line between the home location and the dog
   line = new google.maps.Polyline({
     path: [static_loc, static_dog],
@@ -98,14 +108,17 @@ function initialize() {
   });
   //put the line on the map
   line.setMap(map);
+  initialized = true;
 }
+
+
 
 setInterval(trackLocation, 3000); //regularly update the position of the dog on the map
 
 /*
 #### Code for simulated dog, so position moves during test ####
 */
-setInterval(alterLocation, 2000); //regularly change the location of the simulated dog
+//setInterval(alterLocation, 2000); //regularly change the location of the simulated dog
 function alterLocation() {
   var num = Math.round(Math.random()); //randomly choose 0 or 1
   switch(num) {
@@ -120,17 +133,13 @@ function alterLocation() {
 }
 
 function trackLocation() {
-  //update the geolocated position
-  /*
-  navigator.geolocation.getCurrentPosition(function(position) {
-    var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    getDistance(static_loc, pos);
-  */
-  //pullDogLocation();
-  pet_marker.setPosition(static_dog); //update the dog's position on the map
-  line.setPath([static_loc, static_dog]); //update the line on the map
-  getDistance(static_loc, static_dog); //get the distance between the home location and the dog
+  if(initialized==true) {
+    pullDogLocation();
+    pet_marker.setPosition(static_dog); //update the dog's position on the map
+    line.setPath([static_loc, static_dog]); //update the line on the map
+    getDistance(static_loc, static_dog); //get the distance between the home location and the dog
   //});
+  }
 }
 
 /*
@@ -147,72 +156,84 @@ function getDistance(loc, pos) {
   //calculate distance in meters
   var d = google.maps.geometry.spherical.computeDistanceBetween(loc, pos);
   d = 3.28084*d; //convert to feet
+  console.log("Distance: " + String(d));
   parseDistance(d);
 }
 
 function parseDistance(dist) {
-  //if out of range
-  if (dist>150) {
-    console.log("Counter: " + String(out_counter));
-    //remove in-range counter
-    in_counter = 0;
-    //increment out of range counter
-    out_counter++;
-    //if has been out of range 3 times consecutively
-    if (out_counter==3) {
-      if(alerted==false) {
-        sendAlert();
-        alerted = true;
+  if(turned_on==true) {
+    //if out of range
+    if (dist>threshold) {
+      //remove in-range counter
+      in_counter = 0;
+      //increment out of range counter
+      out_counter++;
+      //if has been out of range 3 times consecutively
+      if (out_counter==3) {
+        if(alerted==false) {
+          sendAlert();
+          alerted = true;
+        }
+      }
+    }
+    //if in range
+    else {
+      //remove out of range counter
+      out_counter = 0;
+      //increment in range counter
+      in_counter++;
+      if (in_counter==3) {
+        alerted = false;
       }
     }
   }
-  //if in range
+}
+
+function toggleON_OFF() {
+  var current = $("#on_off").html();
+  if(current=="Turn ON") {
+    $("#on_off").html("Turn OFF");
+    turned_on = true;
+  }
   else {
-    //remove out of range counter
+    $("#on_off").html("Turn ON");
+    turned_on = false;
     out_counter = 0;
-    //increment in range counter
-    in_counter++;
-    if (in_counter==3) {
-      alerted = false;
-    }
+    in_counter = 0;
   }
 }
 
+
 //send alert to user
 function sendAlert() {
-  alert("Dog is running away!");
-  
-  $.ajax({
-	 type: 'POST',
-         dataType: 'jsonp',
-	 url: 'text.php',
-	 data: {
-		'To': getCookie("phoneNumber"),
-		'From':'+12692042709',
-		'Body':'Dog is running away!'	 
-	 },
-	 success: function(data) {
-		console.log(data); 
-	 }
-  });
+  if(turned_on==true) {
+    alert("Dog is running away!");
+    
+    $.ajax({
+  	 type: 'POST',
+           dataType: 'jsonp',
+  	 url: 'text.php',
+  	 data: {
+  		'To': getCookie("phoneNumber"),
+  		'From':'+12692042709',
+  		'Body':'Dog is running away!'	 
+  	 },
+  	 success: function(data) {
+  		console.log(data); 
+  	 }
+    });
+  }
 }
 
 //create the map upon loading the page
-google.maps.event.addDomListener(window, 'load', initialize);
+//google.maps.event.addDomListener(window, 'load', initialize);
 
 window.onload = function() {
     setTimeout(function() { window.scrollTo(0, 1) }, 100);
 };
 
-
-
-
-
-
-
-
 function pullDogLocation() {
-  var userInfo = "https://findmydeardog.firebaseio.com/user/dcs592.json";
+  var userInfo = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
   var result;
   $.ajax ({
     dataType: "json",
@@ -224,11 +245,16 @@ function pullDogLocation() {
   });
 
   if (result!='null' && result!=null) {
-    if(result['password']=="testpassword") {
-      var long1 = result['dogLocation']['A'];
-      var lat1 = result['dogLocation']['k'];
+    if(result['Password']==password) {
+      var long1 = result['dogLng'];
+      var lat1 = result['dogLat'];
       static_dog = new google.maps.LatLng(lat1, long1);
-      console.log(result['dogLocation']);
+      console.log(lat1);
+      console.log(long1);
+
+      if (result['Threshold']!=threshold) {
+        initialize(username, password);
+      }
     }
   }
   else {

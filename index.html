@@ -27,7 +27,7 @@
 
         <div class="pull-right">
           <ul class="nav navbar-nav">
-            <li class="pull-left"><a href="#">Turn ON</a></li>
+            <li class="pull-left" onclick="toggleON_OFF()"><a id="on_off" href="#">Turn ON</a></li>
             <li class="pull-left"><a href="#" id="loginBtn" onclick="checkLogInOrOut()" >Login</a></li>
           </ul>
         </div>
@@ -84,9 +84,9 @@
           </div>
           <div class="modal-body">
             <p>Username</p>
-            <input type="text" id="username"/>
+            <input type="text" id="username" autofocus="autofocus"/>
             <p>Password</p>
-            <input type="text" id="password"/>
+            <input type="password" id="password"/>
           </div>
           <div class="modal-body">
           	<label id="login_error" style="display: none;"></label>
@@ -110,7 +110,7 @@
             <p>New Username</p>
             <input type="text" id="reg_username"/>
             <p>New Password</p>
-            <input type="text" id="reg_password"/>
+            <input type="password" id="reg_password"/>
             <p>Phone Number</p>
             <input type="text" id="reg_phone"/>
             <p>Radius</p>
@@ -128,7 +128,7 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div class="modal fade" id="radisModal" tabindex="-1" role="dialog" aria-labelledby="radiusLabel" aria-hidden="true">
+    <div class="modal fade" id="radiusModal" tabindex="-1" role="dialog" aria-labelledby="radiusLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
