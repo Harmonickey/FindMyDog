@@ -207,17 +207,14 @@ function sendAlert() {
     alert("Dog is running away!");
     
     $.ajax({
-  	 type: 'POST',
-           dataType: 'jsonp',
-  	 url: 'text.php',
-  	 data: {
-  		'To': getCookie("phoneNumber"),
-  		'From':'+12692042709',
-  		'Body':'Dog is running away!'	 
-  	 },
-  	 success: function(data) {
-  		console.log(data); 
-  	 }
+		type: 'POST',
+     	dataType: 'json',
+  	 	url: 'text.php',
+  	 	data: {
+  			'To': getCookie("phoneNumber"),
+  			'From':'+12692042709',
+ 	 		'Body':'Dog is running away!'	 
+  		 }
     });
   }
 }
@@ -248,7 +245,7 @@ function pullDogLocation() {
       static_dog = new google.maps.LatLng(lat1, long1);
       console.log(lat1);
       console.log(long1);
-
+	  storeDogLocation(lat1, long1);
       if (result['Threshold']!=threshold) {
         initialize(username, password);
       }
@@ -259,6 +256,21 @@ function pullDogLocation() {
   }
 }
 
-
+function storeDogLocation(lat, long)
+{
+	var t = new Date();
+	var time = t.getMilliseconds();
+	$.ajax({
+		type: 'POST',
+		dataType: 'json',
+		url:'inject_data.php',
+		data: {
+			'username': getCookie('username'),
+			'lat': lat,
+			'long': long,
+			'time': time
+		}
+	});	
+}
 
 

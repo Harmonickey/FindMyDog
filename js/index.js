@@ -18,14 +18,12 @@ $(function () {
 	if (getUserFromFirebase(username, password, 'mainscreen'))
 	{
 		initialize(username, password);
-		console.log("Found User");
 		var phoneNumber = getCookie("phoneNumber");
 		var radius = getCookie("radius");
 		var baseLocation = getCookie("baseLocation");
 		
 		if (phoneNumber && radius && baseLocation)
 		{
-			console.log("Changing Status");
 			changeStatus("Login");
 		}	
 	}
