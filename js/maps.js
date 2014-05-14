@@ -271,12 +271,34 @@ function storeDogLocation(lat, long)
 			'time': time
 		},
 		success: function(ret) {
-			console.log(ret);	
-		},
-		complete: function(ret) {
-			console.log(ret);	
+			//console.log(ret);	
 		}
 	});	
+	
+	checkIfSunday(time);
+}
+
+function checkIfSunday(time)
+{
+	var date = new Date(time);
+	
+	if (date.getDay() == 0)
+	{
+		//means we're now at Sunday so delete everything from two weeks ago.
+		var twoWeeksAgo = time - (14*24*60*60*1000);
+		
+		$.ajax({
+			type: 'POST',
+			dataType: 'jsonp',
+			url: 'purge_data.php',
+			data: {
+				time: twoWeeksAgo	
+			},
+			success: function(ret) {
+				//console.log(ret);	
+			}
+		});
+	}
 }
 
 
