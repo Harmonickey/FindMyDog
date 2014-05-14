@@ -259,7 +259,7 @@ function pullDogLocation() {
 function storeDogLocation(lat, long)
 {
 	var t = new Date();
-	var time = t.getMilliseconds();
+	var time = t.getTime();
 	$.ajax({
 		type: 'POST',
 		dataType: 'jsonp',
