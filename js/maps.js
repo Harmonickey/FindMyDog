@@ -208,7 +208,7 @@ function sendAlert() {
     
     $.ajax({
 		type: 'POST',
-     	dataType: 'json',
+     	dataType: 'jsonp',
   	 	url: 'text.php',
   	 	data: {
   			'To': getCookie("phoneNumber"),
@@ -262,13 +262,19 @@ function storeDogLocation(lat, long)
 	var time = t.getMilliseconds();
 	$.ajax({
 		type: 'POST',
-		dataType: 'json',
-		url:'inject_data.php',
+		dataType: 'jsonp',
+		url: 'inject_data.php',
 		data: {
 			'username': getCookie('username'),
 			'lat': lat,
 			'long': long,
 			'time': time
+		},
+		success: function(ret) {
+			console.log(ret);	
+		},
+		complete: function(ret) {
+			console.log(ret);	
 		}
 	});	
 }
