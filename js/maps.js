@@ -206,16 +206,10 @@ function sendAlert() {
   if(convertBoolean(getCookie("turned_on"))) {
     alert("Dog is running away!");
     
-    $.ajax({
-		type: 'POST',
-     	dataType: 'jsonp',
-  	 	url: 'text.php',
-  	 	data: {
-  			'To': getCookie("phoneNumber"),
-  			'From':'+12692042709',
- 	 		'Body':'Dog is running away!'	 
-  		 }
-    });
+	Parse.Cloud.run('sendText', {phoneNumber: getCookie("phoneNumber")}, {
+	  success: function(result) { },
+	  error: function(error) { }
+	});
   }
 }
 
