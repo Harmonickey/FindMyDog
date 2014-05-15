@@ -349,6 +349,16 @@ function setError(error, module)
 			if (error == 'no_radius')
 				$("#register_error").html("Invalid radius");
 		case 'mainscreen':
+		case 'pn_modal':
+			$("#phonenumber_error").css('display', 'block');
+			$("#phonenumber_error").html("Invalid Phone Number");
+		case 'rad_modal':
+			$("#radius_error").css('display', 'block');
+			$("#radius_error").html("Invalid Radius");
+		case 'base_modal':
+			$("#baselocation_error").css('display', 'block');
+			$("#baselocation_error").html("Invalid Base Location");
+			
 	}
 }
 
@@ -357,7 +367,7 @@ function updateRadius()
 	var radius = $("#new_radius").val();
 	var isANumber = isNaN(radius) === false;
 	if (!isANumber) {
-		alert("Invalid radius");
+		setError(null, 'rad_modal');
 		return;
 	}
 
@@ -385,6 +395,12 @@ function updateBaseLocation()
 	var baseLat = result['results'][0]['geometry']['location']['lat'];
 	var baseLong = result['results'][0]['geometry']['location']['lng'];
 
+    if (!baseLat || !baseLong)
+	{
+		setError(null, 'base_modal');
+		return;	
+	}
+
 	var username = getCookie("username");
 	updateSingleFirebaseAttribute(username, "Base_Location", baseLocation);
 	updateSingleFirebaseAttribute(username, "baseLat", baseLat);
@@ -400,6 +416,13 @@ function updatePhoneNumber()
 {
 	var phoneNumber = $("#new_phonenumber").val();
 	var username = getCookie("username");
+	
+	if (!isPhoneNumber(phoneNumber))
+	{
+		setError(null, 'pn_modal');
+		return;
+	}
+	
 	updateSingleFirebaseAttribute(username, "Phone_Number", phoneNumber);
 	setCookie("phoneNumber", phoneNumber, 30);
 	hideModal("#phoneNumberModal");	
@@ -408,4 +431,9 @@ function updatePhoneNumber()
 function convertBoolean(str)
 {
 	return (str == 'true' ? true : false);
+}
+
+function isPhoneNumber(number)
+{
+	return (number.match(/^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/) !== null);	
 }
