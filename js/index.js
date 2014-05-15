@@ -402,6 +402,7 @@ function updateBaseLocation()
 	}
 
 	var username = getCookie("username");
+	var password = getCookie("password");
 	updateSingleFirebaseAttribute(username, "Base_Location", baseLocation);
 	updateSingleFirebaseAttribute(username, "baseLat", baseLat);
 	updateSingleFirebaseAttribute(username, "baseLong", baseLong);
