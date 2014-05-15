@@ -195,14 +195,25 @@ function toggleON_OFF(isStartUp) {
   }
   else {
     setCookie("turned_on", 'true');
-	if (isStartUp)
+	if (isStartUp) //turn on but on load!
 	{
-	  $(".iPhoneCheckLabelOff").prop("hidden", true);
-	  $(".iPhoneCheckLabelOn").prop("hidden", false);  
+	  $(".iPhoneCheckLabelOff span").css("margin-right", '-50px');
+	  $(".iPhoneCheckLabelOn span").css("margin-left", '0px');
+	  $(".iPhoneCheckLabelOn").css("width", '54px');  
+	  $(".iPhoneCheckHandle").css("left", '50px');
 	}
     out_counter = 0;
     in_counter = 0;
   }
+  
+  //when ON
+  //   Off label ->  margin-right: -50px;
+  //   On  label ->  margin-left: 0px;
+  //   check handle -> left: 50px;
+  //when OFF
+  //   Off label ->  margin-right: 0px;
+  //   On  label ->  margin-left: -50px;
+  //   check handle -> left: 0px;
 }
 
 
