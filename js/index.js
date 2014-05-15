@@ -350,7 +350,9 @@ function updateRadius()
 	var isANumber = isNaN(radius) === false;
 	if (!isANumber) {
 		alert("Invalid radius");
+		return;
 	}
+
 	var username = getCookie("username");
 	updateSingleFirebaseAttribute(username, "Threshold", parseInt(radius));
 	setCookie("radius", radius, 30);
