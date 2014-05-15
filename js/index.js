@@ -98,7 +98,7 @@ function checkLogInOrOut()
 	}
 }
 
-function checkLogIn()
+function loadUser()
 {
 	var username = getCookie("username");
 	
@@ -108,7 +108,8 @@ function checkLogIn()
 	}
 	else
 	{
-		changeStatus("Login");	
+		changeStatus("Login");
+		toggleON_OFF(true);	
 	}
 }
 
