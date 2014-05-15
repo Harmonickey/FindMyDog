@@ -306,6 +306,12 @@ function register()
 	var phoneNumber = $("#reg_phone").val();
 	var radius = $("#reg_radius").val();
 	var baseLocation = $("#reg_baseLocation").val();
+
+	var isANumber = isNaN(radius) === false;
+	if(!isANumber) {
+		setError('no_radius', 'register');
+		return;
+	}
 	
 	if(createFirebaseUser(username, password, phoneNumber, radius, baseLocation))
 	{
@@ -340,6 +346,8 @@ function setError(error, module)
 			$("#register_error").css('display', 'block');
 			if (error == 'no_user')
 				$("#register_error").html("Username already taken");
+			if (error == 'no_radius')
+				$("#register_error").html("Invalid radius");
 		case 'mainscreen':
 	}
 }
