@@ -348,7 +348,7 @@ function updateRadius()
 {
 	var radius = $("#new_radius").val();
 	var isANumber = isNaN(radius) === false;
-	if (!isANumber) {
+	if (isANumber) {
 		alert("Invalid radius");
 	}
 	var username = getCookie("username");

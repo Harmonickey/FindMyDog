@@ -117,6 +117,9 @@
             <input type="text" id="reg_phone"/>
             <p>Radius</p>
             <input type="text" id="reg_radius"/>
+	    <div class="modal-body">
+          	<label id="radius_error" style="display: none;"></label>
+            </div>
             <p>Base Location</p>
             <input type="text" id="reg_baseLocation"/>
           </div>
