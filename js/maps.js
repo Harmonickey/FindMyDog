@@ -195,6 +195,11 @@ function toggleON_OFF(isStartUp) {
   }
   else {
     setCookie("turned_on", 'true');
+	if (isStartUp)
+	{
+	  $(".iPhoneCheckLabelOff").prop("hidden", true);
+	  $(".iPhoneCheckLabelOn").prop("hidden", false);  
+	}
     out_counter = 0;
     in_counter = 0;
   }
