@@ -30,6 +30,8 @@ $(function () {
 			changeStatus("Login");
 		}	
 	} 
+	
+	Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc', 'IaDHE524JasczxM1oihrNaR2egMjWUZ29HXBoxl1');
 });
 
 function getCookie(cname)
