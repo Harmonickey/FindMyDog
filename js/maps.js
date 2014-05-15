@@ -156,7 +156,7 @@ function getDistance(loc, pos) {
   //calculate distance in meters
   var d = google.maps.geometry.spherical.computeDistanceBetween(loc, pos);
   d = 3.28084*d; //convert to feet
-  console.log("Distance: " + String(d));
+  //console.log("Distance: " + String(d));
   parseDistance(d);
 }
 
@@ -195,25 +195,9 @@ function toggleON_OFF(isStartUp) {
   }
   else {
     setCookie("turned_on", 'true');
-	if (isStartUp) //turn on but on load!
-	{
-	  $(".iPhoneCheckLabelOff span").css("margin-right", '-50px');
-	  $(".iPhoneCheckLabelOn span").css("margin-left", '0px');
-	  $(".iPhoneCheckLabelOn").css("width", '54px');  
-	  $(".iPhoneCheckHandle").css("left", '50px');
-	}
     out_counter = 0;
     in_counter = 0;
   }
-  
-  //when ON
-  //   Off label ->  margin-right: -50px;
-  //   On  label ->  margin-left: 0px;
-  //   check handle -> left: 50px;
-  //when OFF
-  //   Off label ->  margin-right: 0px;
-  //   On  label ->  margin-left: -50px;
-  //   check handle -> left: 0px;
 }
 
 
@@ -259,8 +243,8 @@ function pullDogLocation() {
       var long1 = result['dogLng'];
       var lat1 = result['dogLat'];
       static_dog = new google.maps.LatLng(lat1, long1);
-      console.log(lat1);
-      console.log(long1);
+      //console.log(lat1);
+      //console.log(long1);
 	  storeDogLocation(lat1, long1);
       if (result['Threshold']!=threshold) {
         initialize(username, password);

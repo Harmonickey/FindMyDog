@@ -9,6 +9,9 @@ $(function () {
 	  });
 	});
 
+    if (convertBoolean(getCookie("turned_on")))
+	    $('#on-off').prop("checked", true);
+
 	$('.on-off :checkbox').iphoneStyle();
 	
 	//if there is a username and password, then there must be a phonenumber, radius, and baselocation
