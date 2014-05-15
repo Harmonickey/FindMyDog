@@ -404,3 +404,8 @@ function updatePhoneNumber()
 	setCookie("phoneNumber", phoneNumber, 30);
 	hideModal("#phoneNumberModal");	
 }
+
+function convertBoolean(str)
+{
+	return (str == 'true' ? true : false);
+}

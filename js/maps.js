@@ -1,7 +1,7 @@
 var map; //will be used for map on page
 
-var initialized = false;
-var turned_on = false;
+var initialized = convertBoolean(getCookie("turned_on"));
+var turned_on = convertBoolean(getCookie("turned_on"));
 var username;
 var password;
 
@@ -39,7 +39,7 @@ function initialize(user, pass) {
       //create the map
       map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
-      initialized = true;
+      setCookie("initialized", 'true');
 
       //set a marker for the home location
       var static_marker = new google.maps.Marker({
@@ -108,7 +108,7 @@ function addDog(lat, lng) {
   });
   //put the line on the map
   line.setMap(map);
-  initialized = true;
+  setCookie("initialized", 'true');
 }
 
 
@@ -133,7 +133,7 @@ function alterLocation() {
 }
 
 function trackLocation() {
-  if(initialized==true) {
+  if(convertBoolean(getCooke("initialized"))) {
     pullDogLocation();
     pet_marker.setPosition(static_dog); //update the dog's position on the map
     line.setPath([static_loc, static_dog]); //update the line on the map
@@ -161,7 +161,7 @@ function getDistance(loc, pos) {
 }
 
 function parseDistance(dist) {
-  if(turned_on==true) {
+  if(convertBoolean(getCookie("turned_on"))) {
     //if out of range
     if (dist>threshold) {
       //remove in-range counter
@@ -190,11 +190,11 @@ function parseDistance(dist) {
 }
 
 function toggleON_OFF() {
-  if(turned_on==true) {
-    turned_on = false;
+  if(convertBoolean(getCookie("turned_on"))) {
+    setCookie("turned_on", 'false');
   }
   else {
-    turned_on = true;
+    setCookie("turned_on", 'true');
     out_counter = 0;
     in_counter = 0;
   }
@@ -203,7 +203,7 @@ function toggleON_OFF() {
 
 //send alert to user
 function sendAlert() {
-  if(turned_on==true) {
+  if(convertBoolean(getCookie("turned_on"))) {
     alert("Dog is running away!");
     
     $.ajax({
