@@ -150,7 +150,7 @@ function trackLocation() {
 */
 var out_counter = 0;
 var in_counter = 0;
-var alerted = getCookie("alerted");
+var alerted = false;
 
 function getDistance(loc, pos) {
   //calculate distance in meters
@@ -170,11 +170,9 @@ function parseDistance(dist) {
       out_counter++;
       //if has been out of range 3 times consecutively
       if (out_counter==3) {
-        alerted = getCookie("alerted");
-        console.log(alerted);
-        if(alerted=='false') {
+        if(alerted==false) {
           sendAlert();
-          setCookie("alerted", "true");
+          alerted = true;
         }
       }
     }
@@ -185,7 +183,7 @@ function parseDistance(dist) {
       //increment in range counter
       in_counter++;
       if (in_counter==3) {
-        setCookie("alerted", "false");
+        alerted = false;
       }
     }
   }
