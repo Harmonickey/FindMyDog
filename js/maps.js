@@ -133,7 +133,7 @@ function alterLocation() {
 }
 
 function trackLocation() {
-  if(convertBoolean(getCooke("initialized"))) {
+  if(convertBoolean(getCookie("initialized"))) {
     pullDogLocation();
     pet_marker.setPosition(static_dog); //update the dog's position on the map
     line.setPath([static_loc, static_dog]); //update the line on the map
