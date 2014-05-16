@@ -454,16 +454,20 @@ function isPhoneNumber(number)
 function getReportInfo(minTime, maxTime)
 {
 	var query = new Parse.Query("Dog_Location");
+	var lat_long = new Array();
 	query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").find({
 	  success: function(results) {
 		for (var i = 0; i < results.length; i++)
 		{
 			var latitude = results[i].attributes.Location._latitude;
 			var longitude = results[i].attributes.Location._longitude;
+			lat_long.push({latitude: latitude, longitude: longitude});
 		}
 	  },
 	  error: function(error) {
 		console.log("Cannot get info from Parse");
 	  }
 	});	
+	
+	return lat_long;
 }
