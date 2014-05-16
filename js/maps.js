@@ -294,20 +294,22 @@ function storeDogLocation(lat, long)
 {
 	var t = new Date();
 	var time = t.getTime();
-	$.ajax({
-		type: 'POST',
-		dataType: 'jsonp',
-		url: 'inject_data.php',
-		data: {
-			'username': getCookie('username'),
-			'lat': lat,
-			'long': long,
-			'time': time
-		},
-		success: function(ret) {
-			//console.log(ret);	
-		}
-	});	
+	
+	var DogLocation = Parse.Object.extend("Dog_Location");
+	var dogLocation = new DogLocation();
+	var location = new Parse.GeoPoint(lat, long);
+	dogLocation.save({
+		Username: getCookie("username"),
+		Location: location,
+		Time: time
+	}, {
+	success: function(dogLocation) {
+	    //success
+	},
+	error: function(dogLocation, error) {
+	  	console.log("Parse failed with " + error);
+	}
+	});
 	
 	checkIfSunday(time);
 }
@@ -321,17 +323,7 @@ function checkIfSunday(time)
 		//means we're now at Sunday so delete everything from two weeks ago.
 		var twoWeeksAgo = time - (14*24*60*60*1000);
 		
-		$.ajax({
-			type: 'POST',
-			dataType: 'jsonp',
-			url: 'purge_data.php',
-			data: {
-				time: twoWeeksAgo	
-			},
-			success: function(ret) {
-				//console.log(ret);	
-			}
-		});
+		deleteLocations(twoWeeksAgo);
 	}
 }
 
@@ -359,6 +351,58 @@ function UnfollowDevice() {
   setCookie("follow_device", false, 1);
   console.log("following: false");
 }
+
+function getRecordIds(time)
+{
+	var query = new Parse.Query("Dog_Location");
+	var ids = new Array();
+	query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", time).find({
+	  success: function(results) {
+		for (var i = 0; i < results.length; i++)
+		{
+			ids.push(results[i].id);	
+		}
+	  },
+	  error: function(error) {
+		console.log("Cannot get info from Parse");
+	  }
+	});	
+	
+	return ids;
+}
+
+function deleteLocations(fromTime)
+{
+	var objectIds = getRecordIds(fromTime);
+	
+	for (var i = 0; i < objectIds.length; i++)
+	{
+		var DogLocation = Parse.Object.extend("Dog_Location");
+		var query = new Parse.Query(DogLocation);
+		var doglocationobj;
+		query.get(objectIds[i], {
+		  success: function(object) {
+			doglocationobj = object;
+		  },
+		  error: function(object, error) {
+			// The object was not retrieved successfully.
+			// error is a Parse.Error with an error code and description.
+		  }
+		});	
+		doglocationobj.destroy({
+		  success: function(myObject) {
+			// The object was deleted from the Parse Cloud.
+		  },
+		  error: function(myObject, error) {
+			// The delete failed.
+			// error is a Parse.Error with an error code and description.
+		  }
+		});
+		
+		doglocationobj.save();
+	}
+}
+
 
 
 

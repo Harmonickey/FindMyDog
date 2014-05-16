@@ -450,3 +450,21 @@ function isPhoneNumber(number)
 {
 	return (number.match(/^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/) !== null);	
 }
+
+function getReportInfo(minTime, maxTime)
+{
+	var query = new Parse.Query("Dog_Location");
+	query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).find({
+	  success: function(results) {
+		console.log(results);
+		for (var i = 0; i < results.length; i++)
+		{
+			var latitude = results[i].attributes.Location._latitude;
+			var longitude = results[i].attributes.Location._longitude;
+		}
+	  },
+	  error: function(error) {
+		console.log("Cannot get info from Parse");
+	  }
+	});	
+}
