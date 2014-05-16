@@ -13,6 +13,9 @@ var threshold;
 var dog;
 var pet_marker;
 var line;
+var owner_marker;
+var owner_circle;
+var owner_location;
 
 
 function initialize(user, pass) {
@@ -81,6 +84,21 @@ function initialize(user, pass) {
         strokeOpacity: 0.5
       });
       static_circle3.bindTo('center', static_marker, 'position');
+
+      owner_circle = new google.maps.Circle({
+        map: map,
+        radius: 200,
+        fillColor: '#333333',
+        fillOpacity: 0.3,
+        strokeWeight: 0,
+        strokeOpacity: 0.5,
+      });
+
+      owner_marker = new google.maps.Marker({
+        map: map,
+        title: "Owner's Location",
+        icon: "images/male.png"
+      });
     }
   });
   if(result['dogLat']!=null) {
@@ -134,11 +152,21 @@ function alterLocation() {
 
 function trackLocation() {
   if(convertBoolean(getCookie("initialized"))) {
-    pullDogLocation();
-    pet_marker.setPosition(static_dog); //update the dog's position on the map
-    line.setPath([static_loc, static_dog]); //update the line on the map
-    getDistance(static_loc, static_dog); //get the distance between the home location and the dog
-  //});
+    if(convertBoolean(getCookie("follow_device"))) {
+      getUserLocation();
+      console.log(owner_location);
+      pullDogLocation();
+      pet_marker.setPosition(static_dog); //update the dog's position on the map
+      line.setPath([owner_location, static_dog]);
+      var personal_radius = parseInt(getCookie("personal_radius"));
+      getDistance(owner_location, static_dog, personal_radius);
+    }
+    else {
+      pullDogLocation();
+      pet_marker.setPosition(static_dog); //update the dog's position on the map
+      line.setPath([static_loc, static_dog]); //update the line on the map
+      getDistance(static_loc, static_dog, threshold); //get the distance between the home location and the dog
+    }
   }
 }
 
@@ -152,18 +180,18 @@ var out_counter = 0;
 var in_counter = 0;
 var alerted = convertBoolean(getCookie("alerted"));
 
-function getDistance(loc, pos) {
+function getDistance(loc, pos, thres) {
   //calculate distance in meters
   var d = google.maps.geometry.spherical.computeDistanceBetween(loc, pos);
   d = 3.28084*d; //convert to feet
   //console.log("Distance: " + String(d));
-  parseDistance(d);
+  parseDistance(d, thres);
 }
 
-function parseDistance(dist) {
+function parseDistance(dist, thres) {
   if(convertBoolean(getCookie("turned_on"))) {
     //if out of range
-    if (dist>threshold) {
+    if (dist>thres) {
       //remove in-range counter
       in_counter = 0;
       //increment out of range counter
@@ -189,17 +217,17 @@ function parseDistance(dist) {
   }
 }
 
-function toggleON_OFF(isStartUp) {	
-  if(convertBoolean(getCookie("turned_on")) && !isStartUp) {
-    setCookie("turned_on", 'false');
+function toggleON_OFF() {	
+  if(convertBoolean(getCookie("turned_on"))) {
+    setCookie("turned_on", 'false', 30);
   }
   else {
-    setCookie("turned_on", 'true');
+    setCookie("turned_on", 'true', 30);
+    $('#on-off').prop("checked", true);
     out_counter = 0;
     in_counter = 0;
   }
 }
-
 
 //send alert to user
 function sendAlert() {
@@ -212,9 +240,6 @@ function sendAlert() {
 	});
   }
 }
-
-//create the map upon loading the page
-//google.maps.event.addDomListener(window, 'load', initialize);
 
 window.onload = function() {
     setTimeout(function() { window.scrollTo(0, 1) }, 100);
@@ -247,6 +272,21 @@ function pullDogLocation() {
   }
   else {
     console.log("fail");
+  }
+}
+
+function getUserLocation() {
+  var result;
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      owner_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      map.setCenter(owner_location);
+      owner_marker.setPosition(owner_location);
+      var r = parseFloat(getCookie("personal_radius"));
+      r = r/3.28084;
+      owner_circle.set('radius', r);
+      owner_circle.bindTo('center', owner_marker, 'position');
+    });
   }
 }
 
@@ -294,5 +334,32 @@ function checkIfSunday(time)
 		});
 	}
 }
+
+function FollowDevice() {
+  var new_radius = $("#new_person_radius").val();
+  var isANumber = isNaN(new_radius) === false;
+  if (!isANumber) {
+    setError(null, 'rad_modal');
+    return
+  }
+
+  $("#followDeviceBtn").hide();
+  $("#unfollowDeviceBtn").show();
+  setCookie("follow_device", true, 1);
+  setCookie("personal_radius", new_radius, 30);
+  hideModal("#followDeviceModal");
+  console.log("following: true");
+}
+
+function UnfollowDevice() {
+  map.setCenter(static_loc);
+  $("#followDeviceBtn").show();
+  $("#unfollowDeviceBtn").hide();
+  setCookie("personal_radius", "", 0);
+  setCookie("follow_device", false, 1);
+  console.log("following: false");
+}
+
+
 
 

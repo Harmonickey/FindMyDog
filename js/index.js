@@ -8,9 +8,15 @@ $(function () {
 	    // Animation complete.
 	  });
 	});
-
-    if (convertBoolean(getCookie("turned_on")))
+	//console.log("on? " + getCookie("turned_on"));
+    if (convertBoolean(getCookie("turned_on"))) {
 	    $('#on-off').prop("checked", true);
+	}
+
+	if (convertBoolean(getCookie("follow_device"))) {
+		$('#followDeviceBtn').hide();
+		$('#unfollowDeviceBtn').show();
+	}
 
 	$('.on-off :checkbox').iphoneStyle();
 	
@@ -114,7 +120,6 @@ function loadUser()
 	else
 	{
 		changeStatus("Login");
-		toggleON_OFF(true);	
 	}
 }
 
@@ -361,10 +366,11 @@ function setError(error, module)
 		case 'rad_modal':
 			$("#radius_error").css('display', 'block');
 			$("#radius_error").html("Invalid Radius");
+			$("#personal_radius_error").css('display', 'block');
+			$("#personal_radius_error").html("Invalid Radius");
 		case 'base_modal':
 			$("#baselocation_error").css('display', 'block');
 			$("#baselocation_error").html("Invalid Base Location");
-			
 	}
 }
 

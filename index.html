@@ -29,7 +29,7 @@
         <a class="navbar-brand" href="#">Find My Dog</a>
         <div class="pull-right">
           <ul class="nav navbar-nav">
-            <li class="pull-left on-off" onclick="toggleON_OFF(false)"><input type="checkbox" id="on-off"/></li>
+            <li class="pull-left on-off" onclick="toggleON_OFF()"><input type="checkbox" id="on-off"/></li>
           </ul>
         </div>
       </div>
@@ -52,7 +52,8 @@
           <br/>
           <button type="button" class="btn btn-default" id="phoneNumberBtn" data-toggle="modal" data-target="#phoneNumberModal"> Change Phone Number </button> 
           <br/>
-          <button type="button" class="btn btn-default" > "Follow My Device" Mode </button>
+          <button type="button" class="btn btn-default" id="followDeviceBtn" data-toggle="modal" data-target="#followDeviceModal"> Follow My Device Mode </button>
+          <button type="button" class="btn btn-default" id="unfollowDeviceBtn" data-toggle="modal" style="display: none" onclick="UnfollowDevice()"> Stop Following My Device </button>
           <br/>
           <button type="button" class="btn btn-default" id="loginout" onclick="checkLogInOrOut()"> Logout </button>
         </div>
@@ -169,6 +170,30 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" onclick="updatePhoneNumber();"> Save Changes</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  <!-- 
+  Pop up box for "Follow my device" mode
+-->
+    <div class="modal fade" id="followDeviceModal" tabindex="-1" role="dialog" aria-labelledby="followDeviceLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="FollowDevice">Follow My Device</h4>
+          </div>
+          <div class="modal-body">
+            <p>Personal Radius</p>
+            <input type="text" id="new_person_radius" />
+          </div>
+          <div class="modal-body">
+            <label id="personal_radius_error" style="display: none;"></label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="FollowDevice()"> Save Changes</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
