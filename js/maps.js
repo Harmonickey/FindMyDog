@@ -232,7 +232,7 @@ function toggleON_OFF() {
 //send alert to user
 function sendAlert() {
   if(convertBoolean(getCookie("turned_on"))) {
-    alert("Dog is running away!");
+    //alert("Dog is running away!");
     
 	Parse.Cloud.run('sendText', {phoneNumber: getCookie("phoneNumber")}, {
 	  success: function(result) { },
@@ -375,6 +375,21 @@ function deleteLocations(fromTime)
 {
 	var objectIds = getRecordIds(fromTime);
 	
+	/*
+	curl -X POST \
+	  -H "X-Parse-Application-Id: H4zb5P2LW0xRtP21SlKaWBFCuR2Cvwkd73OLlIyn" \
+	  -H "X-Parse-Master-Key: XFvgotn8KdcFeNfB19JAU7uPDxBWsHsXrx9gOpbC" \
+	  -H "Content-Type: application/json" \
+	  -d '{"plan":"paid"}' \
+	  https://api.parse.com/1/jobs/userMigration
+	*/
+	
+	Parse.Cloud.run('removeTwoWeeksAgo', {objectIds: objectIds}, {
+	  success: function(result) { },
+	  error: function(error) { }
+	});
+	
+	/*
 	for (var i = 0; i < objectIds.length; i++)
 	{
 		var DogLocation = Parse.Object.extend("Dog_Location");
@@ -401,6 +416,7 @@ function deleteLocations(fromTime)
 		
 		doglocationobj.save();
 	}
+	*/
 }
 
 
