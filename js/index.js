@@ -454,9 +454,8 @@ function isPhoneNumber(number)
 function getReportInfo(minTime, maxTime)
 {
 	var query = new Parse.Query("Dog_Location");
-	query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).find({
+	query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").find({
 	  success: function(results) {
-		console.log(results);
 		for (var i = 0; i < results.length; i++)
 		{
 			var latitude = results[i].attributes.Location._latitude;
