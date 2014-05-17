@@ -498,7 +498,7 @@ function getReportInfo1(minTime, maxTime)
 		{
 			var latitude = results[i].attributes.Location._latitude;
 			var longitude = results[i].attributes.Location._longitude;
-			lat_long.push([latitude, longitude);
+			lat_long.push([latitude, longitude]);
 		}
 	  },
 	  error: function(error) {
