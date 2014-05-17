@@ -23,7 +23,7 @@ function createActivityMap() {
 		var line_seg = new google.maps.Polyline({
 			path: [point1, point2],
 			geodesic: true,
-			strokeColor: 'red',//'#008f8f',
+			strokeColor: '#008f8F',
 			strokeWeight: 3,
 			strokeOpacity: 0.8
 		});
