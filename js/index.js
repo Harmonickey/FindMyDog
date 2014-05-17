@@ -480,9 +480,9 @@ function calculateDist(minTime, maxTime)
 	
 	for (var i = 1; i < lat_long.length; i++)
 	{
-		var lat = parseInt(lat_long[i - 1][0]) - parseInt(lat_long[i][0]);
-		var long = parseInt(lat_long[i - 1][1]) - parseInt(lat_long[i][1]);
-		var d = lat * lat + long * long;
+		var lat = parseInt(lat_long[i - 1]['latitude']) - parseInt(lat_long[i]['latitude']);
+		var lng = parseInt(lat_long[i - 1]['longitude']) - parseInt(lat_long[i]['longitude']);
+		var d = lat * lat + lng * lng;
 		dist = dist + Math.sqrt(d);
 	}
 	return dist;
