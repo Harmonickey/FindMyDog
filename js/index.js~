@@ -8,6 +8,15 @@ $(function () {
 	    // Animation complete.
 	  });
 	});
+	//console.log("on? " + getCookie("turned_on"));
+    if (convertBoolean(getCookie("turned_on"))) {
+	    $('#on-off').prop("checked", true);
+	}
+
+	if (convertBoolean(getCookie("follow_device"))) {
+		$('#followDeviceBtn').hide();
+		$('#unfollowDeviceBtn').show();
+	}
 
 	$('.on-off :checkbox').iphoneStyle();
 	
@@ -27,6 +36,8 @@ $(function () {
 			changeStatus("Login");
 		}	
 	} 
+	
+	Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
 });
 
 function getCookie(cname)
@@ -98,7 +109,7 @@ function checkLogInOrOut()
 	}
 }
 
-function checkLogIn()
+function loadUser()
 {
 	var username = getCookie("username");
 	
@@ -108,7 +119,7 @@ function checkLogIn()
 	}
 	else
 	{
-		changeStatus("Login");	
+		changeStatus("Login");
 	}
 }
 
@@ -310,6 +321,7 @@ function register()
 	var isANumber = isNaN(radius) === false;
 	if(!isANumber) {
 		setError('no_radius', 'register');
+		return;
 	}
 	
 	if(createFirebaseUser(username, password, phoneNumber, radius, baseLocation))
@@ -348,6 +360,17 @@ function setError(error, module)
 			if (error == 'no_radius')
 				$("#register_error").html("Invalid radius");
 		case 'mainscreen':
+		case 'pn_modal':
+			$("#phonenumber_error").css('display', 'block');
+			$("#phonenumber_error").html("Invalid Phone Number");
+		case 'rad_modal':
+			$("#radius_error").css('display', 'block');
+			$("#radius_error").html("Invalid Radius");
+			$("#personal_radius_error").css('display', 'block');
+			$("#personal_radius_error").html("Invalid Radius");
+		case 'base_modal':
+			$("#baselocation_error").css('display', 'block');
+			$("#baselocation_error").html("Invalid Base Location");
 	}
 }
 
@@ -356,7 +379,7 @@ function updateRadius()
 	var radius = $("#new_radius").val();
 	var isANumber = isNaN(radius) === false;
 	if (!isANumber) {
-		alert("Invalid radius");
+		setError(null, 'rad_modal');
 		return;
 	}
 
@@ -384,7 +407,14 @@ function updateBaseLocation()
 	var baseLat = result['results'][0]['geometry']['location']['lat'];
 	var baseLong = result['results'][0]['geometry']['location']['lng'];
 
+    if (!baseLat || !baseLong)
+	{
+		setError(null, 'base_modal');
+		return;	
+	}
+
 	var username = getCookie("username");
+	var password = getCookie("password");
 	updateSingleFirebaseAttribute(username, "Base_Location", baseLocation);
 	updateSingleFirebaseAttribute(username, "baseLat", baseLat);
 	updateSingleFirebaseAttribute(username, "baseLong", baseLong);
@@ -399,7 +429,45 @@ function updatePhoneNumber()
 {
 	var phoneNumber = $("#new_phonenumber").val();
 	var username = getCookie("username");
+	
+	if (!isPhoneNumber(phoneNumber))
+	{
+		setError(null, 'pn_modal');
+		return;
+	}
+	
 	updateSingleFirebaseAttribute(username, "Phone_Number", phoneNumber);
 	setCookie("phoneNumber", phoneNumber, 30);
 	hideModal("#phoneNumberModal");	
+}
+
+function convertBoolean(str)
+{
+	return (str == 'true' ? true : false);
+}
+
+function isPhoneNumber(number)
+{
+	return (number.match(/^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/) !== null);	
+}
+
+function getReportInfo(minTime, maxTime)
+{
+	var query = new Parse.Query("Dog_Location");
+	var lat_long = new Array();
+	query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").find({
+	  success: function(results) {
+		for (var i = 0; i < results.length; i++)
+		{
+			var latitude = results[i].attributes.Location._latitude;
+			var longitude = results[i].attributes.Location._longitude;
+			lat_long.push({latitude: latitude, longitude: longitude});
+		}
+	  },
+	  error: function(error) {
+		console.log("Cannot get info from Parse");
+	  }
+	});	
+	
+	return lat_long;
 }

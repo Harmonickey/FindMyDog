@@ -471,3 +471,39 @@ function getReportInfo(minTime, maxTime)
 	
 	return lat_long;
 }
+
+function calculateDist(minTime, maxTime)
+{
+	var dist = 0;
+	var lat_long = getReportInfo1(minTime, maxTime);
+	
+	for (var i = 1; i < lat_long.length; i++)
+	{
+		var lat = parseInt(lat_long[i - 1][0]) - parseInt(lat_long[i][0]);
+		var long = parseInt(lat_long[i - 1][1]) - parseInt(lat_long[i][1]);
+		var d = lat * lat + long * long;
+		dist = dist + Math.sqrt(d);
+	}
+	return dist;
+}
+
+function getReportInfo1(minTime, maxTime)
+{
+	var query = new Parse.Query("Dog_Location");
+	var lat_long = new Array();
+	query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").find({
+	  success: function(results) {
+		for (var i = 0; i < results.length; i++)
+		{
+			var latitude = results[i].attributes.Location._latitude;
+			var longitude = results[i].attributes.Location._longitude;
+			lat_long.push([latitude, longitude);
+		}
+	  },
+	  error: function(error) {
+		console.log("Cannot get info from Parse");
+	  }
+	});	
+	
+	return lat_long;
+}
