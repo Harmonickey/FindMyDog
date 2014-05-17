@@ -453,6 +453,7 @@ function isPhoneNumber(number)
 
 function getReportInfo(minTime, maxTime)
 {
+	Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
 	var query = new Parse.Query("Dog_Location");
 	var lat_long = new Array();
 	query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").find({

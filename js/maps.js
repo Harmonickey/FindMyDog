@@ -341,6 +341,8 @@ function FollowDevice() {
   setCookie("personal_radius", new_radius, 30);
   hideModal("#followDeviceModal");
   console.log("following: true");
+  owner_marker.setVisible(true);
+  owner_circle.setVisible(true);
 }
 
 function UnfollowDevice() {
@@ -350,6 +352,8 @@ function UnfollowDevice() {
   setCookie("personal_radius", "", 0);
   setCookie("follow_device", false, 1);
   console.log("following: false");
+  owner_marker.setVisible(false);
+  owner_circle.setVisible(false);
 }
 
 function getRecordIds(time)
