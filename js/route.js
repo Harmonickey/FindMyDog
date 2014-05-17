@@ -14,6 +14,16 @@ function createActivityMap() {
 
 	//var result = getReportInfo("1:00", "24:00");
 
+	var date = new Date();
+	console.log(date);
+	var millTime2 = date.getTime();
+	console.log(millTime2);
+	millTime1 = millTime2 - (10*24*3600*1000);
+	console.log(millTime1);
+
+	var result = getReportInfo(millTime1, millTime2);
+	console.log(result);
+
 	var result = [{'latitude': 49.47805, 'longitude': -123.84716}, {'latitude': 49.47805, 'longitude': -123.84800}, 
 	{'latitude': 49.47850, 'longitude': -123.84800}, {'latitude': 49.47900, 'longitude': -123.84850}];
 
