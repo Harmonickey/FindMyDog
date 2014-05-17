@@ -36,8 +36,7 @@ $(function () {
 			changeStatus("Login");
 		}	
 	} 
-	
-	Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
+
 });
 
 function getCookie(cname)
@@ -453,24 +452,28 @@ function isPhoneNumber(number)
 
 function getReportInfo(minTime, maxTime)
 {
-	Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
+	//Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
 	var query = new Parse.Query("Dog_Location");
 	var lat_long = new Array();
-	query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").find({
-	  success: function(results) {
-		for (var i = 0; i < results.length; i++)
-		{
-			var latitude = results[i].attributes.Location._latitude;
-			var longitude = results[i].attributes.Location._longitude;
-			lat_long.push({latitude: latitude, longitude: longitude});
-		}
-	  },
-	  error: function(error) {
-		console.log("Cannot get info from Parse");
-	  }
-	});	
-	
-	return lat_long;
+	if (getCookie('username')!=null) {
+		query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").find({
+		  success: function(results) {
+			for (var i = 0; i < results.length; i++)
+			{
+				var latitude = results[i].attributes.Location._latitude;
+				var longitude = results[i].attributes.Location._longitude;
+				lat_long.push({'latitude': latitude, 'longitude': longitude});
+				if(i==results.length-1){
+					drawRoute(lat_long);
+					console.log(lat_long);
+				}
+			}
+		  },
+		  error: function(error) {
+			console.log("Cannot get info from Parse");
+		  }
+		});	
+	}
 }
 
 function calculateDist(minTime, maxTime)
