@@ -129,8 +129,6 @@ function addDog(lat, lng) {
   setCookie("initialized", 'true');
 }
 
-
-
 setInterval(trackLocation, 3000); //regularly update the position of the dog on the map
 
 /*
@@ -279,6 +277,7 @@ function getUserLocation() {
       owner_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       map.setCenter(owner_location);
       owner_marker.setPosition(owner_location);
+      line.setPath([owner_location, static_dog]);
       var r = parseFloat(getCookie("personal_radius"));
       r = r/3.28084;
       owner_circle.set('radius', r);
