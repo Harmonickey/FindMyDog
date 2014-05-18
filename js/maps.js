@@ -240,11 +240,11 @@ function pullDogLocation() {
 
   if (result!='null' && result!=null) {
     if(result['Password']==password) {
-      if(result['dogLat']!=null && convertBoolean(getCookie("dog_added"))!=true) {
+      if(result['dogLat']!=null && result['dogLat']!='null' && convertBoolean(getCookie("dog_added"))!=true) {
         console.log("Add dog");
         addDog(result['dogLat'], result['dogLng']);
       }
-      if(result['dogLat']!=null) {
+      if(result['dogLat']!=null && result['dogLat']!='null') {
         console.log("Update dog");
         var long1 = result['dogLng'];
         var lat1 = result['dogLat'];
