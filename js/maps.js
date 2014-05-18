@@ -2,6 +2,7 @@ var map; //will be used for map on page
 
 var initialized = convertBoolean(getCookie("initialized"));
 var turned_on = convertBoolean(getCookie("turned_on"));
+setCookie("dog_added", 'false');
 var username;
 var password;
 
