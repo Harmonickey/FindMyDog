@@ -241,15 +241,20 @@ function pullDogLocation() {
   if (result!='null' && result!=null) {
     if(result['Password']==password) {
       if(result['dogLat']!=null && convertBoolean(getCookie("dog_added"))!=true) {
+        console.log("Add dog");
         addDog(result['dogLat'], result['dogLng']);
       }
       if(result['dogLat']!=null) {
+        console.log("Update dog");
         var long1 = result['dogLng'];
         var lat1 = result['dogLat'];
         static_dog = new google.maps.LatLng(lat1, long1);
         if (result['Threshold']!=threshold) {
           initialize(username, password);
         }
+      }
+      else {
+        console.log("No dog");
       }
     }
   }
