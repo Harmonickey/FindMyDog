@@ -1,0 +1,97 @@
+body {
+  padding-top: 50px;
+}
+
+#stats {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.stats {
+  /*margin-bottom: 10px;*/
+  text-align: center;
+}
+.stats h4 {
+  margin-bottom: 0;
+  font-size: 1.3em;
+}
+.quick-stat {
+  margin-bottom: 20px;
+}
+
+.stat-circle {
+	display: inline-block;
+	border-radius: 50%;
+	background-color: black;
+	height: 200px;
+	width: 200px;
+}
+
+.circle-text {
+	line-height: 200px;
+	margin-top: 0px
+}
+
+@media (max-width: 768px) {
+	.stat-circle {
+		height: 145px;
+		width: 145px;
+	}
+
+	.circle-text {
+		line-height: 145px;
+	}
+}
+
+.blue {
+	background-color: #3E8AE8;
+}
+
+.cyan {
+	background-color: #51F1FF;
+}
+
+.teal {
+	background-color: #3EE8A1;
+}
+
+.green {
+	background-color: #3FFF4D;
+}
+
+.page-header {
+	margin-left: 28px;
+}
+
+.map {
+	height: 400px;
+	background-color: gray;
+}
+
+.nav-pills {
+	display: block;
+	text-align: center;
+}
+
+.selector {
+	text-align: center;
+}
+
+.selector ul {
+	display: inline-table;
+}
+
+.selector ul li {
+	display: inline;
+}
+
+.nav-pills > li > a:hover,
+.nav-pills > li > a:focus {
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.nav-pills > li.disabled > a:hover,
+.nav-pills > li.disabled > a:focus {
+  cursor: default;
+}
