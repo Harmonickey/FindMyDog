@@ -427,6 +427,19 @@ function updateBaseLocation()
 function updatePhoneNumber()
 {
 	var phoneNumber = $("#new_phonenumber").val();
+	
+	//use Twilio verification here...
+	//send request with phoneNumber
+	Parse.Cloud.run('verifyPhoneNumber', {phoneNumber: phoneNumber}, {
+	  success: function(result) {;
+		  if (result.validationCode)
+		  {
+			  $("#validation_number").html(result.validationCode);
+			  showModal("#validation");
+		  }
+	  }
+	});
+	
 	var username = getCookie("username");
 	
 	if (!isPhoneNumber(phoneNumber))
