@@ -1,6 +1,6 @@
 var map; //will be used for map on page
 
-var initialized = convertBoolean(getCookie("turned_on"));
+var initialized = convertBoolean(getCookie("initialized"));
 var turned_on = convertBoolean(getCookie("turned_on"));
 var username;
 var password;
@@ -126,27 +126,10 @@ function addDog(lat, lng) {
   });
   //put the line on the map
   line.setMap(map);
-  setCookie("initialized", 'true');
+  setCookie("dog_added", 'true');
 }
 
 setInterval(trackLocation, 3000); //regularly update the position of the dog on the map
-
-/*
-#### Code for simulated dog, so position moves during test ####
-*/
-//setInterval(alterLocation, 2000); //regularly change the location of the simulated dog
-function alterLocation() {
-  var num = Math.round(Math.random()); //randomly choose 0 or 1
-  switch(num) {
-    case 0:
-      pet_lat+= .000012; //change the latitude
-      break;
-    case 1:
-      pet_long+= .00005;
-      break;
-  }
-  static_dog = new google.maps.LatLng(pet_lat, pet_long); //update the dog's position
-}
 
 function trackLocation() {
   if(convertBoolean(getCookie("initialized"))) {
@@ -257,11 +240,16 @@ function pullDogLocation() {
 
   if (result!='null' && result!=null) {
     if(result['Password']==password) {
-      var long1 = result['dogLng'];
-      var lat1 = result['dogLat'];
-      static_dog = new google.maps.LatLng(lat1, long1);
-      if (result['Threshold']!=threshold) {
-        initialize(username, password);
+      if(result['dogLat']!=null && convertBoolean(getCookie("dog_added"))!=true) {
+        addDog(result['dogLat'], result['dogLng']);
+      }
+      if(result['dogLat']!=null) {
+        var long1 = result['dogLng'];
+        var lat1 = result['dogLat'];
+        static_dog = new google.maps.LatLng(lat1, long1);
+        if (result['Threshold']!=threshold) {
+          initialize(username, password);
+        }
       }
     }
   }
