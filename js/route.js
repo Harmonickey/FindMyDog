@@ -21,12 +21,11 @@ function createActivityMap() {
 	millTime1 = millTime2 - (10*24*3600*1000);
 	console.log(millTime1);
 
-	var result = getReportInfo(millTime1, millTime2);
-	console.log(result);
+	getReportInfo(millTime1, millTime2);
+	return;
+}
 
-	var result = [{'latitude': 49.47805, 'longitude': -123.84716}, {'latitude': 49.47805, 'longitude': -123.84800}, 
-	{'latitude': 49.47850, 'longitude': -123.84800}, {'latitude': 49.47900, 'longitude': -123.84850}];
-
+function drawRoute(result) {
 	for(var i=1; i<result.length; i++) {
 		var point1 = new google.maps.LatLng(result[i-1]['latitude'], result[i-1]['longitude']);
 		var point2 = new google.maps.LatLng(result[i]['latitude'], result[i]['longitude']);
@@ -58,7 +57,6 @@ function createActivityMap() {
 			});
 		}
 	}
-	return;
 }
 
 google.maps.event.addDomListener(window, 'load', createActivityMap);

@@ -14,7 +14,6 @@
     <link rel="stylesheet" type="text/css" href="css/iphone-style-checkbox.css">
 
     <script type="text/javascript" src='https://cdn.firebase.com/js/client/1.0.11/firebase.js'></script>
-    <script type="text/javascript" src="js/parse-1.2.18.min.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/iphone-style-checkbox.js"></script>
@@ -26,7 +25,7 @@
   <body onload="loadUser()">
     <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Find My Dog</a>
+        <span class="navbar-brand2" style="text-decoration: none">Find My Dog</span>
         <div class="pull-right">
           <ul class="nav navbar-nav">
             <li class="pull-left on-off" onclick="toggleON_OFF()"><input type="checkbox" id="on-off"/></li>
@@ -117,10 +116,10 @@
             <input type="password" id="reg_password"/>
             <p>Phone Number</p>
             <input type="text" id="reg_phone"/>
-            <p>Radius</p>
-            <input type="text" id="reg_radius"/>
-            <p>Base Location</p>
-            <input type="text" id="reg_baseLocation"/>
+            <p>Radius (feet)</p>
+            <input type="text" id="reg_radius" placeholder="i.e. 100"/>
+            <p>Dog's Home Address</p>
+            <input type="text" id="reg_baseLocation" placeholder="i.e. 123 Random St, Anytown, ST 012345"/>
           </div>
           <div class="modal-body">
           	<label id="register_error" style="display: none;"></label>
@@ -140,7 +139,7 @@
             <h4 class="modal-title">Change Radius</h4>
           </div>
           <div class="modal-body">
-            <p>Radius</p>
+            <p>Radius (feet)</p>
             <input type="text" id="new_radius" />
           </div>
           <div class="modal-body">
@@ -185,7 +184,7 @@
             <h4 class="modal-title" id="FollowDevice">Follow My Device</h4>
           </div>
           <div class="modal-body">
-            <p>Personal Radius</p>
+            <p>Personal Radius (feet)</p>
             <input type="text" id="new_person_radius" />
           </div>
           <div class="modal-body">

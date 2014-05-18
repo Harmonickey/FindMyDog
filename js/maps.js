@@ -1,7 +1,8 @@
 var map; //will be used for map on page
 
-var initialized = convertBoolean(getCookie("turned_on"));
+var initialized = convertBoolean(getCookie("initialized"));
 var turned_on = convertBoolean(getCookie("turned_on"));
+setCookie("dog_added", 'false');
 var username;
 var password;
 
@@ -126,29 +127,10 @@ function addDog(lat, lng) {
   });
   //put the line on the map
   line.setMap(map);
-  setCookie("initialized", 'true');
+  setCookie("dog_added", 'true');
 }
-
-
 
 setInterval(trackLocation, 3000); //regularly update the position of the dog on the map
-
-/*
-#### Code for simulated dog, so position moves during test ####
-*/
-//setInterval(alterLocation, 2000); //regularly change the location of the simulated dog
-function alterLocation() {
-  var num = Math.round(Math.random()); //randomly choose 0 or 1
-  switch(num) {
-    case 0:
-      pet_lat+= .000012; //change the latitude
-      break;
-    case 1:
-      pet_long+= .00005;
-      break;
-  }
-  static_dog = new google.maps.LatLng(pet_lat, pet_long); //update the dog's position
-}
 
 function trackLocation() {
   if(convertBoolean(getCookie("initialized"))) {
@@ -232,12 +214,12 @@ function toggleON_OFF() {
 //send alert to user
 function sendAlert() {
   if(convertBoolean(getCookie("turned_on"))) {
-    //alert("Dog is running away!");
+    alert("Dog is running away!");
     
-	Parse.Cloud.run('sendText', {phoneNumber: getCookie("phoneNumber")}, {
-	  success: function(result) { },
-	  error: function(error) { }
-	});
+	  Parse.Cloud.run('sendText', {phoneNumber: getCookie("phoneNumber")}, {
+	    success: function(result) { },
+	    error: function(error) { }
+ 	  });
   }
 }
 
@@ -259,14 +241,21 @@ function pullDogLocation() {
 
   if (result!='null' && result!=null) {
     if(result['Password']==password) {
-      var long1 = result['dogLng'];
-      var lat1 = result['dogLat'];
-      static_dog = new google.maps.LatLng(lat1, long1);
-      //console.log(lat1);
-      //console.log(long1);
-	  storeDogLocation(lat1, long1);
-      if (result['Threshold']!=threshold) {
-        initialize(username, password);
+      if(result['dogLat']!=null && result['dogLat']!='null' && convertBoolean(getCookie("dog_added"))!=true) {
+        console.log("Add dog");
+        addDog(result['dogLat'], result['dogLng']);
+      }
+      if(result['dogLat']!=null && result['dogLat']!='null') {
+        console.log("Update dog");
+        var long1 = result['dogLng'];
+        var lat1 = result['dogLat'];
+        static_dog = new google.maps.LatLng(lat1, long1);
+        if (result['Threshold']!=threshold) {
+          initialize(username, password);
+        }
+      }
+      else {
+        console.log("No dog");
       }
     }
   }
@@ -282,49 +271,13 @@ function getUserLocation() {
       owner_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       map.setCenter(owner_location);
       owner_marker.setPosition(owner_location);
+      line.setPath([owner_location, static_dog]);
       var r = parseFloat(getCookie("personal_radius"));
       r = r/3.28084;
       owner_circle.set('radius', r);
       owner_circle.bindTo('center', owner_marker, 'position');
     });
   }
-}
-
-function storeDogLocation(lat, long)
-{
-	var t = new Date();
-	var time = t.getTime();
-	
-	var DogLocation = Parse.Object.extend("Dog_Location");
-	var dogLocation = new DogLocation();
-	var location = new Parse.GeoPoint(lat, long);
-	dogLocation.save({
-		Username: getCookie("username"),
-		Location: location,
-		Time: time
-	}, {
-	success: function(dogLocation) {
-	    //success
-	},
-	error: function(dogLocation, error) {
-	  	console.log("Parse failed with " + error);
-	}
-	});
-	
-	checkIfSunday(time);
-}
-
-function checkIfSunday(time)
-{
-	var date = new Date(time);
-	
-	if (date.getDay() == 0)
-	{
-		//means we're now at Sunday so delete everything from two weeks ago.
-		var twoWeeksAgo = time - (14*24*60*60*1000);
-		
-		deleteLocations(twoWeeksAgo);
-	}
 }
 
 function FollowDevice() {
@@ -355,74 +308,6 @@ function UnfollowDevice() {
   owner_marker.setVisible(false);
   owner_circle.setVisible(false);
 }
-
-function getRecordIds(time)
-{
-	var query = new Parse.Query("Dog_Location");
-	var ids = new Array();
-	query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", time).find({
-	  success: function(results) {
-		for (var i = 0; i < results.length; i++)
-		{
-			ids.push(results[i].id);	
-		}
-	  },
-	  error: function(error) {
-		console.log("Cannot get info from Parse");
-	  }
-	});	
-	
-	return ids;
-}
-
-function deleteLocations(fromTime)
-{
-	var objectIds = getRecordIds(fromTime);
-	
-	/*
-	curl -X POST \
-	  -H "X-Parse-Application-Id: H4zb5P2LW0xRtP21SlKaWBFCuR2Cvwkd73OLlIyn" \
-	  -H "X-Parse-Master-Key: XFvgotn8KdcFeNfB19JAU7uPDxBWsHsXrx9gOpbC" \
-	  -H "Content-Type: application/json" \
-	  -d '{"plan":"paid"}' \
-	  https://api.parse.com/1/jobs/userMigration
-	*/
-	
-	Parse.Cloud.run('removeTwoWeeksAgo', {objectIds: objectIds}, {
-	  success: function(result) { },
-	  error: function(error) { }
-	});
-	
-	/*
-	for (var i = 0; i < objectIds.length; i++)
-	{
-		var DogLocation = Parse.Object.extend("Dog_Location");
-		var query = new Parse.Query(DogLocation);
-		var doglocationobj;
-		query.get(objectIds[i], {
-		  success: function(object) {
-			doglocationobj = object;
-		  },
-		  error: function(object, error) {
-			// The object was not retrieved successfully.
-			// error is a Parse.Error with an error code and description.
-		  }
-		});	
-		doglocationobj.destroy({
-		  success: function(myObject) {
-			// The object was deleted from the Parse Cloud.
-		  },
-		  error: function(myObject, error) {
-			// The delete failed.
-			// error is a Parse.Error with an error code and description.
-		  }
-		});
-		
-		doglocationobj.save();
-	}
-	*/
-}
-
 
 
 
