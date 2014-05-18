@@ -8,6 +8,7 @@ $(function () {
 	    // Animation complete.
 	  });
 	});
+	
 	//console.log("on? " + getCookie("turned_on"));
     if (convertBoolean(getCookie("turned_on"))) {
 	    $('#on-off').prop("checked", true);
@@ -19,6 +20,7 @@ $(function () {
 	}
 
 	$('.on-off :checkbox').iphoneStyle();
+	Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
 	
 	//if there is a username and password, then there must be a phonenumber, radius, and baselocation
 	var username = getCookie("username");
