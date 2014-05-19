@@ -59,7 +59,7 @@ function setCookie(cname,cvalue,exdays)
 	var d = new Date();
 	d.setTime(d.getTime()+(exdays*24*60*60*1000));
 	var expires = "expires="+d.toGMTString();
-	document.cookie = cname + "=" + cvalue + "; " + expires;
+	document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
 }
 
 function changeStatus(status)
@@ -465,43 +465,3 @@ function isPhoneNumber(number)
 	return (number.match(/^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/) !== null);	
 }
 
-function getReportInfo(minTime, maxTime)
-{
-	//Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
-	var query = new Parse.Query("Dog_Location");
-	var lat_long = new Array();
-	if (getCookie('username')!=null) {
-		query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").find({
-		  success: function(results) {
-			for (var i = 0; i < results.length; i++)
-			{
-				var latitude = results[i].attributes.Location._latitude;
-				var longitude = results[i].attributes.Location._longitude;
-				lat_long.push({'latitude': latitude, 'longitude': longitude});
-				if(i==results.length-1){
-					drawRoute(lat_long);
-					console.log(lat_long);
-				}
-			}
-		  },
-		  error: function(error) {
-			console.log("Cannot get info from Parse");
-		  }
-		});	
-	}
-}
-
-function calculateDist(minTime, maxTime)
-{
-	var dist = 0;
-	var lat_long = getReportInfo(minTime, maxTime);
-	
-	for (var i = 1; i < lat_long.length; i++)
-	{
-		var lat = parseInt(lat_long[i - 1]['latitude']) - parseInt(lat_long[i]['latitude']);
-		var lng = parseInt(lat_long[i - 1]['longitude']) - parseInt(lat_long[i]['longitude']);
-		var d = lat * lat + lng * lng;
-		dist = dist + Math.sqrt(d);
-	}
-	return dist;
-}
