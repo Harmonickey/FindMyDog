@@ -80,6 +80,9 @@ function changeStatus(status)
 		setCookie("baseLocation", "", 0);
 		setCookie("baseLat", "", 0);
 		setCookie("baseLong", "", 0);
+		setCookie("alerted", "", 0);
+		setCookie("initialized", "", 0);
+		setCookie("turned_on", "", 0);
 	}
 }
 
