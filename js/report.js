@@ -80,7 +80,14 @@ function getReportInfo(minTime, maxTime)
 				var dest = new google.maps.LatLng(lat_long[i + 1].latitude, lat_long[i + 1].longitude);
 				totalDistance += getDistance(src, dest);
 			}
-			$("#distance").html(totalDistance / 5280));
+			
+			var miles = (totalDistacne / 5280).toFixed(2);
+			
+			$("#distance").html(miles);
+			
+			var milesperhour = (miles / 24).toFixed(2);
+			
+			$("#speed").html(milesperhour);
 		  },
 		  error: function(error) {
 			console.log("Cannot get info from Parse");
