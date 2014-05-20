@@ -138,7 +138,6 @@ function drawRoute(result) {
 				icon: 'images/letter_e.png',
 				animation: google.maps.Animation.DROP
 			});
-			map.setCenter(point1);
 		}
 		if(i==result.length-1) {
 			var end = new google.maps.Marker({
@@ -148,6 +147,7 @@ function drawRoute(result) {
 				icon: 'images/letter_s.png',
 				animation: google.maps.Animation.DROP
 			});
+			map.setCenter(point2);
 		}
 	}
 }
