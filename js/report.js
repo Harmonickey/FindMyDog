@@ -17,6 +17,7 @@ function getTodayReport()
 	
 	var yymmdd = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
 	
+	//display as today
 	$("#title").html("Report: " + (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear());
 	
 	//get midnight of last night
@@ -26,9 +27,6 @@ function getTodayReport()
 	//get midnight of tonight
 	normalizedToday.setDate(normalizedToday.getDate() + 1);
 	var max = normalizedToday.getTime();
-	
-	console.log(min);
-	console.log(max);
 	
 	getReportInfo(min, max);
 }
@@ -47,10 +45,8 @@ function getYesterdayReport()
 	normalizedToday.setDate(normalizedToday.getDate() - 1);
 	var min = normalizedToday.getTime();
 	
-	$("#title").html("Report: " + (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear());
-	
-	console.log(min);
-	console.log(max);
+	//display as normalized yesterday
+	$("#title").html("Report: " + (normalizedToday.getMonth() + 1) + "/" + normalizedToday.getDate() + "/" + normalizedToday.getFullYear());
 	
 	getReportInfo(min, max);
 }
