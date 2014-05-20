@@ -28,8 +28,8 @@ function getReportInfo(minTime, maxTime)
 {
 	var query = new Parse.Query("Dog_Location");
 	var lat_long = new Array();
-	//if (getCookie('username')!=null) {
-		query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").find({
+	if (getCookie('username')!=null) {
+		query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").limit(1000).find({
 		  success: function(results) {
 			for (var i = 0; i < results.length; i++)
 			{
@@ -46,7 +46,7 @@ function getReportInfo(minTime, maxTime)
 			console.log("Cannot get info from Parse");
 		  }
 		});	
-	//}
+	}
 }
 
 function calculateDist(minTime, maxTime)
