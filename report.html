@@ -42,9 +42,10 @@
 		<div class="container-fluid" id="stats">
       <div class="row">
         <div class="col-sm-9 col-sm-offset-1 col-md-10 col-md-offset-1 main">
-          <h1 class="page-header">Report</h1>
-
-          <div class="row stats" style="text-align: center;">
+          <h1 id="title" style="width: 300px; float: left;"></h1>
+		  <h3 style="width: 250px; float: left; margin-left: 30px; line-height: 45px; text-align: right;"> Time Span: </h3>
+		  
+          <div class="row stats" style="clear: both;">
             <div class="col-xs-6 col-sm-7 quick-stat">
             	<div class="stat-circle blue">
             		<h2 class="circle-text" id="distance"> </h2>
@@ -64,6 +65,7 @@
       </div>
       <div class="row">
       	<div class="col-sm-9 col-sm-offset-1 col-md-10 col-md-offset-1 main">
+			<h4> Route Taken </h4>
       		<div id="activity-map">
       		</div>
       	</div>
@@ -72,7 +74,7 @@
       	<div class="selector">
 	        <ul class="nav nav-pills">
 			    	<li class="disabled"><a>Today</a></li> <!-- href removed just for now -->
-			    	<li><a href="#">Yesterday</a></li>
+			    	<li><a onclick="getYesterdayReport()" >Yesterday</a></li>
 			    	<li><a href="#">Choose Date</a></li>
 			    </ul>
 			  </div>

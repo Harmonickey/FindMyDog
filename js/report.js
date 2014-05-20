@@ -8,39 +8,45 @@ $(function () {
 	
 	Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
 	
-	var today = getTodayMinMax();
-	reportDistance(today.min, today.max);
-	reportSpeed(today.min, today.max);
-	
+	getTodayReport();
 });
 
-function reportDistance(min, max)
+function getTodayReport()
 {
-	getReportInfo(min, max);
-}
-
-function reportSpeed(min, max)
-{
-	$("#speed").html(speed);
-}
-
-function getTodayMinMax()
-{
-	var today = {min: 0, max: 0};
-
 	var date = new Date();
 	
 	var yymmdd = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
 	
+	$("#title").html("Report: " + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
+	
 	//get midnight of last night
 	var normalizedToday = new Date(yymmdd);
-	today.min = normalizedToday.getTime();
+	var min = normalizedToday.getTime();
 	
 	//get midnight of tonight
 	normalizedToday.setDate(normalizedToday.getDate() + 1);
-	today.max = normalizedToday.getTime();
+	var max = normalizedToday.getTime();
 	
-	return today;
+	getReportInfo(min, max);
+}
+
+function getYesterdayReport()
+{
+	var date = new Date();
+	
+	var yymmdd = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+	
+	$("#title").html("Report: " + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
+	
+	//get midnight of last night
+	var normalizedToday = new Date(yymmdd);
+	var max = normalizedToday.getTime();
+	
+	//get midnight of tonight
+	normalizedToday.setDate(normalizedToday.getDate() - 1);
+	var min = normalizedToday.getTime();
+	
+	getReportInfo(min, max);
 }
 
 function getCookie(cname)
