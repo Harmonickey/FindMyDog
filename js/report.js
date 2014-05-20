@@ -81,7 +81,7 @@ function getReportInfo(minTime, maxTime)
 				totalDistance += getDistance(src, dest);
 			}
 			
-			$("#distance").html(totalDistance);
+			$("#distance").html(parseInt(totalDistance / 5280, 10));
 		  },
 		  error: function(error) {
 			console.log("Cannot get info from Parse");
