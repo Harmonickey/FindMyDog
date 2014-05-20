@@ -23,7 +23,6 @@ function initializeTracker(user, pass) {
   		lng = position.coords.longitude;
   		var pos = new google.maps.LatLng(lat, lng);
   		updateFirebaseLocation(lat, lng);
-  		storeDogLocation(lat, lng)
   		//options for the displayed map
 		var mapOptions = {
 			zoom: 20,
@@ -81,7 +80,8 @@ function trackLocation() {
 		navigator.geolocation.getCurrentPosition(function(position) {
 			var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
   			updateFirebaseLocation(position.coords.latitude, position.coords.longitude);
-			dog_marker.setPosition(pos);	
+			dog_marker.setPosition(pos);
+			storeDogLocation(positions.coords.latitude, positions.coords.longitude);	
 			map.setCenter(pos);
 			if (positions.length < max) {
 				positions.unshift(pos);
@@ -179,7 +179,7 @@ function getRecordIds(time)
 {
 	var query = new Parse.Query("Dog_Location");
 	var ids = new Array();
-	query.select("Location").equalTo("Username", 'dcs592').lessThanOrEqualTo("Time", time).find({
+	query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", time).find({
 	  success: function(results) {
 		for (var i = 0; i < results.length; i++)
 		{

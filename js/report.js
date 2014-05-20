@@ -43,11 +43,24 @@ function getTodayMinMax()
 	return today;
 }
 
+function getCookie(cname)
+{
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0; i<ca.length; i++) 
+	{
+		var c = ca[i].trim();
+		if (c.indexOf(name) == 0) 
+			return c.substring(name.length,c.length);
+	}
+	return null;
+}
+
 function getReportInfo(minTime, maxTime)
 {
 	var query = new Parse.Query("Dog_Location");
-	//if (getCookie('username')!=null) {
-		query.select("Location").equalTo("Username", 'dcs592').lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").find({
+	if (getCookie('username')!=null) {
+		query.select("Location").equalTo("Username", getCookie('username')).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").find({
 		  success: function(results) {
 			var lat_long = new Array();
 			for (var i = 0; i < results.length; i++)
@@ -74,7 +87,7 @@ function getReportInfo(minTime, maxTime)
 			console.log("Cannot get info from Parse");
 		  }
 		});	
-	//}	
+	}	
 }
 
 function getDistance(loc, pos) {
@@ -121,8 +134,8 @@ function drawRoute(result) {
 			var start = new google.maps.Marker({
 				position: point1,
 				map: map,
-				title: "Starting Location",
-				icon: 'images/letter_s.png',
+				title: "Ending Location",
+				icon: 'images/letter_e.png',
 				animation: google.maps.Animation.DROP
 			});
 			map.setCenter(point1);
@@ -132,7 +145,7 @@ function drawRoute(result) {
 				position: point2,
 				map: map,
 				title: "Starting Location",
-				icon: 'images/letter_e.png',
+				icon: 'images/letter_s.png',
 				animation: google.maps.Animation.DROP
 			});
 		}

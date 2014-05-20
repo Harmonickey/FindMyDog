@@ -43,7 +43,7 @@
       <div class="container-fluid">
         <div class="row" id="settings-toggle">
           <!-- figure out this alignment -->
-          <p class="text-center"> <i class="fa fa-bars pull-left"> </i> Settings </p>
+          <p class="text-center"> <i class="fa fa-bars pull-left"> </i> Settings <i class="fa fa-bars pull-right"> </i> </p>
         </div>
         <div class="row text-center" id="settings-hide">
           <button type="button" class="btn btn-default" data-toggle="modal" data-target="#baseLocationModal"> Change Dog's Address </button>
@@ -55,7 +55,8 @@
           <button type="button" class="btn btn-default" id="followDeviceBtn" data-toggle="modal" data-target="#followDeviceModal"> Follow My Device Mode </button>
           <button type="button" class="btn btn-default" id="unfollowDeviceBtn" data-toggle="modal" style="display: none" onclick="UnfollowDevice()"> Stop Following My Device </button>
           <br/>
-          <button type="button" class="btn btn-default" id="loginout" onclick="checkLogInOrOut()"> Logout </button>
+          <button type="button" class="btn btn-default" id="logout"> Stop Following My Device </button>
+          <br/>         
         </div>
     </nav>
     <div class="modal fade" id="baseLocationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

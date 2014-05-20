@@ -51,6 +51,7 @@ p {
 
 #settings-toggle {
 	margin-left: 2%;
+	margin-right: 2%;
 	margin-top: 5px;
 }
 
@@ -58,9 +59,20 @@ p {
 	margin-top: 12px;
 }
 
+@media  (max-width: 768px) {
+	.on-off {
+		margin-top: 5px;
+		margin-right: 5px;
+	}	
+}
+
 #validation_number {
 	color: red;
 	font-size: 24px;
 	font-weight: bold;
 	text-align: center;
+}
+
+.fa.pull-right {
+	color: #222;
 }
