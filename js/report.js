@@ -31,15 +31,14 @@ function getReportInfo(minTime, maxTime)
 	if (getCookie('username')!=null) {
 		query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).ascending("Time").limit(1000).find({
 		  success: function(results) {
+		  	console.log(results);
 			for (var i = 0; i < results.length; i++) {
-				for (var j = 0; j < results[i].length; j++) {
-					var latitude = results[i][j].attributes.Location._latitude;
-					var longitude = results[i][j].attributes.Location._longitude;
-					lat_long.push({'latitude': latitude, 'longitude': longitude});
-					if(i==results.length-1){
-						drawRoute(lat_long);
-						console.log(lat_long);
-					}
+				var latitude = results[i].attributes.Location._latitude;
+				var longitude = results[i].attributes.Location._longitude;
+				lat_long.push({'latitude': latitude, 'longitude': longitude});
+				if(i==results.length-1){
+					drawRoute(lat_long);
+					console.log(lat_long);
 				}
 			}
 		  },
