@@ -95,3 +95,7 @@ body {
 .nav-pills > li.disabled > a:focus {
   cursor: default;
 }
+
+.row {
+	margin: 0px;
+}
