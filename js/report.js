@@ -27,6 +27,9 @@ function getTodayReport()
 	normalizedToday.setDate(normalizedToday.getDate() + 1);
 	var max = normalizedToday.getTime();
 	
+	console.log(min);
+	console.log(max);
+	
 	getReportInfo(min, max);
 }
 
@@ -45,6 +48,9 @@ function getYesterdayReport()
 	var min = normalizedToday.getTime();
 	
 	$("#title").html("Report: " + (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear());
+	
+	console.log(min);
+	console.log(max);
 	
 	getReportInfo(min, max);
 }
@@ -76,7 +82,6 @@ function getReportInfo(minTime, maxTime)
 				lat_long.push({'latitude': latitude, 'longitude': longitude});
 				if(i==results.length-1){
 					drawRoute(lat_long);
-					console.log(lat_long);
 				}
 			}
 			var totalDistance = 0;
@@ -120,11 +125,8 @@ function createActivityMap() {
 	//var result = getReportInfo("1:00", "24:00");
 
 	var date = new Date();
-	console.log(date);
 	var millTime2 = date.getTime();
-	console.log(millTime2);
 	millTime1 = millTime2 - (10*24*3600*1000);
-	console.log(millTime1);
 
 	getReportInfo(millTime1, millTime2);
 	return;
