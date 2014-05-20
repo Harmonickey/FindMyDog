@@ -29,7 +29,7 @@ function getReportInfo(minTime, maxTime)
 	var query = new Parse.Query("Dog_Location");
 	var lat_long = new Array();
 	if (getCookie('username')!=null) {
-		query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").limit(1000).find({
+		query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).ascending("Time").find({
 		  success: function(results) {
 			for (var i = 0; i < results.length; i++)
 			{
@@ -102,8 +102,8 @@ function drawRoute(result) {
 			var start = new google.maps.Marker({
 				position: point1,
 				map: map,
-				title: "Starting Location",
-				icon: 'images/letter_s.png',
+				title: "Ending Location",
+				icon: 'images/letter_e.png',
 				animation: google.maps.Animation.DROP
 			});
 			map.setCenter(point1);
@@ -113,7 +113,7 @@ function drawRoute(result) {
 				position: point2,
 				map: map,
 				title: "Starting Location",
-				icon: 'images/letter_e.png',
+				icon: 'images/letter_s.png',
 				animation: google.maps.Animation.DROP
 			});
 		}
