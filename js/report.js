@@ -80,7 +80,8 @@ function getReportInfo(minTime, maxTime)
 				var dest = new google.maps.LatLng(lat_long[i + 1].latitude, lat_long[i + 1].longitude);
 				totalDistance += getDistance(src, dest);
 			}
-			
+			console.log("Distance " + totalDistance);
+			console.log("Distance " + (totalDistance / 5280));
 			$("#distance").html(parseInt(totalDistance / 5280, 10));
 		  },
 		  error: function(error) {
