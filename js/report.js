@@ -8,15 +8,48 @@ $(function () {
 	
 	Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
 	
+	var today = getTodayMinMax();
+	reportDistance(today.min, today.max);
+	reportSpeed(today.min, today.max);
+	
 });
+
+function reportDistance(min, max)
+{
+	getReportInfo(min, max);
+}
+
+function reportSpeed(min, max)
+{
+	$("#speed").html(speed);
+}
+
+function getTodayMinMax()
+{
+	var today = {min: 0, max: 0};
+
+	var date = new Date();
+	
+	var yymmdd = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+	
+	//get midnight of last night
+	var normalizedToday = new Date(yymmdd);
+	today.min = normalizedToday.getTime();
+	
+	//get midnight of tonight
+	normalizedToday.setDate(normalizedToday.getDate() + 1);
+	today.max = normalizedToday.getTime();
+	
+	return today;
+}
 
 function getReportInfo(minTime, maxTime)
 {
 	var query = new Parse.Query("Dog_Location");
-	var lat_long = new Array();
-	if (getCookie('username')!=null) {
-		query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").find({
+	//if (getCookie('username')!=null) {
+		query.select("Location").equalTo("Username", 'dcs592').lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").find({
 		  success: function(results) {
+			var lat_long = new Array();
 			for (var i = 0; i < results.length; i++)
 			{
 				var latitude = results[i].attributes.Location._latitude;
@@ -27,27 +60,27 @@ function getReportInfo(minTime, maxTime)
 					console.log(lat_long);
 				}
 			}
+			var totalDistance = 0;
+			for (var i = 0; i < lat_long.length - 1; i++)
+			{
+				var src = new google.maps.LatLng(lat_long[i].latitude, lat_long[i].longitude);
+				var dest = new google.maps.LatLng(lat_long[i + 1].latitude, lat_long[i + 1].longitude);
+				totalDistance += getDistance(src, dest);
+			}
+			
+			$("#distance").html(totalDistance);
 		  },
 		  error: function(error) {
 			console.log("Cannot get info from Parse");
 		  }
 		});	
-	}
+	//}	
 }
 
-function calculateDist(minTime, maxTime)
-{
-	var dist = 0;
-	var lat_long = getReportInfo(minTime, maxTime);
-	
-	for (var i = 1; i < lat_long.length; i++)
-	{
-		var lat = parseInt(lat_long[i - 1]['latitude']) - parseInt(lat_long[i]['latitude']);
-		var lng = parseInt(lat_long[i - 1]['longitude']) - parseInt(lat_long[i]['longitude']);
-		var d = lat * lat + lng * lng;
-		dist = dist + Math.sqrt(d);
-	}
-	return dist;
+function getDistance(loc, pos) {
+  //calculate distance in meters
+  var d = google.maps.geometry.spherical.computeDistanceBetween(loc, pos);
+  return 3.28084*d; //convert to feet
 }
 
 function createActivityMap() {
