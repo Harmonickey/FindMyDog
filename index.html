@@ -38,11 +38,10 @@
     <div id="map-canvas"></div>
 
 
-    <!-- add in jQuery Animate and modal stuffs -->
     <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse" role="navigation">
       <div class="container-fluid">
         <div class="row" id="settings-toggle">
-          <!-- figure out this alignment -->
+          <!-- figure out this up/down spacing -->
           <p class="text-center"> <i class="fa fa-bars pull-left"> </i> Settings <i class="fa fa-bars pull-right"> </i> </p>
         </div>
         <div class="row text-center" id="settings-hide">
@@ -81,26 +80,27 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
+      <div class="modal-dialog" id="login-modal">
+        <div class="modal-content" id="login-content">
+          <div class="modal-header" id="login-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Login</h4>
+            <h1 class="modal-title text-center">Find My Dog Logo</h1>
           </div>
           <div class="modal-body">
-            <p>Username</p>
-            <input type="text" id="username" autofocus/>
-            <p>Password</p>
-            <input type="password" id="password"/>
+            <input type="text" placeholder="Username" id="username" autofocus="autofocus"/>
+            <input type="password" placeholder="Password" id="password"/>
+            <!-- <label id="login_error" style="display: none;"></label> -->
+            <div id="login_error"></div>
+            <button type="button" class="btn btn-login" onclick="login()">Login</button>
+
+            <h5 class="text-center"> <a href="#"> Forgot your password? </a>
+            <br/>
+            <br/>
+            Don't have an account?<a href="#"> Sign up here. </a> </h3>
           </div>
-          <div class="modal-body">
-          	<label id="login_error" style="display: none;"></label>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onclick="login()">Login</button>
-            <button type="button" class="btn btn-primary" onclick="hideModal('#loginModal');showModal('#registerModal');">Register</button>
-          </div>
+          <!-- <div class="modal-footer">
+
+          </div> -->
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->

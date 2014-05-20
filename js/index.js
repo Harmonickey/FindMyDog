@@ -342,7 +342,7 @@ function setError(error, module)
 {
 	switch (module) {
 		case 'login':
-			$("#login_error").css('display', 'block');
+			// $("#login_error").css('display', 'block');
 			if (error == 'no_user')
 				$("#login_error").html("Username not found");
 			else if (error == 'no_pass')
