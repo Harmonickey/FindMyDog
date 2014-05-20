@@ -64,7 +64,6 @@ function setCookie(cname,cvalue,exdays)
 
 function changeStatus(status)
 {
-	
 	if (status == "Login")
 	{
 		$("#loginout").html("Logout"); //enable the button
@@ -73,13 +72,7 @@ function changeStatus(status)
 	{
 		$("#loginout").html("Login");
 		//this erases the cookies
-		setCookie("username", "", 0);
-		setCookie("password", "", 0);
-		setCookie("radius", "", 0);
-		setCookie("phoneNumber", "", 0);
-		setCookie("baseLocation", "", 0);
-		setCookie("baseLat", "", 0);
-		setCookie("baseLong", "", 0);
+		document.cookie = "";
 	}
 }
 

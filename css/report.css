@@ -63,7 +63,7 @@ body {
 	margin-left: 28px;
 }
 
-.map {
+#activity-map {
 	height: 400px;
 	background-color: gray;
 }

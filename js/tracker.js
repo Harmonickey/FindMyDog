@@ -179,7 +179,7 @@ function getRecordIds(time)
 {
 	var query = new Parse.Query("Dog_Location");
 	var ids = new Array();
-	query.select("Location").equalTo("Username", getCookie("username")).lessThanOrEqualTo("Time", time).find({
+	query.select("Location").equalTo("Username", 'dcs592').lessThanOrEqualTo("Time", time).find({
 	  success: function(results) {
 		for (var i = 0; i < results.length; i++)
 		{
