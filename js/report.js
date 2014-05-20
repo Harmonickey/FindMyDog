@@ -81,7 +81,7 @@ function getReportInfo(minTime, maxTime)
 				totalDistance += getDistance(src, dest);
 			}
 			
-			var miles = (totalDistacne / 5280).toFixed(2);
+			var miles = (totalDistance / 5280).toFixed(2);
 			
 			$("#distance").html(miles);
 			
