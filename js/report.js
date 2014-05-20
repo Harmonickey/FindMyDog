@@ -66,7 +66,7 @@ function getReportInfo(minTime, maxTime)
 {
 	var query = new Parse.Query("Dog_Location");
 	if (getCookie('username')!=null) {
-		query.select("Location").equalTo("Username", getCookie('username')).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").find({
+		query.select("Location").equalTo("Username", getCookie('username')).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").limit(1000).find({
 		  success: function(results) {
 			var lat_long = new Array();
 			for (var i = 0; i < results.length; i++)
