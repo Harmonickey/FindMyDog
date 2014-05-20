@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Find My Dog</title>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-		<link rel="stylesheet" type="text/css" href="css/report.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/report.css">
     <script type="text/javascript" src='https://cdn.firebase.com/js/client/1.0.11/firebase.js'></script>
     <script type="text/javascript" src="js/parse-1.2.18.min.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry&sensor=false"></script>
     <script type="text/javascript" src="js/report.js"></script>
   </head>
 
@@ -47,14 +47,14 @@
           <div class="row stats">
             <div class="col-xs-6 col-sm-3 quick-stat">
             	<div class="stat-circle blue">
-            		<h2 class="circle-text"> 10.3 </h2>
+            		<h2 class="circle-text" id="distance"> 10.3 </h2>
             	</div>
             	<h4>Distance</h4>
               <span class="text-muted">Miles</span>
             </div>
             <div class="col-xs-6 col-sm-3 quick-stat">
               <div class="stat-circle cyan">
-              	<h2 class="circle-text"> 14.6 </h2>
+              	<h2 class="circle-text" id="speed"> 14.6 </h2>
               </div>
               <h4>Speed</h4>
               <span class="text-muted">Miles/Hour</span>
