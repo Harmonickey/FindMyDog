@@ -125,8 +125,6 @@ function createActivityMap() {
 
 	map = new google.maps.Map(document.getElementById('activity-map'),
 		mapOptions);
-	map.disableScrollWheelZoom();
-	
 
 	//var result = getReportInfo("1:00", "24:00");
 
