@@ -115,11 +115,18 @@ function createActivityMap() {
 		center: start_marker,
 		panControl: false,
 		zoomControl: false,
-		scaleControl: false
+		scaleControl: false,
+		scrollwheel: false,
+		navigationControl: false,
+		mapTypeControl: false,
+		scaleControl: false,
+		draggable: false,
 	}
 
 	map = new google.maps.Map(document.getElementById('activity-map'),
 		mapOptions);
+	map.disableScrollWheelZoom();
+	
 
 	//var result = getReportInfo("1:00", "24:00");
 
