@@ -112,7 +112,10 @@ function getDistance(loc, pos) {
 function createActivityMap() {
 	var mapOptions = {
 		zoom: 17,
-		center: start_marker
+		center: start_marker,
+		panControl: false,
+		zoomControl: false,
+		scaleControl: false
 	}
 
 	map = new google.maps.Map(document.getElementById('activity-map'),
