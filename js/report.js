@@ -73,55 +73,63 @@ function getReportInfo(minTime, maxTime)
 			var lat_long = new Array();
 			var maxLatitude, maxLongitude = -3000;
 			var minLatitude, minLongitude = 3000;
-			for (var i = 0; i < results.length; i++)
+			if (results.length <= 1)
 			{
-				var latitude = results[i].attributes.Location._latitude;
-				var longitude = results[i].attributes.Location._longitude;
-				
-				if (latitude > maxLatitude)
-					maxLatitude = latitude;
-				if (latitude < minLatitude)
-					minLatitude = latitude;
-				if (longitude > maxLongitude)
-					maxLongitude = longitude;
-				if (longitude < minLongitude)
-					minLongitude = longitude;
+				$("#distance").html(0.0);
+				$("#speed").html(0.0);
+			}
+			else
+			{
+				for (var i = 0; i < results.length; i++)
+				{
+					var latitude = results[i].attributes.Location._latitude;
+					var longitude = results[i].attributes.Location._longitude;
 					
-				lat_long.push({'latitude': latitude, 'longitude': longitude});
-				if(i==results.length-1){
-					drawRoute(lat_long);
-					console.log(lat_long);
+					if (latitude > maxLatitude)
+						maxLatitude = latitude;
+					if (latitude < minLatitude)
+						minLatitude = latitude;
+					if (longitude > maxLongitude)
+						maxLongitude = longitude;
+					if (longitude < minLongitude)
+						minLongitude = longitude;
+						
+					lat_long.push({'latitude': latitude, 'longitude': longitude});
+					if(i==results.length-1){
+						drawRoute(lat_long);
+						console.log(lat_long);
+					}
 				}
+				var totalDistance = 0;
+				for (var i = 0; i < lat_long.length - 1; i++)
+				{
+					var a = new google.maps.LatLng(lat_long[i].latitude, lat_long[i].longitude);
+					var b = new google.maps.LatLng(lat_long[i + 1].latitude, lat_long[i + 1].longitude);
+					totalDistance += getDistance(a, b);
+				}
+				
+				var miles = (totalDistance / 5280).toFixed(2);
+				console.log(miles);
+				$("#distance").html(miles);
+				
+				var milesperhour = (miles / 24).toFixed(2);
+				console.log(milesperhour);
+				$("#speed").html(milesperhour);
+				
+				var latlng = [
+					new google.maps.LatLng(maxLatitude, maxLongitude),
+					new google.maps.LatLng(maxLatitude, minLongitude),
+					new google.maps.LatLng(minLatitude, maxLongitude),
+					new google.maps.LatLng(minLatitude, minLongitude)
+				]; 
+				var latlngbounds = new google.maps.LatLngBounds();
+				
+				for (var i = 0; i < latlng.length; i++)
+				{
+					latlngbounds.extend(latlng[i]);
+				}
+				map.fitBounds(latlngbounds);
 			}
-			var totalDistance = 0;
-			for (var i = 0; i < lat_long.length - 1; i++)
-			{
-				var a = new google.maps.LatLng(lat_long[i].latitude, lat_long[i].longitude);
-				var b = new google.maps.LatLng(lat_long[i + 1].latitude, lat_long[i + 1].longitude);
-				totalDistance += getDistance(a, b);
-			}
-			
-			var miles = (totalDistance / 5280).toFixed(2);
-			console.log(miles);
-			$("#distance").html(miles);
-			
-			var milesperhour = (miles / 24).toFixed(2);
-			console.log(milesperhour);
-			$("#speed").html(milesperhour);
-			
-			var latlng = [
-				new google.maps.LatLng(maxLatitude, maxLongitude),
-				new google.maps.LatLng(maxLatitude, minLongitude),
-				new google.maps.LatLng(minLatitude, maxLongitude),
-				new google.maps.LatLng(minLatitude, minLongitude)
-			]; 
-			var latlngbounds = new google.maps.LatLngBounds();
-			
-			for (var i = 0; i < latlng.length; i++)
-			{
-				latlngbounds.extend(latlng[i]);
-			}
-			map.fitBounds(latlngbounds);
 		  },
 		  error: function(error) {
 			console.log("Cannot get info from Parse");
