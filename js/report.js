@@ -71,10 +71,22 @@ function getReportInfo(minTime, maxTime)
 		query.select("Location").equalTo("Username", getCookie('username')).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").limit(1000).find({
 		  success: function(results) {
 			var lat_long = new Array();
+			var maxLatitide, maxLongitude = -3000;
+			var minLatitude, minLongitude = 3000;
 			for (var i = 0; i < results.length; i++)
 			{
 				var latitude = results[i].attributes.Location._latitude;
 				var longitude = results[i].attributes.Location._longitude;
+				
+				if (latitude > maxLatitude)
+					maxLatitude = latitude;
+				if (latitude < minLatitude)
+					minLatitude = latitude;
+				if (longitude > maxLongitude)
+					maxLongitude = longitude;
+				if (longitude < minLongitude)
+					minLongitude = longitude;
+					
 				lat_long.push({'latitude': latitude, 'longitude': longitude});
 				if(i==results.length-1){
 					drawRoute(lat_long);
@@ -95,6 +107,10 @@ function getReportInfo(minTime, maxTime)
 			var milesperhour = (miles / 24).toFixed(2);
 			
 			$("#speed").html(milesperhour);
+			
+			map.animateTo(new GeoPoint( 
+				( maxLatitude + minLatitude )/2, 
+				( maxLongitude + minLongitude )/2 ));
 		  },
 		  error: function(error) {
 			console.log("Cannot get info from Parse");
@@ -127,8 +143,6 @@ function createActivityMap() {
 
 	map = new google.maps.Map(document.getElementById('activity-map'),
 		mapOptions);
-
-	//var result = getReportInfo("1:00", "24:00");
 
 	var date = new Date();
 	var millTime2 = date.getTime();
@@ -173,6 +187,3 @@ function drawRoute(result) {
 }
 
 google.maps.event.addDomListener(window, 'load', createActivityMap);
-
-
-
