@@ -8,7 +8,7 @@ $(function () {
 	
 	Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
 	
-	getTodayReport();
+	//getTodayReport();
 });
 
 function getTodayReport()
@@ -90,6 +90,7 @@ function getReportInfo(minTime, maxTime)
 				lat_long.push({'latitude': latitude, 'longitude': longitude});
 				if(i==results.length-1){
 					drawRoute(lat_long);
+					console.log(lat_long);
 				}
 			}
 			var totalDistance = 0;
@@ -101,11 +102,11 @@ function getReportInfo(minTime, maxTime)
 			}
 			
 			var miles = (totalDistance / 5280).toFixed(2);
-			
+			console.log(miles);
 			$("#distance").html(miles);
 			
 			var milesperhour = (miles / 24).toFixed(2);
-			
+			console.log(milesperhour);
 			$("#speed").html(milesperhour);
 			
 			var latlng = [
@@ -154,11 +155,11 @@ function createActivityMap() {
 	map = new google.maps.Map(document.getElementById('activity-map'),
 		mapOptions);
 
-	var date = new Date();
-	var millTime2 = date.getTime();
-	millTime1 = millTime2 - (10*24*3600*1000);
-
-	getReportInfo(millTime1, millTime2);
+	//var date = new Date();
+	//var millTime2 = date.getTime();
+	//millTime1 = millTime2 - (10*24*3600*1000);
+	//getReportInfo(millTime1, millTime2);
+	getTodayReport();
 	return;
 }
 
