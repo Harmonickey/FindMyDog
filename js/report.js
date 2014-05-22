@@ -97,7 +97,7 @@ function getReportInfo(minTime, maxTime)
 			{
 				var a = new google.maps.LatLng(lat_long[i].latitude, lat_long[i].longitude);
 				var b = new google.maps.LatLng(lat_long[i + 1].latitude, lat_long[i + 1].longitude);
-				totalDistance += getDistance(src, dest);
+				totalDistance += getDistance(a, b);
 			}
 			
 			var miles = (totalDistance / 5280).toFixed(2);
@@ -108,9 +108,19 @@ function getReportInfo(minTime, maxTime)
 			
 			$("#speed").html(milesperhour);
 			
-			var centerpoint = new google.maps.LatLng((maxLatitude + minLatitude) / 2,  (maxLongitude + minLongitude) / 2);
+			var latlng = [
+				new google.maps.LatLng(maxLatitude, maxLongitude),
+				new google.maps.LatLng(maxLatitude, minLongitude),
+				new google.maps.LatLng(minLatitude, maxLongitude),
+				new google.maps.LatLng(minLatitude, minLongitude)
+			]; 
+			var latlngbounds = new google.maps.LatLngBounds();
 			
-			map.animateTo(centerpoint);
+			for (var i = 0; i < latlng.length; i++)
+			{
+				latlngbounds.extend(latlng[i]);
+			}
+			map.fitBounds(latlngbounds);
 		  },
 		  error: function(error) {
 			console.log("Cannot get info from Parse");
