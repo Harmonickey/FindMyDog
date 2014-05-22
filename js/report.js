@@ -114,13 +114,15 @@ function createActivityMap() {
 		zoom: 17,
 		center: start_marker,
 		panControl: false,
-		zoomControl: false,
+		zoomControl: true,
 		scaleControl: false,
 		scrollwheel: false,
 		navigationControl: false,
 		mapTypeControl: false,
 		scaleControl: false,
 		draggable: false,
+		disableDoubleClickZoom: true,
+		streetViewControl: false
 	}
 
 	map = new google.maps.Map(document.getElementById('activity-map'),
