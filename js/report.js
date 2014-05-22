@@ -28,6 +28,9 @@ function getTodayReport()
 	normalizedToday.setDate(normalizedToday.getDate() + 1);
 	var max = normalizedToday.getTime();
 	
+	$("#yesterdaybtn").removeClass("disabled");
+	$("#todaybtn").addClass("disabled");
+	
 	getReportInfo(min, max);
 }
 
@@ -47,6 +50,8 @@ function getYesterdayReport()
 	
 	//display as normalized yesterday
 	$("#title").html("Report: " + (normalizedToday.getMonth() + 1) + "/" + normalizedToday.getDate() + "/" + normalizedToday.getFullYear());
+	$("#todaybtn").removeClass("disabled");
+	$("#yesterdaybtn").addClass("disabled");
 	
 	getReportInfo(min, max);
 }
