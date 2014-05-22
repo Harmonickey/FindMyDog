@@ -71,7 +71,7 @@ function getReportInfo(minTime, maxTime)
 		query.select("Location").equalTo("Username", getCookie('username')).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").limit(1000).find({
 		  success: function(results) {
 			var lat_long = new Array();
-			var maxLatitide, maxLongitude = -3000;
+			var maxLatitude, maxLongitude = -3000;
 			var minLatitude, minLongitude = 3000;
 			for (var i = 0; i < results.length; i++)
 			{
@@ -95,8 +95,8 @@ function getReportInfo(minTime, maxTime)
 			var totalDistance = 0;
 			for (var i = 0; i < lat_long.length - 1; i++)
 			{
-				var src = new google.maps.LatLng(lat_long[i].latitude, lat_long[i].longitude);
-				var dest = new google.maps.LatLng(lat_long[i + 1].latitude, lat_long[i + 1].longitude);
+				var a = new google.maps.LatLng(lat_long[i].latitude, lat_long[i].longitude);
+				var b = new google.maps.LatLng(lat_long[i + 1].latitude, lat_long[i + 1].longitude);
 				totalDistance += getDistance(src, dest);
 			}
 			
@@ -108,9 +108,9 @@ function getReportInfo(minTime, maxTime)
 			
 			$("#speed").html(milesperhour);
 			
-			map.animateTo(new GeoPoint( 
-				( maxLatitude + minLatitude )/2, 
-				( maxLongitude + minLongitude )/2 ));
+			var centerpoint = new google.maps.LatLng((maxLatitude + minLatitude) / 2,  (maxLongitude + minLongitude) / 2);
+			
+			map.animateTo(centerpoint);
 		  },
 		  error: function(error) {
 			console.log("Cannot get info from Parse");
