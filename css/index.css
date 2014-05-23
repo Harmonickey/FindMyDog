@@ -16,7 +16,8 @@
 }
 
 #tracking-map {
-	height: 750px;
+	width: 75%;
+	height: 250px;
 }
 
 #activity-map {
@@ -123,4 +124,18 @@ p {
 
 #login_error {
 	color: red;
+}
+
+.tracker-content {
+	background: white;
+	width: 100%;
+	height: auto;
+	color: black;
+	text-align: center;
+	font-size: large;
+	margin-top: 20px;
+}
+
+.tracker-content span {
+	margin-top: 50px;
 }

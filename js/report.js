@@ -4,12 +4,7 @@ var map;
 var start_marker = new google.maps.LatLng(42.056918, -87.676703);
 var end_marker;
 
-$(function () {
-	
-	Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
-	
-	getTodayReport();
-});
+Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
 
 function getTodayReport()
 {
@@ -73,31 +68,36 @@ function getReportInfo(minTime, maxTime)
 			var lat_long = new Array();
 			var maxLatitude, maxLongitude = -3000;
 			var minLatitude, minLongitude = 3000;
+			console.log(results.length);
 			for (var i = 0; i < results.length; i++)
 			{
 				var latitude = results[i].attributes.Location._latitude;
 				var longitude = results[i].attributes.Location._longitude;
 				
-				if (latitude > maxLatitude)
-					maxLatitude = latitude;
-				if (latitude < minLatitude)
-					minLatitude = latitude;
-				if (longitude > maxLongitude)
-					maxLongitude = longitude;
-				if (longitude < minLongitude)
-					minLongitude = longitude;
-					
+				if (latitude > maxLatitude) {
+					maxLatitude = latitude;}
+				if (latitude < minLatitude) {
+					minLatitude = latitude;}
+				if (longitude > maxLongitude) {
+					maxLongitude = longitude;}
+				if (longitude < minLongitude) {
+					minLongitude = longitude;}
+
 				lat_long.push({'latitude': latitude, 'longitude': longitude});
 				if(i==results.length-1){
 					drawRoute(lat_long);
 				}
 			}
 			var totalDistance = 0;
-			for (var i = 0; i < lat_long.length - 1; i++)
-			{
-				var a = new google.maps.LatLng(lat_long[i].latitude, lat_long[i].longitude);
-				var b = new google.maps.LatLng(lat_long[i + 1].latitude, lat_long[i + 1].longitude);
-				totalDistance += getDistance(a, b);
+			console.log(lat_long.length);
+			if(lat_long.length>0) {
+				console.log("here....");
+				for (var i = 1; i < lat_long.length; i++)
+				{
+					var a = new google.maps.LatLng(lat_long[i-1].latitude, lat_long[i-1].longitude);
+					var b = new google.maps.LatLng(lat_long[i].latitude, lat_long[i].longitude);
+					totalDistance += getDistance(a, b);
+				}
 			}
 			
 			var miles = (totalDistance / 5280).toFixed(2);
@@ -154,11 +154,12 @@ function createActivityMap() {
 	map = new google.maps.Map(document.getElementById('activity-map'),
 		mapOptions);
 
-	var date = new Date();
-	var millTime2 = date.getTime();
-	millTime1 = millTime2 - (10*24*3600*1000);
+//	var date = new Date();
+//	var millTime2 = date.getTime();
+//	millTime1 = millTime2 - (10*24*3600*1000);
 
-	getReportInfo(millTime1, millTime2);
+//	getReportInfo(millTime1, millTime2);
+	getTodayReport();
 	return;
 }
 

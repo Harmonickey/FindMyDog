@@ -2,8 +2,6 @@ var myDataRef = new Firebase('https://findmydeardog.firebaseio.com/');
 Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
 
 var map; //will be used for map on page
-var username;
-var password;
 
 var logged_in = false;
 
@@ -12,19 +10,18 @@ var positions = [];
 var max = 5;
 var line1, line2, line3, line4;
 
-function initializeTracker(user, pass) {
-  username = user;
-  password = pass;
-  getUserFromFirebase(username, password, 'login');
+function initializeTracker() {
   //get original geolocation
   if(navigator.geolocation) {
   	navigator.geolocation.getCurrentPosition(function(position) {
   		lat = position.coords.latitude;
   		lng = position.coords.longitude;
-  		var pos = new google.maps.LatLng(lat, lng);
+ // 		var pos = new google.maps.LatLng(lat, lng);
   		updateFirebaseLocation(lat, lng);
+  		logged_in = true;
+  		$("#user_id").text(getCookie("username"));
   		//options for the displayed map
-		var mapOptions = {
+/*		var mapOptions = {
 			zoom: 20,
 			center: pos
 		}
@@ -68,7 +65,7 @@ function initializeTracker(user, pass) {
   		line1.setMap(map);
   		line2.setMap(map);
   		line3.setMap(map);
-  		line4.setMap(map);
+  		line4.setMap(map);*/
   	});
   }
 }
@@ -80,7 +77,9 @@ function trackLocation() {
 		navigator.geolocation.getCurrentPosition(function(position) {
 			var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
   			updateFirebaseLocation(position.coords.latitude, position.coords.longitude);
-			dog_marker.setPosition(pos);
+  			
+  			$("#status").text("Transmitting location...");
+	/*		dog_marker.setPosition(pos);
 			storeDogLocation(positions.coords.latitude, positions.coords.longitude);	
 			map.setCenter(pos);
 			if (positions.length < max) {
@@ -108,13 +107,14 @@ function trackLocation() {
 				line4.setPath([positions[3], positions[4]]);
 				console.log(positions[4]);
 				console.log("-----");
-			}
+			}*/
 		});
 	}
 }
 
 function updateFirebaseLocation(lat, lng) {
-	myDataRef.child('user').child(username).update({
+	console.log(lat + ',' + lng);
+	myDataRef.child('user').child(getCookie("username")).update({
 		'dogLat': lat,
 		'dogLng': lng
 	});
@@ -242,7 +242,9 @@ function deleteLocations(fromTime)
 	*/
 }
 
-
+username = getCookie("username");
+password = getCookie("password");
+getUserFromFirebase(username, password, 'login');
 
 
 

@@ -17,40 +17,42 @@
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-    <script type="text/javascript" src="js/tracker.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/tracker.js"></script>
 
-  </head>
-  <body onload="checkLogInOrOut()">
-    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Find My Dog - Tracks Your Dog's Location</a>
+</head>
+<body onload="checkLogInOrOut()">
+  <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <span class="navbar-brand2" style="text-decoration: none">Find My Dog</span>
+      <div class="pull-right">
+        <span class="navbar-brand2" style="text-decoration: none" id="user_id"></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal-dialog" id="login-modal">
+      <div class="modal-content" id="login-content">
+        <div class="modal-header" id="login-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h1 class="modal-title text-center">Dog Tracker: <h2>1.) Log in to account<br/><br/>2.) Attach to pet</h2></h1>
         </div>
-    </nav>
+        <div class="modal-body">
+          <input type="text" placeholder="Username" id="username" autofocus="autofocus"/>
+          <input type="password" placeholder="Password" id="password"/>
+          <!-- <label id="login_error" style="display: none;"></label> -->
+          <div id="login_error"></div>
+          <button type="button" class="btn btn-login" onclick="loginTracker()">Login</button>
 
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Login</h4>
-          </div>
-          <div class="modal-body">
-            <p>Username</p>
-            <input type="text" id="username" autofocus="autofocus"/>
-            <p>Password</p>
-            <input type="password" id="password"/>
-          </div>
-          <div class="modal-body">
-            <label id="login_error" style="display: none;"></label>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onclick="loginTracker()">Login</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <div id="tracking-map"></div>
+          <h5 class="text-center"> <a href="#"> Forgot your password? </a>
+          <br/>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+</div>
+  <div class="tracker-content">Tracking your dog's location
+  <br/><br/><span id="status">Loading...</span></div>
+
 </body>
 </html>

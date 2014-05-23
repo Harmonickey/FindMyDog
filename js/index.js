@@ -300,7 +300,7 @@ function loginTracker() {
 	if (checkFirebaseForLogin(username, password, 'login'))
 	{
 		changeStatus("Login");
-		initializeTracker(username, password);	
+		initializeTracker();	
 	}
 }
 
