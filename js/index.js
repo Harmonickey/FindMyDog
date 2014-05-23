@@ -103,6 +103,22 @@ function checkLogInOrOut()
 	}
 }
 
+function checkLogInOrOut2()
+{
+	var username = getCookie("username");
+	
+	if (!username)
+	{
+		//means it's showing "Login"
+		showModal('#loginModal');	
+	}
+	else
+	{
+		//means it's showing "Logout"
+		loadUser();
+	}
+}
+
 function loadUser()
 {
 	var username = getCookie("username");
@@ -114,6 +130,7 @@ function loadUser()
 	else
 	{
 		changeStatus("Login");
+		initializeTracker();
 	}
 }
 
