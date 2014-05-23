@@ -76,9 +76,16 @@ function trackLocation() {
 	if(logged_in==true) {
 		navigator.geolocation.getCurrentPosition(function(position) {
 			var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-  			updateFirebaseLocation(position.coords.latitude, position.coords.longitude);
+			if(position.coords.latitude && position.coords.longitude) {	
+  				updateFirebaseLocation(position.coords.latitude, position.coords.longitude);
+  				$("#status").text("Transmitting location...");
+  				document.getElementById('status').style.color = 'green';
+  			}
+  			else {
+  				$("#status").text("Error: Location not found");
+  				document.getElementById('status').style.color = 'red';
+  			}
   			
-  			$("#status").text("Transmitting location...");
 	/*		dog_marker.setPosition(pos);
 			storeDogLocation(positions.coords.latitude, positions.coords.longitude);	
 			map.setCenter(pos);
@@ -109,6 +116,12 @@ function trackLocation() {
 				console.log("-----");
 			}*/
 		});
+	}
+	else {
+		if($("#status").text()!="Loading...") {
+			$("#status").text("Error: Failed to send location");
+			document.getElementById('status').style.color = 'red';
+		}
 	}
 }
 
