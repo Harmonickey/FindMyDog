@@ -239,7 +239,8 @@ function changeTimeSpan()
 	if (toTime < fromTime)
 	{
 		$("#timespan_error").css('display', 'block');
-		$("#timespan_error").html("Cannot look in inverse. Switch 'From' and 'To'!");
+		$("#timespan_error").html("Cannot check in reverse. Switch 'From' and 'To'!");
+		return;
 	}
 	
 	//reenabled if needed
