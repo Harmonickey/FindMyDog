@@ -66,6 +66,9 @@ function getCookie(cname)
 
 function getReportInfo(minTime, maxTime)
 {
+	console.log(minTime);
+	console.log(maxTime);
+	console.log(getCookie('username'));
 	var query = new Parse.Query("Dog_Location");
 	if (getCookie('username')!=null) {
 		query.select("Location").equalTo("Username", getCookie('username')).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").limit(1000).find({
