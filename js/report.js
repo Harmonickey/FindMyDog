@@ -73,7 +73,7 @@ function getReportInfo(minTime, maxTime)
 			var lat_long = new Array();
 			var maxLatitude, maxLongitude = -3000;
 			var minLatitude, minLongitude = 3000;
-
+			console.log(results);
 			if (results.length <= 1)
 			{
 				$("#distance").html(0.0);
