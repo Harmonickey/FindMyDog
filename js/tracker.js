@@ -173,7 +173,7 @@ function storeDogLocation(lat, lng)
 	}
 	});
 	
-	checkIfSunday(time);
+	//checkIfSunday(time);
 }
 
 function checkIfSunday(time)

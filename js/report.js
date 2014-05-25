@@ -66,9 +66,9 @@ function getCookie(cname)
 
 function getReportInfo(minTime, maxTime)
 {
-	console.log(minTime);
-	console.log(maxTime);
-	console.log(getCookie('username'));
+	//console.log(minTime);
+	//console.log(maxTime);
+	//console.log(getCookie('username'));
 	var query = new Parse.Query("Dog_Location");
 	if (getCookie('username')!=null) {
 		query.select("Location").equalTo("Username", getCookie('username')).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").limit(1000).find({
@@ -76,7 +76,7 @@ function getReportInfo(minTime, maxTime)
 			var lat_long = new Array();
 			var maxLatitude, maxLongitude = -3000;
 			var minLatitude, minLongitude = 3000;
-			console.log(results);
+			//console.log(results);
 			if (results.length <= 1)
 			{
 				$("#distance").html(0.0);
