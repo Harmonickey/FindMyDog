@@ -66,17 +66,15 @@ function getCookie(cname)
 
 function getReportInfo(minTime, maxTime)
 {
-	//console.log(minTime);
-	//console.log(maxTime);
-	//console.log(getCookie('username'));
 	var query = new Parse.Query("Dog_Location");
 	if (getCookie('username')!=null) {
 		query.select("Location").equalTo("Username", getCookie('username')).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").limit(1000).find({
 		  success: function(results) {
 			var lat_long = new Array();
-			var maxLatitude, maxLongitude = -3000;
-			var minLatitude, minLongitude = 3000;
-			//console.log(results);
+			var maxLatitude = -3000;
+			var maxLongitude = -3000;
+			var minLatitude = 3000;
+			var minLongitude = 3000;
 			if (results.length <= 1)
 			{
 				$("#distance").html(0.0);
@@ -101,7 +99,6 @@ function getReportInfo(minTime, maxTime)
 					lat_long.push({'latitude': latitude, 'longitude': longitude});
 					if(i==results.length-1){
 						drawRoute(lat_long);
-						console.log(lat_long);
 					}
 				}
 				var totalDistance = 0;
@@ -113,11 +110,9 @@ function getReportInfo(minTime, maxTime)
 				}
 				
 				var miles = (totalDistance / 5280).toFixed(2);
-				console.log(miles);
 				$("#distance").html(miles);
 				
 				var milesperhour = (miles / 24).toFixed(2);
-				console.log(milesperhour);
 				$("#speed").html(milesperhour);
 				
 				var latlng = [
@@ -127,7 +122,6 @@ function getReportInfo(minTime, maxTime)
 					new google.maps.LatLng(minLatitude, minLongitude)
 				]; 
 				var latlngbounds = new google.maps.LatLngBounds();
-				
 				for (var i = 0; i < latlng.length; i++)
 				{
 					latlngbounds.extend(latlng[i]);
