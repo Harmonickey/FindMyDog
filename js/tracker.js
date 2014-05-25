@@ -80,6 +80,7 @@ function trackLocation() {
   				updateFirebaseLocation(position.coords.latitude, position.coords.longitude);
   				$("#status").text("Transmitting location...");
   				document.getElementById('status').style.color = 'green';
+				storeDogLocation(position.coords.latitude, position.coords.longitude);
   			}
   			else {
   				$("#status").text("Error: Location not found");
