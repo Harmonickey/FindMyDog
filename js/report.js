@@ -6,6 +6,12 @@ var end_marker;
 
 Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
 
+$(function() {
+	$("#from").datepicker();
+	$("#to").datepicker();
+});
+
+
 function getTodayReport()
 {
 	var date = new Date();
@@ -133,7 +139,12 @@ function getReportInfo(minTime, maxTime)
 			console.log("Cannot get info from Parse");
 		  }
 		});	
-	}	
+	}
+	else
+	{
+		$("#distance").html(0.0);
+		$("#speed").html(0.0);
+	}
 }
 
 function getDistance(loc, pos) {
@@ -202,6 +213,45 @@ function drawRoute(result) {
 			map.setCenter(point2);
 		}
 	}
+}
+
+function changeTimeSpan()
+{
+	//some parsing to get the millisecond value
+	var from = $("#from").val();
+	var to = $("#to").val();
+	from = from.replace(/ /g, "");
+	to = to.replace(/ /g, "");
+	
+	if (!from || !to || from == "" || to == "")
+	{
+		$("#timespan_error").css('display', 'block');
+		$("#timespan_error").html("Need to include two dates!");
+		return;
+	}
+	
+	var fromDate = new Date(from);
+	var toDate = new Date(to);
+	
+	var fromTime = fromDate.getTime();
+	var toTime = toDate.getTime();
+	
+	if (toTime < fromTime)
+	{
+		$("#timespan_error").css('display', 'block');
+		$("#timespan_error").html("Cannot look in inverse. Switch 'From' and 'To'!");
+	}
+	
+	//reenabled if needed
+	$("#yesterdaybtn").removeClass("disabled");
+	$("#todaybtn").removeClass("disabled");
+	
+	console.log(fromTime, toTime);
+	
+	getReportInfo(fromTime, toTime);
+	$("#title").html("Report: " + from + " - " + to);
+	
+	$('#timeSpanModal').modal('hide');
 }
 
 google.maps.event.addDomListener(window, 'load', createActivityMap);

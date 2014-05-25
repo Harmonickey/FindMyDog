@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
+	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Find My Dog</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/report.css">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     <script type="text/javascript" src='https://cdn.firebase.com/js/client/1.0.11/firebase.js'></script>
     <script type="text/javascript" src="js/parse-1.2.18.min.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry&sensor=false"></script>
-	<script type="text/javascript" src="graph/Chart.js"></script>
     <script type="text/javascript" src="js/report.js"></script>
   </head>
 
@@ -45,9 +46,10 @@
 		<div class="container-fluid" id="stats">
       <div class="row">
         <div class="col-sm-9 col-sm-offset-1 col-md-10 col-md-offset-1 main">
-          <h1 id="title" style="width: 300px; float: left; text-align: center"></h1>
-		  <h3 style="width: 250px; float: left; clear: left; text-align: center; margin-left: 30px; line-height: 45px; text-align: right;"> Time Span: </h3>
-		  
+          <h1 id="title" class="pull-left" style="width: 100%; text-align: center;"></h1>
+		  <div id="changeTimeDiv" class='text-center'>
+			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#timeSpanModal"> Change Time Span </button>
+		  </div>
           <div class="row stats" style="clear: both;">
             <div class="col-xs-6 col-sm-7 quick-stat">
             	<div class="stat-circle blue">
@@ -81,7 +83,29 @@
 			</ul>
 		</div>
 	  </div>
-	  
+	  <div class="modal fade" id="timeSpanModal" tabindex="-1" role="dialog" aria-labelledby="timeSpanLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Register</h4>
+          </div>
+          <div class="modal-body">
+            <p>From: </p>
+            <input type="text" id="from" />
+            <p>To: </p>
+            <input type="text" id="to" />
+          </div>
+          <div class="modal-body">
+          	<label id="timespan_error" style="display: none;"></label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+            <button type="button" class="btn btn-primary" onclick="changeTimeSpan();">Submit</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     </div>
 	</body>
 </html>
