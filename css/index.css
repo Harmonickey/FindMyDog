@@ -140,3 +140,36 @@ p {
 	margin-top: 50px;
 	color: red;
 }
+
+
+/*
+==================================
+==== CSS for Main Log in Page ====
+==================================
+*/
+
+.mainAccess {
+	background: black;
+	opacity: .8;
+	width: 100%;
+	height: 100%;
+	padding-top: 10%;
+	text-align: center;
+	margin-top: -50px;
+	padding-bottom: 100%;
+	position: relative;
+}
+
+.mainAccess span {
+	font-size: x-large;
+	color: white;
+}
+
+.mainAccess p {
+	font-size: medium;
+	color: #AAAAAA;
+	font-style: italic;
+}
+
+
+

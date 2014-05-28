@@ -129,6 +129,7 @@ function loadUser()
 	}
 	else
 	{
+		$("#user_id").text(username);
 		changeStatus("Login");
 		initializeTracker();
 	}
@@ -300,7 +301,8 @@ function login()
 	if (checkFirebaseForLogin(username, password, 'login'))
 	{
 		changeStatus("Login");
-		initialize(username, password);	
+		initialize(username, password);
+		window.location = "harmonickey.github.io/FindMyDog/index.html";
 	}
 }
 
@@ -337,7 +339,8 @@ function register()
 	
 	if(createFirebaseUser(username, password, phoneNumber, radius, baseLocation))
 	{
-		hideModal("#registerModal");	
+		hideModal("#registerModal");
+		window.location = "harmonickey.github.io/FindMyDog/index.html";
 	}
 	else
 	{

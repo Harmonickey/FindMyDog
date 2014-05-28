@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Find My Dog - Activity</title>
+    <title>Find My Dog</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
@@ -14,26 +14,30 @@
     <link rel="stylesheet" type="text/css" href="css/iphone-style-checkbox.css">
 
     <script type="text/javascript" src='https://cdn.firebase.com/js/client/1.0.11/firebase.js'></script>
-    <script type="text/javascript" src="js/parse-1.2.18.min.js"></script>
+    <script type="text/javascript" src='js/parse-1.2.18.min.js'></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/iphone-style-checkbox.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-    <script src="js/markerwithlabel.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript" src="js/route.js"></script>
+    <script type="text/javascript" src="js/maps.js"></script>
   
   </head>
-  <body>
+  <body onload="loadUser()">
     <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">Back</a>
+        <span class="navbar-brand2" style="text-decoration: none">Find My Dog</span>
         <div class="pull-right">
-          <span class="navbar-brand2" style="text-decoration: none">Find My Dog - Route Tracker</span>
+          <span class="navbar-brand2" style="text-decoration: none" id="user_id"></span>
         </div>
       </div>
     </nav>
 
-    <div id="activity-map"></div>
-</body>
-</html>
+    <div class="mainAccess">
+      <br><br>
+      <button type="button" class="btn btn-primary" style="font-size: large; width: 80%; height: 50px;">Dog Tracking Map</button>
+      <button type="button" class="btn btn-primary" style="font-size: large; width: 80%; height: 50px;">Tracking Device</button>
+      <button type="button" class="btn btn-primary" style="font-size: large; width: 80%; height: 50px;">Activity Report</button>
+      <br><br><br>
+      <button type="button" class="btn btn-default" style="width: 50%; height: 50px;">Log out</button>
+    </div>
