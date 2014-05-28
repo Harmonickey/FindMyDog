@@ -49,12 +49,10 @@ $(function () {
 	if (getUserFromFirebase(username, password, 'mainscreen'))
 	{
 		initialize(username, password);
-		/*var phoneNumber = myDataRef.child('user').child(username).child('Phone_Number');
+		var phoneNumber = myDataRef.child('user').child(username).child('Phone_Number');
 		var radius = myDataRef.child('user').child(username).child('Threshold');
-		var baseLocation = myDataRef.child('user').child(username).child('Base_Location');*/
-		var phoneNumber = getPhoneNumber(username);
-		var radius = getRadius(username);
-		var baseLocation = getLocation(username);
+		var baseLocation = myDataRef.child('user').child(username).child('Base_Location');
+		
 		if (phoneNumber && radius && baseLocation)
 		{
 			changeStatus("Login");
@@ -63,53 +61,6 @@ $(function () {
 
 });
 
-function getLocation(username) 
-{
-          var baseLocation;
-          var UserID = username;
-          var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + UserID +"/.json";
-          $.ajax ({
-            dataType : "jsonp",
-            url : firebaseAPI,
-            async : false,
-            success : function(data) {
-              baseLocation = data["Base_Location"];
-            }
-          });
-	  return baseLocation;
-}
-
-function getRadius(username) 
-{
-          var radius;
-          var UserID = username;
-          var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + UserID +"/.json";
-          $.ajax ({
-            dataType : "jsonp",
-            url : firebaseAPI,
-            async : false,
-            success : function(data) {
-              radius = data["Threshold"];
-            }
-          });
-	  return radius;
-}
-
-function getPhoneNumber(username) 
-{
-          var phoneNumber;
-          var UserID = username;
-          var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + UserID +"/.json";
-          $.ajax ({
-            dataType : "jsonp",
-            url : firebaseAPI,
-            async : false,
-            success : function(data) {
-              phoneNumber = data["Phone_Number"];
-            }
-          });
-	  return phoneNumber;
-}
 /*function getCookie(cname)
 {
 	var name = cname + "=";
