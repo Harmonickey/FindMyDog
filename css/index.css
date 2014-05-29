@@ -171,5 +171,9 @@ p {
 	font-style: italic;
 }
 
+input {
+	width: 100%;
+}
+
 
 
