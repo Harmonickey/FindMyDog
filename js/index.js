@@ -337,7 +337,7 @@ function login()
 	{
 		changeStatus("Login");
 		initialize(username, password);
-		window.location.href = "../index.html";
+		window.location.href = "index.html";
 	}
 }
 

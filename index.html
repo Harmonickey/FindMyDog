@@ -59,21 +59,20 @@
         </div>
     </nav>
     <div class="modal fade" id="baseLocationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
+      <div class="modal-dialog settings-modal">
+        <div class="modal-content settings-content">
+          <div class="modal-header settings-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Change Dog's Address</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body settings-body">
             <p>Please Enter a New Location Where You Expect Your Dog To Reside</p>
             <input type="text" class='controls' id="new_baselocation" style="width: 100%;" placeholder='Ex. 2060 Ridge Ave.'/>
           </div>
-          <div class="modal-body">
-          	<label id="baselocation_error" style="display: none;"></label>
+          <div class="modal-body settings-error">
+          	<label id="baselocation_error" style="display: none; color: red"></label>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <div class="modal-footer settings-footer">
             <button type="button" class="btn btn-primary" onclick="hideModal('#baseLocationModal'); updateBaseLocation();">Save changes</button>
           </div>
         </div><!-- /.modal-content -->
@@ -129,42 +128,40 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <div class="modal fade" id="radiusModal" tabindex="-1" role="dialog" aria-labelledby="radiusLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
+      <div class="modal-dialog settings-modal">
+        <div class="modal-content settings-content">
+          <div class="modal-header settings-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Change Radius</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body settings-body">
             <p>Radius (feet)</p>
             <input type="text" id="new_radius" />
           </div>
-          <div class="modal-body">
-          	<label id="radius_error" style="display: none;"></label>
+          <div class="modal-body settings-error">
+          	<label id="radius_error" style="display: none; color: red;"></label>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <div class="modal-footer settings-footer">
             <button type="button" class="btn btn-primary" onclick="updateRadius();">Save Changes</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <div class="modal fade" id="phoneNumberModal" tabindex="-1" role="dialog" aria-labelledby="phoneNumberLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
+      <div class="modal-dialog settings-modal">
+        <div class="modal-content settings-content">
+          <div class="modal-header settings-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Change Phone Number</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body settings-body">
             <p>Phone Number</p>
             <input type="text" id="new_phonenumber" />
           </div>
-          <div class="modal-body">
-          	<label id="phonenumber_error" style="display: none;"></label>
+          <div class="modal-body settings-error">
+          	<label id="phonenumber_error" style="display: none; color: red"></label>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <div class="modal-footer settings-footer">
             <button type="button" class="btn btn-primary" onclick="updatePhoneNumber();"> Save Changes</button>
           </div>
         </div><!-- /.modal-content -->
@@ -174,21 +171,20 @@
   Pop up box for "Follow my device" mode
 -->
     <div class="modal fade" id="followDeviceModal" tabindex="-1" role="dialog" aria-labelledby="followDeviceLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
+      <div class="modal-dialog settings-modal">
+        <div class="modal-content settings-content">
+          <div class="modal-header settings-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title" id="FollowDevice">Follow My Device</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body settings-body">
             <p>Personal Radius (feet)</p>
             <input type="text" id="new_person_radius" />
           </div>
-          <div class="modal-body">
-            <label id="personal_radius_error" style="display: none;"></label>
+          <div class="modal-body settings-error">
+            <label id="personal_radius_error" style="display: none; color: red;"></label>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <div class="modal-footer settings-footer">
             <button type="button" class="btn btn-primary" onclick="FollowDevice()"> Save Changes</button>
           </div>
         </div><!-- /.modal-content -->
@@ -198,17 +194,17 @@
   Pop up box to verify phone numbers with Twilio.
 -->
     <div class="modal fade" id="validation" tabindex="-1" role="dialog" aria-labelledby="validationLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
+      <div class="modal-dialog settings-modal">
+        <div class="modal-content settings-content">
+          <div class="modal-header settings-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title" id="ValidatePhone">Verify Phone Number</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body settings-body">
             <p>Use this Validation Code when you receive the call!</p>
             <label id="validation_number"></label>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer settings-footer">
             <button type="button" class="btn btn-primary" onclick="hideModal('#validation'); showModal('#phoneNumberModal');">Try Again</button>
             <button type="button" class="btn btn-primary" data-dismiss="modal">Finished</button>
           </div>
