@@ -375,7 +375,6 @@ function register()
 	if(createFirebaseUser(username, password, phoneNumber, radius, baseLocation))
 	{
 		hideModal("#registerModal");
-		window.location = "harmonickey.github.io/FindMyDog/index.html";
 	}
 	else
 	{
