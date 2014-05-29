@@ -42,9 +42,10 @@ $(function () {
 
 	//var input = $("#reg_baselocation");
 	var input2 = document.getElementById('new_baselocation');
-	
+	var map = new google.maps.Map();
 	//var autocomplete = new google.maps.places.Autocomplete(input);
 	var autocomplete2 = new google.maps.places.Autocomplete(input2);
+	autocomplete2.bindTo('bounds', map);
 	var infowindow = new google.maps.InfoWindow();
 	
 	google.maps.event.addListener(autocomplete2, 'place_changed', function() {
