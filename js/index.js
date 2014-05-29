@@ -74,6 +74,7 @@ function changeStatus(status)
 		$("#loginout").html("Login");
 		//this erases the cookies
 		document.cookie = "";
+		document.location.href = 'landing.html';
 	}
 }
 
