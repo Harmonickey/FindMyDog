@@ -302,7 +302,7 @@ function login()
 	{
 		changeStatus("Login");
 		initialize(username, password);
-		window.location = "harmonickey.github.io/FindMyDog/index.html";
+		window.location.href = "harmonickey.github.io/FindMyDog/index.html";
 	}
 }
 
