@@ -154,13 +154,14 @@ function checkLogInOrOut2()
 	}
 }
 
-function loadUser()
+function loadUser(page)
 {
 	var username = getCookie("username");
 	
 	if (!username)
 	{
-		showModal('#loginModal');	
+		if (page == 'main')
+			showModal('#loginModal');	
 	}
 	else
 	{
