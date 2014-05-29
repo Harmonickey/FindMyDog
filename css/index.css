@@ -239,15 +239,19 @@ input {
 
 .pac-container {
 	font-family: Roboto;
+	z-index: 1053;
 }
 
 #target {
     width: 345px;
 }
-
-.ui-autocomplete {
-    z-index: 1051 !important;
+	  
+.modal{
+    z-index: 1052;   
 }
+.modal-backdrop{
+    z-index: 1051;        
+}​
 
 
 
