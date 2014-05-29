@@ -18,7 +18,7 @@
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/iphone-style-checkbox.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/maps.js"></script>
   
@@ -67,7 +67,7 @@
           </div>
           <div class="modal-body">
             <p>Please Enter a New Location Where You Expect Your Dog To Reside</p>
-            <input type="text" id="new_baselocation" style="width: 100%;" placeholder='Ex. 2060 Ridge Ave.'/>
+            <input type="text" class='controls' id="new_baselocation" style="width: 100%;" placeholder='Ex. 2060 Ridge Ave.'/>
           </div>
           <div class="modal-body">
           	<label id="baselocation_error" style="display: none;"></label>
@@ -116,7 +116,7 @@
             <p>Radius (feet)</p>
             <input type="text" id="reg_radius" placeholder="i.e. 100"/>
             <p>Dog's Home Address</p>
-            <input type="text" id="reg_baseLocation" placeholder="i.e. 123 Random St, Anytown, ST 012345"/>
+            <input type="text" class='controls' id="reg_baseLocation" placeholder="i.e. 123 Random St, Anytown, ST 012345"/>
           </div>
           <div class="modal-body">
           	<label id="register_error" style="display: none;"></label>
