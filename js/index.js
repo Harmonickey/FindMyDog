@@ -65,14 +65,8 @@ function setCookie(cname,cvalue,exdays)
 
 function changeStatus(status)
 {
-	if (status == "Login")
+	if (status == "Logout")
 	{
-		$("#loginout").html("Logout"); //enable the button
-	}
-	else if (status == "Logout")
-	{
-		$("#loginout").html("Login");
-		//this erases the cookies
 		clearAllCookies(); 
 	}
 }
