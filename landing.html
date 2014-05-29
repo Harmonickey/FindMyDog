@@ -39,10 +39,10 @@
       <a href="tracker.html"><button type="button" class="btn btn-primary" style="font-size: large; width: 80%; height: 50px;">Tracking Device</button></a>
       <a href="report.html"><button type="button" class="btn btn-primary" style="font-size: large; width: 80%; height: 50px;">Activity Report</button></a>
       <br><br><br>
-      <button id="loginout" type="button" class="btn btn-default" style="width: 50%; height: 50px;" onclick="changeStatus('Logout');" data-toggle="modal" data-target="#loginModal">Log out</button>
+      <button type="button" class="btn btn-default" style="width: 50%; height: 50px;" onclick="changeStatus('Logout');" data-toggle="modal" data-target="#loginModal">Log out</button>
     </div>
 
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog" id="login-modal">
         <div class="modal-content" id="login-content">
           <div class="modal-header" id="login-header">

@@ -29,7 +29,7 @@
         <a href="landing.html"><span class="navbar-brand">Find My Dog</span></a>
         <div class="pull-right">
           <ul class="nav navbar-nav">
-            <li class="pull-left on-off" onclick="toggleON_OFF()"><input type="checkbox" id="on-off"/></li>
+            <span class="pull-left navbar-brand">Alerts: </span><li class="pull-left on-off" onclick="toggleON_OFF()"><input type="checkbox" id="on-off"/></li>
           </ul>
         </div>
       </div>
@@ -54,7 +54,7 @@
           <button type="button" class="btn btn-default" id="followDeviceBtn" data-toggle="modal" data-target="#followDeviceModal"> Follow My Device Mode </button>
           <button type="button" class="btn btn-default" id="unfollowDeviceBtn" data-toggle="modal" style="display: none" onclick="UnfollowDevice()"> Stop Following My Device </button>
           <br/>
-          <button type="button" class="btn btn-default" id="loginout" onclick="logout(); document.location.href='landing.html'"> Logout </button>
+          <button type="button" class="btn btn-default" onclick="changeStatus('Logout'); document.location.href='landing.html'"> Logout </button>
           <br/>         
         </div>
     </nav>
@@ -79,17 +79,15 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog" id="login-modal">
         <div class="modal-content" id="login-content">
           <div class="modal-header" id="login-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h1 class="modal-title text-center">Find My Dog Logo</h1>
           </div>
           <div class="modal-body">
             <input type="text" placeholder="Username" id="username" autofocus="autofocus"/>
             <input type="password" placeholder="Password" id="password"/>
-            <!-- <label id="login_error" style="display: none;"></label> -->
             <div id="login_error"></div>
             <button type="button" class="btn btn-login" onclick="login()">Login</button>
 
@@ -98,9 +96,6 @@
             <br/>
             Don't have an account?<a data-toggle="modal" data-target="#registerModal" onclick="hideModal('#loginModal');"> Sign up here. </a> </h3>
           </div>
-          <!-- <div class="modal-footer">
-
-          </div> -->
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
