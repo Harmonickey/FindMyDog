@@ -39,5 +39,65 @@
       <a href="tracker.html"><button type="button" class="btn btn-primary" style="font-size: large; width: 80%; height: 50px;">Tracking Device</button></a>
       <a href="report.html"><button type="button" class="btn btn-primary" style="font-size: large; width: 80%; height: 50px;">Activity Report</button></a>
       <br><br><br>
-      <a href="login.html"><button type="button" class="btn btn-default" style="width: 50%; height: 50px;" onclick="changeStatus('Logout')">Log out</button></a>
+      <button type="button" class="btn btn-default" style="width: 50%; height: 50px;" onclick="changeStatus('Logout')" data-toggle="modal" data-target="#loginModal">Log out</button>
     </div>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+      <div class="modal-dialog" id="login-modal">
+        <div class="modal-content" id="login-content">
+          <div class="modal-header" id="login-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h1 class="modal-title text-center">Find My Dog Logo</h1>
+          </div>
+          <div class="modal-body">
+            <input type="text" placeholder="Username" id="username" autofocus="autofocus"/>
+            <input type="password" placeholder="Password" id="password"/>
+            <!-- <label id="login_error" style="display: none;"></label> -->
+            <div id="login_error"></div>
+            <button type="button" class="btn btn-login" onclick="login()">Login</button>
+
+            <h5 class="text-center"> <a href="#"> Forgot your password? </a>
+            <br/>
+            <br/>
+            Don't have an account?<a data-toggle="modal" data-target="#registerModal" onclick="hideModal('#loginModal');"> Sign up here. </a> </h3>
+          </div>
+          <!-- <div class="modal-footer">
+
+          </div> -->
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Register</h4>
+          </div>
+          <div class="modal-body">
+            <p>New Username</p>
+            <input type="text" id="reg_username"/>
+            <p>New Password</p>
+            <input type="password" id="reg_password"/>
+            <p>Phone Number</p>
+            <input type="text" id="reg_phone"/>
+            <p>Radius (feet)</p>
+            <input type="text" id="reg_radius" placeholder="i.e. 100"/>
+            <p>Dog's Home Address</p>
+            <input type="text" id="reg_baseLocation" placeholder="i.e. 123 Random St, Anytown, ST 012345"/>
+          </div>
+          <div class="modal-body">
+            <label id="register_error" style="display: none;"></label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="register();">Create Account</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</body>
+</html>
+

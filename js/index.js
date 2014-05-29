@@ -28,6 +28,7 @@ $(function () {
 
 	if (getUserFromFirebase(username, password, 'mainscreen'))
 	{
+		$("#user_id").text(getCookie("username"));
 		initialize(username, password);
 		var phoneNumber = getCookie("phoneNumber");
 		var radius = getCookie("radius");
