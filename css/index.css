@@ -218,7 +218,7 @@ input {
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-#new_baselocation,
+#pac-input,
 #reg_baselocation {
 	background-color: #fff;
 	padding: 0 11px 0 13px;
@@ -229,7 +229,7 @@ input {
 	text-overflow: ellipsis;
 }
 
-#new_baselocation:focus,
+#pac-input:focus,
 #reg_baselocation:focus {
 	border-color: #4d90fe;
 	margin-left: -1px;

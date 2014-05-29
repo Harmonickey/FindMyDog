@@ -106,7 +106,7 @@ function initialize(user, pass) {
     addDog(result['dogLat'], result['dogLng']);
   }
   
-	var input = document.getElementById('new_baselocation');
+	var input = document.getElementById('pac-input');
 	var searchBox = new google.maps.places.SearchBox((input));
 	
 	google.maps.event.addListener(searchBox, 'place_changed', function() {
