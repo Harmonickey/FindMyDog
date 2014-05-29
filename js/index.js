@@ -73,9 +73,20 @@ function changeStatus(status)
 	{
 		$("#loginout").html("Login");
 		//this erases the cookies
-		document.cookie = "";
-		document.location.href = 'landing.html';
+		clearAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong, dog_added); 
 	}
+}
+
+function clearAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong, dog_added)
+{
+	setCookie('username', "", -1);
+	setCookie('password', "", -1);
+	setCookie('radius', "", -1);
+	setCookie('phoneNumber', "", -1);
+	setCookie('baseLocation', "", -1);
+	setCookie('baseLat', "", -1);
+	setCookie('baseLong', "", -1);
+	setCookie('dog_added', "", -1);
 }
 
 function setAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong)
