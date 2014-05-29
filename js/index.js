@@ -73,11 +73,11 @@ function changeStatus(status)
 	{
 		$("#loginout").html("Login");
 		//this erases the cookies
-		clearAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong, dog_added); 
+		clearAllCookies(); 
 	}
 }
 
-function clearAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong, dog_added)
+function clearAllCookies()
 {
 	setCookie('username', "", -1);
 	setCookie('password', "", -1);
@@ -87,6 +87,7 @@ function clearAllCookies(username, password, radius, phoneNumber, baseLocation, 
 	setCookie('baseLat', "", -1);
 	setCookie('baseLong', "", -1);
 	setCookie('dog_added', "", -1);
+	setCookie('initialized', "", -1);
 }
 
 function setAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong)
