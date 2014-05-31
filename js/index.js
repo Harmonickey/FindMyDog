@@ -372,6 +372,12 @@ function register()
 		return;
 	}
 	
+	if (!isPhoneNumber(phoneNumber))
+	{
+		setError('no_num', 'register');
+		return;
+	}
+	
 	if(createFirebaseUser(username, password, phoneNumber, radius, baseLocation))
 	{
 		updatePhoneNumber(phoneNumber); 
@@ -408,6 +414,8 @@ function setError(error, module)
 				$("#register_error").html("Username already taken");
 			if (error == 'no_radius')
 				$("#register_error").html("Invalid radius");
+			if (error == 'no_num')
+				$("#register_error").html("Invalid phone number");
 		case 'mainscreen':
 		case 'pn_modal':
 			$("#phonenumber_error").css('display', 'block');
@@ -476,7 +484,7 @@ function updateBaseLocation()
 
 function updatePhoneNumber(num)
 {
-	var phoneNumber = (num ? num : $("#new_phonenumber").val());
+	var phoneNumber = (num !== null ? num : $("#new_phonenumber").val());
 	
 	//use Twilio verification here...
 	//send request with phoneNumber
@@ -490,17 +498,15 @@ function updatePhoneNumber(num)
 	  }
 	});
 	
-	var username = getCookie("username");
-	
 	if (!isPhoneNumber(phoneNumber))
 	{
 		setError(null, 'pn_modal');
 		return;
 	}
 	
-	updateSingleFirebaseAttribute(username, "Phone_Number", phoneNumber);
+	updateSingleFirebaseAttribute(getCookie("username"), "Phone_Number", phoneNumber);
 	setCookie("phoneNumber", phoneNumber, 30);
-	hideModal("#phoneNumberModal");	
+	if (num === null) hideModal("#phoneNumberModal");	
 }
 
 function convertBoolean(str)

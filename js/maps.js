@@ -18,13 +18,12 @@ var owner_marker;
 var owner_circle;
 var owner_location;
 
-
-function initialize(user, pass) {
-  username = user;
-  password = pass;
+function initialize() {
+  username = getCookie('username');
+  password = getCookie('password');
   getUserFromFirebase(username, password, 'login');
 
-  var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username+ ".json";
+  var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
   var result;
   $.ajax ({
     dataType: "json",
@@ -251,7 +250,7 @@ function pullDogLocation() {
         var lat1 = result['dogLat'];
         static_dog = new google.maps.LatLng(lat1, long1);
         if (result['Threshold']!=threshold) {
-          initialize(username, password);
+          initialize();
         }
       }
       else {

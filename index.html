@@ -73,17 +73,17 @@
           </div>
           <div class="modal-body">
             <p>New Username</p>
-            <input type="text" placeholder="Username" autofocus="autofocus" id="reg_username"/>
+            <input type="text" class='controls' placeholder="Username" autofocus="autofocus" id="reg_username"/>
             <p>New Password</p>
-            <input type="password" placeholder="Password" id="reg_password"/>
+            <input type="password" class='controls' placeholder="Password" id="reg_password"/>
             <p>Phone Number</p>
-            <input type="text" placeholder="xxxxxxxxxx"  id="reg_phone"/>
+            <input type="text" class='controls' placeholder="xxxxxxxxxx"  id="reg_phone"/>
             <p>Radius (feet)</p>
-            <input type="text" id="reg_radius" placeholder="i.e. 100"/>
+            <input type="text" class='controls' id="reg_radius" placeholder="i.e. 100"/>
             <p>Dog's Home Address</p>
             <input type="text" class='controls' id="pac-input2" placeholder="i.e. 123 Random St, Anytown, ST 012345"/>
             <br><br>
-            <button type="button" class="btn btn-primary" onclick="register();">Create Account</button>
+            <button type="button" class="btn btn-primary" style="width: 100%;" onclick="register();">Create Account</button>
             <br><br>
             Already have an account?<a data-toggle="modal" data-target="#loginModal" onclick="hideModal('#registerModal');"> Sign in here. </a>
           </div>
