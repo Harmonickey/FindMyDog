@@ -316,8 +316,6 @@ function login()
 	{
 		changeStatus("Login");
 		$("#user_id").text(getCookie("username"));
-		initialize(username, password);
-		window.location.href = "index.html";
 	}
 }
 
