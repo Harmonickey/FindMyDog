@@ -9,6 +9,9 @@ Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEP
 $(function() {
 	$("#from").datepicker();
 	$("#to").datepicker();
+	
+	var height = $(".stat-circle").height();
+	$(".stat-circle").width(height);
 });
 
 
@@ -75,7 +78,7 @@ function getReportInfo(minTime, maxTime)
 	var mapOptions = {
 		zoom: 17,
 		center: start_marker,
-		panControl: false,
+		panControl: true,
 		zoomControl: true,
 		scaleControl: false,
 		scrollwheel: false,
