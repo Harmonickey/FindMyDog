@@ -10,8 +10,9 @@ $(function() {
 	$("#from").datepicker();
 	$("#to").datepicker();
 	
-	var height = $(".stat-circle").height();
-	$(".stat-circle").width(height);
+	var height = $(".stat-circle")[0].height();
+	$(".stat-circle")[0].width(height);
+	$(".stat-circle")[1].width(height);
 });
 
 
