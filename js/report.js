@@ -227,6 +227,7 @@ function changeTimeSpan()
 	
 	var fromDate = new Date(from);
 	var toDate = new Date(to);
+	toDate.setDate(toDate.getDate() + 1);  //make it the midnight of the day we're wanting
 	
 	var fromTime = fromDate.getTime();
 	var toTime = toDate.getTime();
