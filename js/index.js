@@ -29,7 +29,7 @@ $(function () {
 	if (getUserFromFirebase(username, password, 'mainscreen'))
 	{
 		$("#user_id").text(getCookie("username"));
-		initialize(username, password);
+		initialize();
 		var phoneNumber = getCookie("phoneNumber");
 		var radius = getCookie("radius");
 		var baseLocation = getCookie("baseLocation");
@@ -479,7 +479,7 @@ function updateBaseLocation()
 	setCookie('baseLat', baseLat, 30);
 	setCookie('baseLong', baseLong, 30);
 	hideModal("#baseLocationModal");	
-	initialize(username, password);
+	initialize();
 }
 
 function updatePhoneNumber(num)
