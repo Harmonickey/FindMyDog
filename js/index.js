@@ -140,7 +140,7 @@ function loadUser(page)
 		if (page == 'main')
 			showModal('#loginModal');
 		else
-			window.location.href = 'landing.html';
+			window.location.href = 'index.html';
 	}
 	else
 	{
