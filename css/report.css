@@ -105,3 +105,34 @@ body {
 	margin: 0px;
 	opacity: 0.9;
 }
+
+.timespan-modal {
+	width: 200px;
+	border-radius: 5px;
+}
+
+.timespan-content {
+	background: #ebedf2;
+	opacity: 0.95;
+	border-radius: 0px;
+}
+
+.timespan-header {
+	background-color: #dfe0e6;
+	border: none;
+}
+
+.timespan-body {
+	border: none;
+}
+
+.timespan-error {
+	border: none;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.timespan-footer {
+	margin-top: 0;
+	border: none;
+}

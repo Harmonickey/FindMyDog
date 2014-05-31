@@ -73,23 +73,23 @@
 			</ul>
 		</div>
 	  </div>
-	  <div class="modal fade" id="timeSpanModal" tabindex="-1" role="dialog" aria-labelledby="timeSpanLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
+	<div class="modal fade" id="timeSpanModal" tabindex="-1" role="dialog" aria-labelledby="timeSpanLabel" aria-hidden="true">
+      <div class="modal-dialog timespan-modal">
+        <div class="modal-content timespan-content">
+          <div class="modal-header timespan-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Time Span</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body timespan-body">
             <p>From: </p>
             <input type="text" id="from" readonly>
             <p>To: </p>
             <input type="text" id="to" readonly>
           </div>
-          <div class="modal-body">
+          <div class="modal-body timespan-error">
           	<label id="timespan_error" style="color: red; display: none;"></label>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer timespan-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
             <button type="button" class="btn btn-primary" onclick="changeTimeSpan();">Submit</button>
           </div>
