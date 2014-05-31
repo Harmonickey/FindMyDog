@@ -339,6 +339,7 @@ function loginTracker() {
 function register()
 {
 	var username = $("#reg_username").val();
+	$("#user_id").text(username);
 	var password = $("#reg_password").val();
 	var phoneNumber = $("#reg_phone").val();
 	var radius = $("#reg_radius").val();
