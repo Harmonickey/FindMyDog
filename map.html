@@ -64,7 +64,7 @@
             <h4 class="modal-title">Change Dog's Address</h4>
           </div>
           <div class="modal-body settings-body">
-            <p>Please Enter a New Location Where You Expect Your Dog To Reside</p>
+            <p>Please Enter a New Location Where You Expect Your Dog To Be</p>
             <input type="text" class='controls' id="pac-input" style="width: 100%;" placeholder='Ex. 2060 Ridge Ave.'/>
           </div>
           <div class="modal-body settings-error">
@@ -72,35 +72,6 @@
           </div>
           <div class="modal-footer settings-footer">
             <button type="button" class="btn btn-primary" onclick="hideModal('#baseLocationModal'); updateBaseLocation();">Save changes</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Register</h4>
-          </div>
-          <div class="modal-body">
-            <p>New Username</p>
-            <input type="text" id="reg_username"/>
-            <p>New Password</p>
-            <input type="password" id="reg_password"/>
-            <p>Phone Number</p>
-            <input type="text" id="reg_phone"/>
-            <p>Radius (feet)</p>
-            <input type="text" id="reg_radius" placeholder="i.e. 100"/>
-            <p>Dog's Home Address</p>
-            <input type="text" class='controls' id="reg_baseLocation" placeholder="i.e. 123 Random St, Anytown, ST 012345"/>
-          </div>
-          <div class="modal-body">
-          	<label id="register_error" style="display: none;"></label>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onclick="register();">Create Account</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -140,7 +111,7 @@
           	<label id="phonenumber_error" style="display: none; color: red"></label>
           </div>
           <div class="modal-footer settings-footer">
-            <button type="button" class="btn btn-primary" onclick="updatePhoneNumber();"> Save Changes</button>
+            <button type="button" class="btn btn-primary" onclick="updatePhoneNumber(null);"> Save Changes</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

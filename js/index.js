@@ -39,7 +39,27 @@ $(function () {
 			changeStatus("Login");
 		}	
 	} 
-
+	
+	var input = document.getElementById('pac-input');
+	var searchBox = new google.maps.places.SearchBox((input));
+	
+	google.maps.event.addListener(searchBox, 'place_changed', function() {
+		var place = searchBox.getPlace();
+		if (!place.geometry) {
+			return;
+		}
+	});
+	
+	var input2 = document.getElementById('pac-input2');
+	var searchBox2 = new google.maps.places.SearchBox((input2));
+	
+	google.maps.event.addListener(searchBox2, 'place_changed', function() {
+		var place = searchBox2.getPlace();
+		if (!place.geometry) {
+			return;
+		}
+	});
+	
 });
 
 function getCookie(cname)
@@ -344,7 +364,7 @@ function register()
 	var password = $("#reg_password").val();
 	var phoneNumber = $("#reg_phone").val();
 	var radius = $("#reg_radius").val();
-	var baseLocation = $("#reg_baseLocation").val();
+	var baseLocation = $("#pac-input2").val();
 
 	var isANumber = isNaN(radius) === false;
 	if(!isANumber) {
@@ -354,6 +374,7 @@ function register()
 	
 	if(createFirebaseUser(username, password, phoneNumber, radius, baseLocation))
 	{
+		updatePhoneNumber(phoneNumber); 
 		hideModal("#registerModal");
 	}
 	else
@@ -453,9 +474,9 @@ function updateBaseLocation()
 	initialize(username, password);
 }
 
-function updatePhoneNumber()
+function updatePhoneNumber(num)
 {
-	var phoneNumber = $("#new_phonenumber").val();
+	var phoneNumber = (num ? num : $("#new_phonenumber").val());
 	
 	//use Twilio verification here...
 	//send request with phoneNumber
