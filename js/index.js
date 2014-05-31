@@ -85,6 +85,7 @@ function clearAllCookies()
 		setCookie('baseLong', "", -1);
 		setCookie('dog_added', "", -1);
 		setCookie('initialized', "", -1);
+		setCookie('turned_on', "", -1);
 	}
 }
 
