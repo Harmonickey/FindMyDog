@@ -359,29 +359,47 @@ function loginTracker() {
 
 function register()
 {
-	var username = $("#reg_username").val();
+	var username = $("#reg_username").val().trim();
 	$("#user_id").text(username);
-	var password = $("#reg_password").val();
+	var password = $("#reg_password").val().trim();
 	var phoneNumber = $("#reg_phone").val();
-	var radius = $("#reg_radius").val();
+	var radius = $("#reg_radius").val().trim();
 	var baseLocation = $("#pac-input2").val();
 
-	var isANumber = isNaN(radius) === false;
-	if(!isANumber) {
+	var isANumber = (isNaN(radius) === false);
+	if(!isANumber || radius == "") {
 		setError('no_radius', 'register');
 		return;
 	}
 	
-	if (!isPhoneNumber(phoneNumber))
+	if (!isPhoneNumber(phoneNumber) || phoneNumber == "")
 	{
 		setError('no_num', 'register');
 		return;
 	}
 	
+	if (username == "")
+	{
+		setError('no_username', 'register');
+		return;
+	}
+	
+	if (password == "")
+	{
+		setError('no_password', 'register');
+		return;
+	}
+	
+	if (baseLocation == "")
+	{
+		setError('no_location', 'register');
+		return;
+	}
+	
 	if(createFirebaseUser(username, password, phoneNumber, radius, baseLocation))
 	{
-		updatePhoneNumber(phoneNumber); 
 		hideModal("#registerModal");
+		updatePhoneNumber(phoneNumber); 
 	}
 	else
 	{
@@ -416,6 +434,12 @@ function setError(error, module)
 				$("#register_error").html("Invalid radius");
 			if (error == 'no_num')
 				$("#register_error").html("Invalid phone number");
+			if (error == 'no_username')
+				$("#register_error").html("Please enter a username");
+			if (error == 'no_password')
+				$("#register_error").html("Please enter a password");
+			if (error == 'no_location')
+				$("#register_error").html("Please enter a location");
 		case 'mainscreen':
 		case 'pn_modal':
 			$("#phonenumber_error").css('display', 'block');
