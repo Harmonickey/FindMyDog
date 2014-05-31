@@ -68,6 +68,7 @@ function changeStatus(status)
 	if (status == "Logout")
 	{
 		clearAllCookies(); 
+		$("#user_id").text("");
 	}
 }
 
