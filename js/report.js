@@ -72,6 +72,24 @@ function getCookie(cname)
 
 function getReportInfo(minTime, maxTime)
 {
+	var mapOptions = {
+		zoom: 17,
+		center: start_marker,
+		panControl: false,
+		zoomControl: true,
+		scaleControl: false,
+		scrollwheel: false,
+		navigationControl: false,
+		mapTypeControl: false,
+		scaleControl: false,
+		draggable: false,
+		disableDoubleClickZoom: true,
+		streetViewControl: false
+	}
+
+	map = new google.maps.Map(document.getElementById('activity-map'),
+		mapOptions);
+
 	var query = new Parse.Query("Dog_Location");
 	if (getCookie('username')!=null) {
 		query.select("Location").equalTo("Username", getCookie('username')).lessThanOrEqualTo("Time", maxTime).greaterThanOrEqualTo("Time", minTime).descending("Time").limit(1000).find({
@@ -154,29 +172,6 @@ function getDistance(loc, pos) {
 }
 
 function createActivityMap() {
-	var mapOptions = {
-		zoom: 17,
-		center: start_marker,
-		panControl: false,
-		zoomControl: true,
-		scaleControl: false,
-		scrollwheel: false,
-		navigationControl: false,
-		mapTypeControl: false,
-		scaleControl: false,
-		draggable: false,
-		disableDoubleClickZoom: true,
-		streetViewControl: false
-	}
-
-	map = new google.maps.Map(document.getElementById('activity-map'),
-		mapOptions);
-
-//	var date = new Date();
-//	var millTime2 = date.getTime();
-//	millTime1 = millTime2 - (10*24*3600*1000);
-
-//	getReportInfo(millTime1, millTime2);
 	getTodayReport();
 	return;
 }
