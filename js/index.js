@@ -73,15 +73,18 @@ function changeStatus(status)
 
 function clearAllCookies()
 {
-	setCookie('username', "", -1);
-	setCookie('password', "", -1);
-	setCookie('radius', "", -1);
-	setCookie('phoneNumber', "", -1);
-	setCookie('baseLocation', "", -1);
-	setCookie('baseLat', "", -1);
-	setCookie('baseLong', "", -1);
-	setCookie('dog_added', "", -1);
-	setCookie('initialized', "", -1);
+	for (var i = 0; i < 3; i++)
+	{
+		setCookie('username', "", -1);
+		setCookie('password', "", -1);
+		setCookie('radius', "", -1);
+		setCookie('phoneNumber', "", -1);
+		setCookie('baseLocation', "", -1);
+		setCookie('baseLat', "", -1);
+		setCookie('baseLong', "", -1);
+		setCookie('dog_added', "", -1);
+		setCookie('initialized', "", -1);
+	}
 }
 
 function setAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong)
@@ -134,13 +137,14 @@ function loadUser(page)
 	if (!username)
 	{
 		if (page == 'main')
-			showModal('#loginModal');	
+			showModal('#loginModal');
+		else
+			window.location.href = 'landing.html';
 	}
 	else
 	{
 		$("#user_id").text(username);
 		changeStatus("Login");
-		initializeTracker();
 	}
 }
 
@@ -310,6 +314,7 @@ function login()
 	if (checkFirebaseForLogin(username, password, 'login'))
 	{
 		changeStatus("Login");
+		$("#user_id").text(getCookie("username"));
 		initialize(username, password);
 		window.location.href = "index.html";
 	}
