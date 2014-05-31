@@ -105,16 +105,6 @@ function initialize(user, pass) {
   if(result['dogLat']!=null) {
     addDog(result['dogLat'], result['dogLng']);
   }
-  
-	var input = document.getElementById('pac-input');
-	var searchBox = new google.maps.places.SearchBox((input));
-	
-	google.maps.event.addListener(searchBox, 'place_changed', function() {
-		var place = searchBox.getPlace();
-		if (!place.geometry) {
-			return;
-		}
-	});
 }
 
 function addDog(lat, lng) {
