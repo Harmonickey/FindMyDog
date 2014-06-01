@@ -176,17 +176,7 @@ function getDistance(loc, pos) {
 function createActivityMap() {
 	getTodayReport();
 	
-	
-	var width = $($(".stat-circle")[0]).width();
-	$($(".stat-circle")[0]).height(width);
-	$($(".stat-circle")[1]).height(width);
-	$($(".circle-text")[0]).height(width);
-	$($(".circle-text")[1]).height(width);
-	$($(".circle-text")[0]).css('margin-top', "50%");
-	$($(".circle-text")[1]).css('margin-top', "50%");
-	$($(".quick-stat")[0]).height(width + 50);
-	$($(".quick-stat")[1]).height(width + 50);
-	
+	/*
 	if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {} 
 	else {
 		$($(".main")[0]).css('width', "50%");
@@ -200,7 +190,7 @@ function createActivityMap() {
 		$($(".quick-stat")[0]).height(width + 50);
 		$($(".quick-stat")[1]).height(width + 50);
 	}
-	
+	*/
 	return;
 }
 
