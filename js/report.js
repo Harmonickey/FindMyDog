@@ -181,8 +181,8 @@ function createActivityMap() {
 	$($(".stat-circle")[1]).height(width);
 	$($(".circle-text")[0]).height(width);
 	$($(".circle-text")[1]).height(width);
-	$($(".circle-text")[0]).css('line-height', "250%");
-	$($(".circle-text")[1]).css('line-height', "250%");
+	$($(".circle-text")[0]).css('margin-top', "50%");
+	$($(".circle-text")[1]).css('margin-top', "50%");
 	$($(".quick-stat")[0]).height(width + 50);
 	$($(".quick-stat")[1]).height(width + 50);
 	
