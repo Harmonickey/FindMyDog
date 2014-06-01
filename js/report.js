@@ -10,9 +10,7 @@ $(function() {
 	$("#from").datepicker();
 	$("#to").datepicker();
 	
-	var height = $(".stat-circle")[0].height();
-	$(".stat-circle")[0].width(height);
-	$(".stat-circle")[1].width(height);
+	
 });
 
 
@@ -177,6 +175,15 @@ function getDistance(loc, pos) {
 
 function createActivityMap() {
 	getTodayReport();
+	
+	var width = $($(".stat-circle")[0]).width();
+	$($(".stat-circle")[0]).height(width);
+	$($(".stat-circle")[1]).height(width);
+	$($(".circle-text")[0]).height(width);
+	$($(".circle-text")[1]).height(width);
+	$($(".circle-text")[0]).css('line-height', "250%");
+	$($(".circle-text")[1]).css('line-height', "250%");
+	
 	return;
 }
 

@@ -17,21 +17,22 @@ body {
 }
 .quick-stat {
   margin-bottom: 20px;
+  width: 50%;
+  height: 150px;
 }
 
 .stat-circle {
 	display: inline-block;
 	border-radius: 50%;
 	background-color: black;
-	height: 200px;
-	width: 200px;
+	width: 90%;
 }
 
 .circle-text {
-	line-height: 200px;
-	margin-top: 0px
+	width: 100%;
 }
 
+/*
 @media (max-width: 768px) {
 	.stat-circle {
 		height: 145px;
@@ -42,6 +43,7 @@ body {
 		line-height: 145px;
 	}
 }
+*/
 
 .blue {
 	background-color: #3E8AE8;
