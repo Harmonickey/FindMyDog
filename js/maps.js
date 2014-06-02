@@ -186,8 +186,8 @@ function getDistance(loc, pos, thres) {
 }
 
 function parseDistance(dist, thres) {
-  if(getCookie("username")) {
-    if(convertBoolean(getCookie("turned_on"))) {
+  if(convertBoolean(getCookie("turned_on"))) {
+    if(getCookie("username")) {
       //if out of range
       if (dist>thres) {
         //remove in-range counter
@@ -213,9 +213,9 @@ function parseDistance(dist, thres) {
         }
       }
     }
-  }
-  else {
-    window.location = "index.html";
+    else {
+      window.location = "index.html";
+    }
   }
 }
 
