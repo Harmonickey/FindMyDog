@@ -138,20 +138,25 @@ setInterval(trackLocation, 3000); //regularly update the position of the dog on 
 
 function trackLocation() {
   if(convertBoolean(getCookie("initialized"))) {
-    if(convertBoolean(getCookie("follow_device"))) {
-      getUserLocation();
-      console.log(owner_location);
-      pullDogLocation();
-      pet_marker.setPosition(static_dog); //update the dog's position on the map
-      line.setPath([owner_location, static_dog]);
-      var personal_radius = parseInt(getCookie("personal_radius"));
-      getDistance(owner_location, static_dog, personal_radius);
+    if(getCookie("username")) {
+      if(convertBoolean(getCookie("follow_device"))) {
+        getUserLocation();
+        console.log(owner_location);
+        pullDogLocation();
+        pet_marker.setPosition(static_dog); //update the dog's position on the map
+        line.setPath([owner_location, static_dog]);
+        var personal_radius = parseInt(getCookie("personal_radius"));
+        getDistance(owner_location, static_dog, personal_radius);
+      }
+      else {
+        pullDogLocation();
+        pet_marker.setPosition(static_dog); //update the dog's position on the map
+        line.setPath([static_loc, static_dog]); //update the line on the map
+        getDistance(static_loc, static_dog, threshold); //get the distance between the home location and the dog
+      }
     }
     else {
-      pullDogLocation();
-      pet_marker.setPosition(static_dog); //update the dog's position on the map
-      line.setPath([static_loc, static_dog]); //update the line on the map
-      getDistance(static_loc, static_dog, threshold); //get the distance between the home location and the dog
+      window.location = "index.html";
     }
   }
 }
