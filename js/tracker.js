@@ -3,8 +3,6 @@ Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEP
 
 var map; //will be used for map on page
 
-var logged_in = false;
-
 var dog_marker; //used to mark the location of the dog_marker
 var positions = [];
 var max = 5;
@@ -18,7 +16,6 @@ function initializeTracker() {
 	  		lat = position.coords.latitude;
 	  		lng = position.coords.longitude;
 	  		updateFirebaseLocation(lat, lng);
-	  		logged_in = true;
 	  		$("#user_id").text(getCookie("username"));
 	  	});
 	  }
@@ -31,7 +28,7 @@ function initializeTracker() {
 setInterval(trackLocation, 1000);
 
 function trackLocation() {
-	if(logged_in==true) {
+	if(getCookie("username")) {
 		navigator.geolocation.getCurrentPosition(function(position) {
 			var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 			if(position.coords.latitude && position.coords.longitude) {	
@@ -47,10 +44,7 @@ function trackLocation() {
 		});
 	}
 	else {
-		if($("#status").text()!="Loading...") {
-			$("#status").text("Error: Failed to send location");
-			document.getElementById('status').style.color = 'red';
-		}
+		window.location = "index.html";
 	}
 }
 
