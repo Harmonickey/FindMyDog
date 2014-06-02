@@ -23,86 +23,92 @@ function initialize() {
   password = getCookie('password');
   getUserFromFirebase(username, password, 'login');
 
-  var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
-  var result;
-  $.ajax ({
-    dataType: "json",
-    url: firebaseAPI,
-    async: false,
-    success: function(data) {
-      result = data;
-      static_loc = new google.maps.LatLng(result['baseLat'], result['baseLong']);
-      threshold = result['Threshold'];
+  if(getCookie('username')) {
 
-      //options for the displayed map
-      var mapOptions = {
-        zoom: 18,
-        center: static_loc
+    var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
+    var result;
+    $.ajax ({
+      dataType: "json",
+      url: firebaseAPI,
+      async: false,
+      success: function(data) {
+        result = data;
+        static_loc = new google.maps.LatLng(result['baseLat'], result['baseLong']);
+        threshold = result['Threshold'];
+
+        //options for the displayed map
+        var mapOptions = {
+          zoom: 18,
+          center: static_loc
+        }
+        //create the map
+        map = new google.maps.Map(document.getElementById('map-canvas'),
+          mapOptions);
+        setCookie("initialized", 'true');
+
+        //set a marker for the home location
+        var static_marker = new google.maps.Marker({
+          position: static_loc,
+          map: map,
+          title: "Home",
+          icon: 'images/home.png'
+        });
+        //create a circle around the home location
+        var large = parseFloat(threshold)/3.28084;
+        var static_circle1 = new google.maps.Circle({
+          map: map,
+          radius: large,
+          fillColor: '#333333',
+          fillOpacity: 0.2,
+          strokeWeight: 0,
+          strokeOpacity: 0.5
+        });
+        static_circle1.bindTo('center', static_marker, 'position');
+        //create a circle around the home location
+        var mid = parseFloat(threshold)/3.28084 - (parseFloat(threshold)/(3*3.28084));
+        var static_circle2 = new google.maps.Circle({
+          map: map,
+          radius: mid,
+          fillColor: '#333333',
+          fillOpacity: 0.2,
+          strokeWeight: 0,
+          strokeOpacity: 0.5
+        });
+        static_circle2.bindTo('center', static_marker, 'position');
+        //create a circle around the home location
+        var small = parseFloat(threshold)/3.28084 - 2*(parseFloat(threshold)/(3*3.28084));
+        var static_circle3 = new google.maps.Circle({
+          map: map,
+          radius: small,
+          fillColor: '#333333',
+          fillOpacity: 0.2,
+          strokeWeight: 0,
+          strokeOpacity: 0.5
+        });
+        static_circle3.bindTo('center', static_marker, 'position');
+
+        owner_circle = new google.maps.Circle({
+          map: map,
+          radius: 200,
+          fillColor: '#333333',
+          fillOpacity: 0.3,
+          strokeWeight: 0,
+          strokeOpacity: 0.5,
+        });
+
+        owner_marker = new google.maps.Marker({
+          map: map,
+          title: "Owner's Location",
+          icon: "images/male.png"
+        });
       }
-      //create the map
-      map = new google.maps.Map(document.getElementById('map-canvas'),
-        mapOptions);
-      setCookie("initialized", 'true');
-
-      //set a marker for the home location
-      var static_marker = new google.maps.Marker({
-        position: static_loc,
-        map: map,
-        title: "Home",
-        icon: 'images/home.png'
-      });
-      //create a circle around the home location
-      var large = parseFloat(threshold)/3.28084;
-      var static_circle1 = new google.maps.Circle({
-        map: map,
-        radius: large,
-        fillColor: '#333333',
-        fillOpacity: 0.2,
-        strokeWeight: 0,
-        strokeOpacity: 0.5
-      });
-      static_circle1.bindTo('center', static_marker, 'position');
-      //create a circle around the home location
-      var mid = parseFloat(threshold)/3.28084 - (parseFloat(threshold)/(3*3.28084));
-      var static_circle2 = new google.maps.Circle({
-        map: map,
-        radius: mid,
-        fillColor: '#333333',
-        fillOpacity: 0.2,
-        strokeWeight: 0,
-        strokeOpacity: 0.5
-      });
-      static_circle2.bindTo('center', static_marker, 'position');
-      //create a circle around the home location
-      var small = parseFloat(threshold)/3.28084 - 2*(parseFloat(threshold)/(3*3.28084));
-      var static_circle3 = new google.maps.Circle({
-        map: map,
-        radius: small,
-        fillColor: '#333333',
-        fillOpacity: 0.2,
-        strokeWeight: 0,
-        strokeOpacity: 0.5
-      });
-      static_circle3.bindTo('center', static_marker, 'position');
-
-      owner_circle = new google.maps.Circle({
-        map: map,
-        radius: 200,
-        fillColor: '#333333',
-        fillOpacity: 0.3,
-        strokeWeight: 0,
-        strokeOpacity: 0.5,
-      });
-
-      owner_marker = new google.maps.Marker({
-        map: map,
-        title: "Owner's Location",
-        icon: "images/male.png"
-      });
+    });
+    if(result['dogLat']!=null) {
+      addDog(result['dogLat'], result['dogLng']);
     }
-  });
-  if(result['dogLat']!=null) {
-    addDog(result['dogLat'], result['dogLng']);
+  }
+  else {
+    window.location = "index.html";
   }
 }
 
