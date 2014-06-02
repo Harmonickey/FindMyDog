@@ -12,61 +12,19 @@ var line1, line2, line3, line4;
 
 function initializeTracker() {
   //get original geolocation
-  if(navigator.geolocation) {
-  	navigator.geolocation.getCurrentPosition(function(position) {
-  		lat = position.coords.latitude;
-  		lng = position.coords.longitude;
- // 		var pos = new google.maps.LatLng(lat, lng);
-  		updateFirebaseLocation(lat, lng);
-  		logged_in = true;
-  		$("#user_id").text(getCookie("username"));
-  		//options for the displayed map
-/*		var mapOptions = {
-			zoom: 20,
-			center: pos
-		}
-		//create the map
-		map = new google.maps.Map(document.getElementById('tracking-map'),
-		  	mapOptions);
-  		dog_marker = new google.maps.Marker( {
-  			position: pos,
-  			map: map,
-  			title: "Dog's Location",
-  			icon: "images/pets2.png"
-  		});
-
-  		logged_in = true;
-
-  		line1 = new google.maps.Polyline({
-  			geodesic: true,
-  			strokeColor: '#008f8f',
-  			strokeOpacity: 0.5,
-  			strokeWeight: 3
-  		});
-  		line2 = new google.maps.Polyline({
-  			geodesic: true,
-  			strokeColor: '#008f8f',
-  			strokeOpacity: 0.5,
-  			strokeWeight: 3
-  		});
-  		line3 = new google.maps.Polyline({
-  			geodesic: true,
-  			strokeColor: '#008f8f',
-  			strokeOpacity: 0.5,
-  			strokeWeight: 3
-  		});
-  		line4 = new google.maps.Polyline({
-  			geodesic: true,
-  			strokeColor: '#008f8f',
-  			strokeOpacity: 0.5,
-  			strokeWeight: 3
-  		});
-
-  		line1.setMap(map);
-  		line2.setMap(map);
-  		line3.setMap(map);
-  		line4.setMap(map);*/
-  	});
+  if(getCookie("username")) {
+	  if(navigator.geolocation) {
+	  	navigator.geolocation.getCurrentPosition(function(position) {
+	  		lat = position.coords.latitude;
+	  		lng = position.coords.longitude;
+	  		updateFirebaseLocation(lat, lng);
+	  		logged_in = true;
+	  		$("#user_id").text(getCookie("username"));
+	  	});
+	  }
+  }
+  else {
+  	window.location = "index.html";
   }
 }
 
@@ -86,36 +44,6 @@ function trackLocation() {
   				$("#status").text("Error: Location not found");
   				document.getElementById('status').style.color = 'red';
   			}
-  			
-	/*		dog_marker.setPosition(pos);
-			storeDogLocation(positions.coords.latitude, positions.coords.longitude);	
-			map.setCenter(pos);
-			if (positions.length < max) {
-				positions.unshift(pos);
-			}
-			else {
-				positions.pop();
-				positions.unshift(pos);
-			}
-
-			if (positions.length >= 2) {
-				line1.setPath([positions[0], positions[1]]);
-				console.log(positions[0]);
-				console.log(positions[1]);
-			}
-			if (positions.length >= 3) {
-				line2.setPath([positions[1], positions[2]]);
-				console.log(positions[2]);
-			}
-			if (positions.length >= 4) {
-				line3.setPath([positions[2], positions[3]]);
-				console.log(positions[3]);
-			}
-			if (positions.length == 5) {
-				line4.setPath([positions[3], positions[4]]);
-				console.log(positions[4]);
-				console.log("-----");
-			}*/
 		});
 	}
 	else {
