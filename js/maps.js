@@ -155,7 +155,6 @@ function trackLocation() {
     }
   }
 }
-}
 
 /*
 #### check the distance of the dog ####
