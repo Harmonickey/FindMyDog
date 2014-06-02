@@ -154,7 +154,7 @@ function trackLocation() {
       window.location = "index.html";
     }
   }
-  else if(!getCookie("username")) {
+  else if(getCookie("username")==null) {
     window.location = "index.html";
   } 
 }
