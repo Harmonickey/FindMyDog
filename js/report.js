@@ -16,47 +16,57 @@ $(function() {
 
 function getTodayReport()
 {
-	var date = new Date();
-	
-	var yymmdd = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
-	
-	//display as today
-	$("#title").html("Report: " + (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear());
-	
-	//get midnight of last night
-	var normalizedToday = new Date(yymmdd);
-	var min = normalizedToday.getTime();
-	
-	//get midnight of tonight
-	normalizedToday.setDate(normalizedToday.getDate() + 1);
-	var max = normalizedToday.getTime();
-	
-	$("#yesterdaybtn").removeClass("disabled");
-	$("#todaybtn").addClass("disabled");
-	
-	getReportInfo(min, max);
+	if(getCookie("username")) {
+		var date = new Date();
+		
+		var yymmdd = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+		
+		//display as today
+		$("#title").html("Report: " + (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear());
+		
+		//get midnight of last night
+		var normalizedToday = new Date(yymmdd);
+		var min = normalizedToday.getTime();
+		
+		//get midnight of tonight
+		normalizedToday.setDate(normalizedToday.getDate() + 1);
+		var max = normalizedToday.getTime();
+		
+		$("#yesterdaybtn").removeClass("disabled");
+		$("#todaybtn").addClass("disabled");
+		
+		getReportInfo(min, max);
+	}
+	else {
+		window.location = "index.html";
+	}
 }
 
 function getYesterdayReport()
 {
-	var date = new Date();
-	
-	var yymmdd = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
-	
-	//get midnight of last night
-	var normalizedToday = new Date(yymmdd);
-	var max = normalizedToday.getTime();
-	
-	//get midnight of tonight
-	normalizedToday.setDate(normalizedToday.getDate() - 1);
-	var min = normalizedToday.getTime();
-	
-	//display as normalized yesterday
-	$("#title").html("Report: " + (normalizedToday.getMonth() + 1) + "/" + normalizedToday.getDate() + "/" + normalizedToday.getFullYear());
-	$("#todaybtn").removeClass("disabled");
-	$("#yesterdaybtn").addClass("disabled");
-	
-	getReportInfo(min, max);
+	if(getCookie("username")) {
+		var date = new Date();
+		
+		var yymmdd = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+		
+		//get midnight of last night
+		var normalizedToday = new Date(yymmdd);
+		var max = normalizedToday.getTime();
+		
+		//get midnight of tonight
+		normalizedToday.setDate(normalizedToday.getDate() - 1);
+		var min = normalizedToday.getTime();
+		
+		//display as normalized yesterday
+		$("#title").html("Report: " + (normalizedToday.getMonth() + 1) + "/" + normalizedToday.getDate() + "/" + normalizedToday.getFullYear());
+		$("#todaybtn").removeClass("disabled");
+		$("#yesterdaybtn").addClass("disabled");
+		
+		getReportInfo(min, max);
+	}
+	else {
+		window.location = "index.html";
+	}
 }
 
 function getCookie(cname)
@@ -230,43 +240,48 @@ function drawRoute(result) {
 
 function changeTimeSpan()
 {
-	//some parsing to get the millisecond value
-	var from = $("#from").val();
-	var to = $("#to").val();
-	from = from.replace(/ /g, "");
-	to = to.replace(/ /g, "");
-	
-	if (!from || !to || from == "" || to == "")
-	{
-		$("#timespan_error").css('display', 'block');
-		$("#timespan_error").html("Need to include two dates!");
-		return;
+	if(getCookie("username")) {
+		//some parsing to get the millisecond value
+		var from = $("#from").val();
+		var to = $("#to").val();
+		from = from.replace(/ /g, "");
+		to = to.replace(/ /g, "");
+		
+		if (!from || !to || from == "" || to == "")
+		{
+			$("#timespan_error").css('display', 'block');
+			$("#timespan_error").html("Need to include two dates!");
+			return;
+		}
+		
+		var fromDate = new Date(from);
+		var toDate = new Date(to);
+		toDate.setDate(toDate.getDate() + 1);  //make it the midnight of the day we're wanting
+		
+		var fromTime = fromDate.getTime();
+		var toTime = toDate.getTime();
+		
+		if (toTime < fromTime)
+		{
+			$("#timespan_error").css('display', 'block');
+			$("#timespan_error").html("Cannot check in reverse. Switch 'From' and 'To'!");
+			return;
+		}
+		
+		//reenabled if needed
+		$("#yesterdaybtn").removeClass("disabled");
+		$("#todaybtn").removeClass("disabled");
+		
+		console.log(fromTime, toTime);
+		
+		getReportInfo(fromTime, toTime);
+		$("#title").html("Report: " + from + " - " + to);
+		
+		$('#timeSpanModal').modal('hide');
 	}
-	
-	var fromDate = new Date(from);
-	var toDate = new Date(to);
-	toDate.setDate(toDate.getDate() + 1);  //make it the midnight of the day we're wanting
-	
-	var fromTime = fromDate.getTime();
-	var toTime = toDate.getTime();
-	
-	if (toTime < fromTime)
-	{
-		$("#timespan_error").css('display', 'block');
-		$("#timespan_error").html("Cannot check in reverse. Switch 'From' and 'To'!");
-		return;
+	else {
+		window.location = "index.html";
 	}
-	
-	//reenabled if needed
-	$("#yesterdaybtn").removeClass("disabled");
-	$("#todaybtn").removeClass("disabled");
-	
-	console.log(fromTime, toTime);
-	
-	getReportInfo(fromTime, toTime);
-	$("#title").html("Report: " + from + " - " + to);
-	
-	$('#timeSpanModal').modal('hide');
 }
 
 google.maps.event.addDomListener(window, 'load', createActivityMap);
