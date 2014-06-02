@@ -400,8 +400,11 @@ function register()
 	}
 	else
 	{
-		setError('no_user', 'register');	
+		setError('no_user', 'register');
+		return;
 	}
+	
+	$("#register_error").css('display', 'none');
 }
 
 function showModal(modal)
@@ -460,7 +463,7 @@ function updateRadius()
 		setError(null, 'rad_modal');
 		return;
 	}
-
+	$("#radius_error").css('display', 'none');
 	var username = getCookie("username");
 	updateSingleFirebaseAttribute(username, "Threshold", parseInt(radius));
 	setCookie("radius", radius, 30);
@@ -490,7 +493,7 @@ function updateBaseLocation()
 		setError(null, 'base_modal');
 		return;	
 	}
-
+	$("#baselocation_error").css('display', 'none');
 	var username = getCookie("username");
 	var password = getCookie("password");
 	updateSingleFirebaseAttribute(username, "Base_Location", baseLocation);
@@ -524,7 +527,7 @@ function updatePhoneNumber(num)
 		setError(null, 'pn_modal');
 		return;
 	}
-	
+	$("#phonenumber_error").css('display', 'none');
 	updateSingleFirebaseAttribute(getCookie("username"), "Phone_Number", phoneNumber);
 	setCookie("phoneNumber", phoneNumber, 30);
 	if (num === null) hideModal("#phoneNumberModal");	
