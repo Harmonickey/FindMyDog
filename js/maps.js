@@ -105,7 +105,6 @@ function initialize() {
     addDog(result['dogLat'], result['dogLng']);
   }
 }
-}
 
 function addDog(lat, lng) {
   if(getCookie("username")) {
