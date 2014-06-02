@@ -472,8 +472,7 @@ function updateRadius()
 
 function updateBaseLocation()
 {
-	console.log("base location");
-	var baseLocation = $("#new_baselocation").val();
+	var baseLocation = $("#pac-input").val();
 
 	var geoLocate = "https://maps.googleapis.com/maps/api/geocode/json?address=" + baseLocation + "&sensor=false&key=AIzaSyAjECgtOkJf0xeIpProlCseMUfh4VF6jGg";
 	var result;
