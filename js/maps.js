@@ -23,131 +23,146 @@ function initialize() {
   password = getCookie('password');
   getUserFromFirebase(username, password, 'login');
 
-  var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
-  var result;
-  $.ajax ({
-    dataType: "json",
-    url: firebaseAPI,
-    async: false,
-    success: function(data) {
-      result = data;
-      static_loc = new google.maps.LatLng(result['baseLat'], result['baseLong']);
-      threshold = result['Threshold'];
+  if(getCookie("username")) {
+    var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
+    var result;
+    $.ajax ({
+      dataType: "json",
+      url: firebaseAPI,
+      async: false,
+      success: function(data) {
+        result = data;
+        static_loc = new google.maps.LatLng(result['baseLat'], result['baseLong']);
+        threshold = result['Threshold'];
 
-      //options for the displayed map
-      var mapOptions = {
-        zoom: 18,
-        center: static_loc
+        //options for the displayed map
+        var mapOptions = {
+          zoom: 18,
+          center: static_loc
+        }
+        //create the map
+        map = new google.maps.Map(document.getElementById('map-canvas'),
+          mapOptions);
+        setCookie("initialized", 'true');
+
+        //set a marker for the home location
+        var static_marker = new google.maps.Marker({
+          position: static_loc,
+          map: map,
+          title: "Home",
+          icon: 'images/home.png'
+        });
+        //create a circle around the home location
+        var large = parseFloat(threshold)/3.28084;
+        var static_circle1 = new google.maps.Circle({
+          map: map,
+          radius: large,
+          fillColor: '#333333',
+          fillOpacity: 0.2,
+          strokeWeight: 0,
+          strokeOpacity: 0.5
+        });
+        static_circle1.bindTo('center', static_marker, 'position');
+        //create a circle around the home location
+        var mid = parseFloat(threshold)/3.28084 - (parseFloat(threshold)/(3*3.28084));
+        var static_circle2 = new google.maps.Circle({
+          map: map,
+          radius: mid,
+          fillColor: '#333333',
+          fillOpacity: 0.2,
+          strokeWeight: 0,
+          strokeOpacity: 0.5
+        });
+        static_circle2.bindTo('center', static_marker, 'position');
+        //create a circle around the home location
+        var small = parseFloat(threshold)/3.28084 - 2*(parseFloat(threshold)/(3*3.28084));
+        var static_circle3 = new google.maps.Circle({
+          map: map,
+          radius: small,
+          fillColor: '#333333',
+          fillOpacity: 0.2,
+          strokeWeight: 0,
+          strokeOpacity: 0.5
+        });
+        static_circle3.bindTo('center', static_marker, 'position');
+
+        owner_circle = new google.maps.Circle({
+          map: map,
+          radius: 200,
+          fillColor: '#333333',
+          fillOpacity: 0.3,
+          strokeWeight: 0,
+          strokeOpacity: 0.5,
+        });
+
+        owner_marker = new google.maps.Marker({
+          map: map,
+          title: "Owner's Location",
+          icon: "images/male.png"
+        });
       }
-      //create the map
-      map = new google.maps.Map(document.getElementById('map-canvas'),
-        mapOptions);
-      setCookie("initialized", 'true');
-
-      //set a marker for the home location
-      var static_marker = new google.maps.Marker({
-        position: static_loc,
-        map: map,
-        title: "Home",
-        icon: 'images/home.png'
-      });
-      //create a circle around the home location
-      var large = parseFloat(threshold)/3.28084;
-      var static_circle1 = new google.maps.Circle({
-        map: map,
-        radius: large,
-        fillColor: '#333333',
-        fillOpacity: 0.2,
-        strokeWeight: 0,
-        strokeOpacity: 0.5
-      });
-      static_circle1.bindTo('center', static_marker, 'position');
-      //create a circle around the home location
-      var mid = parseFloat(threshold)/3.28084 - (parseFloat(threshold)/(3*3.28084));
-      var static_circle2 = new google.maps.Circle({
-        map: map,
-        radius: mid,
-        fillColor: '#333333',
-        fillOpacity: 0.2,
-        strokeWeight: 0,
-        strokeOpacity: 0.5
-      });
-      static_circle2.bindTo('center', static_marker, 'position');
-      //create a circle around the home location
-      var small = parseFloat(threshold)/3.28084 - 2*(parseFloat(threshold)/(3*3.28084));
-      var static_circle3 = new google.maps.Circle({
-        map: map,
-        radius: small,
-        fillColor: '#333333',
-        fillOpacity: 0.2,
-        strokeWeight: 0,
-        strokeOpacity: 0.5
-      });
-      static_circle3.bindTo('center', static_marker, 'position');
-
-      owner_circle = new google.maps.Circle({
-        map: map,
-        radius: 200,
-        fillColor: '#333333',
-        fillOpacity: 0.3,
-        strokeWeight: 0,
-        strokeOpacity: 0.5,
-      });
-
-      owner_marker = new google.maps.Marker({
-        map: map,
-        title: "Owner's Location",
-        icon: "images/male.png"
-      });
+    });
+    if(result['dogLat']!=null) {
+      addDog(result['dogLat'], result['dogLng']);
     }
-  });
-  if(result['dogLat']!=null) {
-    addDog(result['dogLat'], result['dogLng']);
+  }
+  else {
+    window.location = "index.html";
   }
 }
 
 function addDog(lat, lng) {
-  static_dog = new google.maps.LatLng(lat, lng);
-  //set a marker for the dog
-  pet_marker = new google.maps.Marker({
-    position: static_dog,
-    map: map,
-    title: "Dog",
-    icon: 'images/pets2.png',
-    animation: google.maps.Animation.DROP,
-  })
-  //draw a line between the home location and the dog
-  line = new google.maps.Polyline({
-    path: [static_loc, static_dog],
-    geodesic: true,
-    strokeColor: '#008f8F',
-    strokeOpacity: 0.5,
-    strokeWeight: 3
-  });
-  //put the line on the map
-  line.setMap(map);
-  setCookie("dog_added", 'true');
+  if(getCookie("username")) {
+    static_dog = new google.maps.LatLng(lat, lng);
+    //set a marker for the dog
+    pet_marker = new google.maps.Marker({
+      position: static_dog,
+      map: map,
+      title: "Dog",
+      icon: 'images/pets2.png',
+      animation: google.maps.Animation.DROP,
+    })
+    //draw a line between the home location and the dog
+    line = new google.maps.Polyline({
+      path: [static_loc, static_dog],
+      geodesic: true,
+      strokeColor: '#008f8F',
+      strokeOpacity: 0.5,
+      strokeWeight: 3
+    });
+    //put the line on the map
+    line.setMap(map);
+    setCookie("dog_added", 'true');
+  }
+  else {
+    window.location = "index.html";
+  }
 }
 
 setInterval(trackLocation, 3000); //regularly update the position of the dog on the map
 
 function trackLocation() {
-  if(convertBoolean(getCookie("initialized"))) {
-    if(convertBoolean(getCookie("follow_device"))) {
-      getUserLocation();
-      console.log(owner_location);
-      pullDogLocation();
-      pet_marker.setPosition(static_dog); //update the dog's position on the map
-      line.setPath([owner_location, static_dog]);
-      var personal_radius = parseInt(getCookie("personal_radius"));
-      getDistance(owner_location, static_dog, personal_radius);
+  if(getCookie("username")) {
+    if(convertBoolean(getCookie("initialized"))) {
+      if(convertBoolean(getCookie("follow_device"))) {
+        getUserLocation();
+        console.log(owner_location);
+        pullDogLocation();
+        pet_marker.setPosition(static_dog); //update the dog's position on the map
+        line.setPath([owner_location, static_dog]);
+        var personal_radius = parseInt(getCookie("personal_radius"));
+        getDistance(owner_location, static_dog, personal_radius);
+      }
+      else {
+        pullDogLocation();
+        pet_marker.setPosition(static_dog); //update the dog's position on the map
+        line.setPath([static_loc, static_dog]); //update the line on the map
+        getDistance(static_loc, static_dog, threshold); //get the distance between the home location and the dog
+      }
     }
-    else {
-      pullDogLocation();
-      pet_marker.setPosition(static_dog); //update the dog's position on the map
-      line.setPath([static_loc, static_dog]); //update the line on the map
-      getDistance(static_loc, static_dog, threshold); //get the distance between the home location and the dog
-    }
+  }
+  else {
+    window.location = "index.html";
   }
 }
 
@@ -170,31 +185,36 @@ function getDistance(loc, pos, thres) {
 }
 
 function parseDistance(dist, thres) {
-  if(convertBoolean(getCookie("turned_on"))) {
-    //if out of range
-    if (dist>thres) {
-      //remove in-range counter
-      in_counter = 0;
-      //increment out of range counter
-      out_counter++;
-      //if has been out of range 3 times consecutively
-      if (out_counter==3) {
-        if(!convertBoolean(getCookie("alerted"))) {
-          sendAlert();
-          setCookie("alerted", "true");
+  if(getCookie("username")) {
+    if(convertBoolean(getCookie("turned_on"))) {
+      //if out of range
+      if (dist>thres) {
+        //remove in-range counter
+        in_counter = 0;
+        //increment out of range counter
+        out_counter++;
+        //if has been out of range 3 times consecutively
+        if (out_counter==3) {
+          if(!convertBoolean(getCookie("alerted"))) {
+            sendAlert();
+            setCookie("alerted", "true");
+          }
+        }
+      }
+      //if in range
+      else {
+        //remove out of range counter
+        out_counter = 0;
+        //increment in range counter
+        in_counter++;
+        if (in_counter==3) {
+          setCookie("alerted", "false");
         }
       }
     }
-    //if in range
-    else {
-      //remove out of range counter
-      out_counter = 0;
-      //increment in range counter
-      in_counter++;
-      if (in_counter==3) {
-        setCookie("alerted", "false");
-      }
-    }
+  }
+  else {
+    window.location = "index.html";
   }
 }
 
@@ -227,55 +247,65 @@ window.onload = function() {
 };
 
 function pullDogLocation() {
-  var userInfo = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
-  var result;
-  $.ajax ({
-    dataType: "json",
-    url: userInfo,
-    async: false,
-    success: function(data) {
-      result = data;
-    }
-  });
-
-  if (result!='null' && result!=null) {
-    if(result['Password']==password) {
-      if(result['dogLat']!=null && result['dogLat']!='null' && convertBoolean(getCookie("dog_added"))!=true) {
-        console.log("Add dog");
-        addDog(result['dogLat'], result['dogLng']);
+  if(getCookie("username")) {
+    var userInfo = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
+    var result;
+    $.ajax ({
+      dataType: "json",
+      url: userInfo,
+      async: false,
+      success: function(data) {
+        result = data;
       }
-      if(result['dogLat']!=null && result['dogLat']!='null') {
-        console.log("Update dog");
-        var long1 = result['dogLng'];
-        var lat1 = result['dogLat'];
-        static_dog = new google.maps.LatLng(lat1, long1);
-        if (result['Threshold']!=threshold) {
-          initialize();
+    });
+
+    if (result!='null' && result!=null) {
+      if(result['Password']==password) {
+        if(result['dogLat']!=null && result['dogLat']!='null' && convertBoolean(getCookie("dog_added"))!=true) {
+          console.log("Add dog");
+          addDog(result['dogLat'], result['dogLng']);
+        }
+        if(result['dogLat']!=null && result['dogLat']!='null') {
+          console.log("Update dog");
+          var long1 = result['dogLng'];
+          var lat1 = result['dogLat'];
+          static_dog = new google.maps.LatLng(lat1, long1);
+          if (result['Threshold']!=threshold) {
+            initialize();
+          }
+        }
+        else {
+          console.log("No dog");
         }
       }
-      else {
-        console.log("No dog");
-      }
+    }
+    else {
+      console.log("fail");
     }
   }
   else {
-    console.log("fail");
+    window.location = "index.html";
   }
 }
 
 function getUserLocation() {
-  var result;
-  if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      owner_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      map.setCenter(owner_location);
-      owner_marker.setPosition(owner_location);
-      line.setPath([owner_location, static_dog]);
-      var r = parseFloat(getCookie("personal_radius"));
-      r = r/3.28084;
-      owner_circle.set('radius', r);
-      owner_circle.bindTo('center', owner_marker, 'position');
-    });
+  if(getCookie("username")) {
+    var result;
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        owner_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        map.setCenter(owner_location);
+        owner_marker.setPosition(owner_location);
+        line.setPath([owner_location, static_dog]);
+        var r = parseFloat(getCookie("personal_radius"));
+        r = r/3.28084;
+        owner_circle.set('radius', r);
+        owner_circle.bindTo('center', owner_marker, 'position');
+      });
+    }
+  }
+  else {
+    window.location = "index.html";
   }
 }
 
