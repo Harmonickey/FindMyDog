@@ -133,7 +133,9 @@ setInterval(trackLocation, 3000); //regularly update the position of the dog on 
 
 function trackLocation() {
   if(convertBoolean(getCookie("initialized"))) {
+    console.log("initialized");
     if(getCookie("username")) {
+      console.log(getCookie("username"));
       if(convertBoolean(getCookie("follow_device"))) {
         getUserLocation();
         console.log(owner_location);
