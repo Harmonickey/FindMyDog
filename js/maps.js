@@ -208,11 +208,11 @@ function parseDistance(dist, thres) {
 function toggleON_OFF() {	
   if(convertBoolean(getCookie("turned_on"))) {
     setCookie("turned_on", 'false', 30);
-	updateSingleFirebaseAttribute(username, "Turned_On", getCookie('turned_on'));
+	  updateSingleFirebaseAttribute(username, "Turned_On", getCookie('turned_on'));
   }
   else {
     setCookie("turned_on", 'true', 30);
-	updateSingleFirebaseAttribute(username, "Turned_On", getCookie('turned_on'));
+	  updateSingleFirebaseAttribute(username, "Turned_On", getCookie('turned_on'));
     $('#on-off').prop("checked", true);
     out_counter = 0;
     in_counter = 0;
@@ -258,9 +258,6 @@ function pullDogLocation() {
           var long1 = result['dogLng'];
           var lat1 = result['dogLat'];
           static_dog = new google.maps.LatLng(lat1, long1);
-          if (result['Threshold']!=threshold) {
-            initialize();
-          }
         }
         else {
           console.log("No dog");
