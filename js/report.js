@@ -277,7 +277,8 @@ function sendEmailReport()
 	html2canvas(document.body, {
 	  onrendered: function(canvas) {
 	    //var content = encodeURIComponent( window.JSON.stringify( canvas ) );
-		var content = window.JSON.stringify( canvas );
+		console.log(typeof(canvas));
+		var content = canvas.toString();
 		Parse.Cloud.run('sendEmailReport', {email_address: address,
 											title: subject,
 											content: content}, {
