@@ -30,10 +30,6 @@ $(function () {
 		var phoneNumber = getCookie("phoneNumber");
 		var radius = getCookie("radius");
 		var baseLocation = getCookie("baseLocation");
-		console.log(getCookie("turned_on"));
-		if (convertBoolean(getCookie("turned_on"))) {
-	    	$('#on-off').prop("checked", true);
-		}
 		
 		if (phoneNumber && radius && baseLocation)
 		{
@@ -178,6 +174,7 @@ function loadUser(page)
 	{
 		$("#user_id").text(username);
 		changeStatus("Login");
+		initialize();
 	}
 }
 

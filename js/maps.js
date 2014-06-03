@@ -2,7 +2,6 @@ var map; //will be used for map on page
 
 var initialized = convertBoolean(getCookie("initialized"));
 var turned_on = convertBoolean(getCookie("turned_on"));
-updateSingleFirebaseAttribute(username, "Turned_On", turned_on);
 setCookie("dog_added", 'false');
 var username;
 var password;
@@ -34,6 +33,9 @@ function initialize() {
       result = data;
       static_loc = new google.maps.LatLng(result['baseLat'], result['baseLong']);
       threshold = result['Threshold'];
+      if (convertBoolean(getCookie("turned_on"))) {
+        $('#on-off').prop("checked", true);
+      }
 
       //options for the displayed map
       var mapOptions = {
@@ -177,7 +179,6 @@ function getDistance(loc, pos, thres) {
 }
 
 function parseDistance(dist, thres) {
-  console.log("turned_on");
   if(convertBoolean(getCookie("turned_on"))) {
     //if out of range
     if (dist>thres) {
@@ -222,7 +223,6 @@ function toggleON_OFF() {
 
 //send alert to user
 function sendAlert() {
-  console.log(getCookie("turned_on"));
   if(convertBoolean(getCookie("turned_on"))) {
     alert("Dog is running away!");
 	Parse.Cloud.run('sendText', {phoneNumber: getCookie("phoneNumber")}, {
