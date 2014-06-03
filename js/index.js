@@ -458,6 +458,7 @@ function updateRadius()
 	updateSingleFirebaseAttribute(username, "Threshold", parseInt(radius));
 	setCookie("radius", radius, 30);
 	hideModal("#radiusModal");
+	initialize();
 }
 
 function updateBaseLocation()
