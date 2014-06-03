@@ -279,6 +279,8 @@ function sendEmailReport()
 		content = canvas;
 	  }
 	});
+	
+	if (content == "") content = "test";
 	window.location.href="mailto:"+email_address+"?subject="+escape(document.title)+"&body="+content;
 	console.log(content);
 	console.log(email_address);
