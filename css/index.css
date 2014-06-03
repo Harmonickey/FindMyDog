@@ -71,6 +71,10 @@ p {
 		padding-left: 4px;
 	}
 
+	.navbar-nav {
+		margin: 0px;
+	}
+
 	#on-off-wrap {
 		margin-right: 5px;
 	}
