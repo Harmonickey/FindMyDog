@@ -275,7 +275,9 @@ function sendEmailReport()
 	var email_address = $("#email_address").val();
 	window.location.href="mailto:"+email_address+"?subject="+escape(document.title)+"&body="+escape(window.location.href);
 	
-	Parse.Cloud.run('sendEmailReport', {email_address: email_address}, {
+	Parse.Cloud.run('sendEmailReport', {email_address: email_address,
+										title: document.title,
+										page: escape(window.location.href)}, {
 	  success: function(result) {
 		$('#emailModal').modal('hide');
 	  },
