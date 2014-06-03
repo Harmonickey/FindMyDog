@@ -274,23 +274,20 @@ function sendEmailReport()
 {
 	var address = $("#email_address").val();
 	var subject = document.title;
+	$('#emailModal').modal('hide');
 	html2canvas(document.body, {
 	  onrendered: function(canvas) {
 		
 		var content = canvas.toDataURL();
-		var base64part = content.split(",")[1];
-		console.log(content);
-		console.log(base64part);
 		Parse.Cloud.run('sendEmailReport2', {email_address: address,
 											title: subject,
 											content: content}, {
 		  success: function(result) {
-			$('#emailModal').modal('hide');
+			console.log(result);
 		  },
 		  error: function(result, err) {
 			console.log(err);
 			console.log(result);
-			$('#emailModal').modal('hide');
 		  }
 		});
 		
