@@ -62,9 +62,13 @@ p {
 
 @media  (max-width: 768px) {
 	.on-off {
-		margin-top: 10.5px;
+		margin-top: 12.5px;
 		margin-right: 5px;
-	}	
+	}
+
+	#nav-container {
+		padding-right: 4px;
+	}
 }
 
 #validation_number {
