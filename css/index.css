@@ -37,9 +37,9 @@ html, body, #activity-map, #map-canvas {
 	padding: 0px
 }
 
-body {
+/*body {
 	padding-top: 50px;
-}
+}*/
 
 #settings-hide {
 	display: none;
