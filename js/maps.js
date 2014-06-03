@@ -33,9 +33,6 @@ function initialize() {
       result = data;
       static_loc = new google.maps.LatLng(result['baseLat'], result['baseLong']);
       threshold = result['Threshold'];
-      if (convertBoolean(getCookie("turned_on"))) {
-        $('#on-off').prop("checked", true);
-      }
 
       //options for the displayed map
       var mapOptions = {

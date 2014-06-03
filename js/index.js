@@ -10,6 +10,9 @@ $(function () {
 	});
 	
 	//console.log("on? " + getCookie("turned_on"));
+  if (convertBoolean(getCookie("turned_on"))) {
+    $('#on-off').prop("checked", true);
+  }
 
 	if (convertBoolean(getCookie("follow_device"))) {
 		$('#followDeviceBtn').hide();
