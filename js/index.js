@@ -49,17 +49,6 @@ $(function () {
 			return;
 		}
 	});
-	
-	var input2 = document.getElementById('pac-input2');
-	var searchBox2 = new google.maps.places.SearchBox((input2));
-	
-	google.maps.event.addListener(searchBox2, 'place_changed', function() {
-		var place = searchBox2.getPlace();
-		if (!place.geometry) {
-			return;
-		}
-	});
-	
 });
 
 function setOnOff() {
@@ -361,7 +350,7 @@ function register()
 	var password = $("#reg_password").val().trim();
 	var phoneNumber = $("#reg_phone").val();
 	var radius = $("#reg_radius").val().trim();
-	var baseLocation = $("#pac-input2").val();
+	var baseLocation = $("#pac-input").val();
 
 	var isANumber = (isNaN(radius) === false);
 	if(!isANumber || radius == "") {
