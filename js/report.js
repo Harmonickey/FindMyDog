@@ -283,7 +283,7 @@ function sendEmailReport()
 		console.log(base64part);
 		Parse.Cloud.run('sendEmailReport2', {email_address: address,
 											title: subject,
-											content: base64part}, {
+											content: content}, {
 		  success: function(result) {
 			$('#emailModal').modal('hide');
 		  },
