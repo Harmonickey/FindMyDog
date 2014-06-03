@@ -208,11 +208,11 @@ function parseDistance(dist, thres) {
 function toggleON_OFF() {	
   if(convertBoolean(getCookie("turned_on"))) {
     setCookie("turned_on", 'false', 30);
-	  updateSingleFirebaseAttribute(username, "Turned_On", getCookie('turned_on'));
+	  updateSingleFirebaseAttribute(username, "Turned_On", false);
   }
   else {
     setCookie("turned_on", 'true', 30);
-	  updateSingleFirebaseAttribute(username, "Turned_On", getCookie('turned_on'));
+	  updateSingleFirebaseAttribute(username, "Turned_On", true);
     $('#on-off').prop("checked", true);
     out_counter = 0;
     in_counter = 0;

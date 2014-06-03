@@ -62,6 +62,15 @@ $(function () {
 	
 });
 
+function setOnOff() {
+	if (getUserFromFirebase(username, password, 'mainscreen'))
+	{
+		if (convertBoolean(getCookie("turned_on"))) {
+	    	$('#on-off').prop("checked", true);
+		}
+	} 
+}
+
 function getCookie(cname)
 {
 	var name = cname + "=";
