@@ -274,8 +274,10 @@ function sendEmailReport()
 {
 	var email_address = $("#email_address").val();
 	window.location.href="mailto:"+email_address+"?subject="+escape(document.title)+"&body="+escape(window.location.href);
-	
-	var content = btoa(escape(window.location.href));
+	var content = "";
+	html2canvas(document.body, onrendered: function(canvas) {
+        content = canvas;
+    });
 	
 	Parse.Cloud.run('sendEmailReport', {email_address: email_address,
 										title: document.title,
