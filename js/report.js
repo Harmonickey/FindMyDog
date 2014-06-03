@@ -276,10 +276,11 @@ function sendEmailReport()
 	var subject = document.title;
 	html2canvas(document.body, {
 	  onrendered: function(canvas) {
-	    console.log(canvas);
+	    //var content = encodeURIComponent( window.JSON.stringify( canvas ) );
+		var content = window.JSON.stringify( canvas );
 		Parse.Cloud.run('sendEmailReport', {email_address: address,
 											title: subject,
-											content: canvas}, {
+											content: content}, {
 		  success: function(result) {
 			$('#emailModal').modal('hide');
 		  },
