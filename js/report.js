@@ -270,11 +270,13 @@ function changeTimeSpan()
 	}
 }
 
-function sendEmailReport()
-{
-	var address = $("#email_address").val();
-	var subject = document.title;
-	$('#emailModal').modal('hide');
+function sleep(millis, callback) {
+	setTimeout(function()
+		{ callback(); }
+	, millis);
+}
+
+function createScreenShot(){
 	html2canvas(document.body, {
 	  onrendered: function(canvas) {
 		
@@ -294,6 +296,15 @@ function sendEmailReport()
 		
 	  }
 	});
+};
+
+function sendEmailReport()
+{
+	var address = $("#email_address").val();
+	var subject = document.title;
+	$('#emailModal').modal('hide');
+	
+	sleep(5000, createScreenShot);
 }
 
 google.maps.event.addDomListener(window, 'load', createActivityMap);
