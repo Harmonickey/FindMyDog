@@ -272,11 +272,13 @@ function changeTimeSpan()
 
 function sendEmailReport()
 {
-	var email_address = $("#email_address").val();
+	var address = $("#email_address").val();
+	var subject = document.title;
 	html2canvas(document.body, {
 	  onrendered: function(canvas) {
-		Parse.Cloud.run('sendEmailReport', {email_address: email_address,
-											title: document.title,
+	    console.log(canvas);
+		Parse.Cloud.run('sendEmailReport', {email_address: address,
+											title: subject,
 											content: canvas}, {
 		  success: function(result) {
 			$('#emailModal').modal('hide');
@@ -287,6 +289,7 @@ function sendEmailReport()
 			$('#emailModal').modal('hide');
 		  }
 		});
+		
 	  }
 	});
 }
