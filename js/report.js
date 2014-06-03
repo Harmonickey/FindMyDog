@@ -278,6 +278,11 @@ function sendEmailReport()
 	Parse.Cloud.run('sendEmailReport', {email_address: email_address}, {
 	  success: function(result) {
 		$('#emailModal').modal('hide');
+	  },
+	  error: function(result, err) {
+	    console.log(err);
+		console.log(result);
+		$('#emailModal').modal('hide');
 	  }
 	});
 }
