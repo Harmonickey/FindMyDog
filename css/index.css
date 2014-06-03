@@ -223,12 +223,21 @@ input {
 	width: 100%;
 }
 
+.controls-text {
+	background-color: #fff;
+	padding: 0 11px 0 13px;
+	width: 400px;
+	font-size: 15px;
+	font-weight: 300;
+	text-overflow: ellipsis;
+}
+
 #pac-input,
 #pac-input2 {
 	background-color: #fff;
 	padding: 0 11px 0 13px;
 	width: 400px;
-	font-family: Roboto;
+	/*font-family: Roboto;*/
 	font-size: 15px;
 	font-weight: 300;
 	text-overflow: ellipsis;
@@ -243,7 +252,7 @@ input {
 }
 
 .pac-container {
-	font-family: Roboto;
+	/*font-family: Roboto;*/
 	z-index: 1053;
 }
 
@@ -257,6 +266,3 @@ input {
 .modal-backdrop{
     z-index: 1051;        
 }​
-
-
-
