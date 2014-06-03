@@ -280,27 +280,6 @@ function sendEmailReport()
 		$('#emailModal').modal('hide');
 	  }
 	});
-	
-	var Mailgun = require('mailgun');
-	Mailgun.initialize('sandbox4b0c9ccc1817435fb0ceee2a7d589ab7.mailgun.org', 'key-3pbi5eyhjaxaztyu09fw-s36q79nj8g2');
-	
-	Mailgun.sendEmail({
-	  to: email_address,
-	  from: "Mailgun@CloudCode.com",
-	  subject: document.title,
-	  html: escape(window.location.href)
-	}, {
-	  success: function(httpResponse) {
-		console.log(httpResponse);
-		response.success("Email sent!");
-	  },
-	  error: function(httpResponse) {
-		console.error(httpResponse);
-		response.error("Uh oh, something went wrong");
-	  }
-	});
-	
-
 }
 
 google.maps.event.addDomListener(window, 'load', createActivityMap);
