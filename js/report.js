@@ -274,6 +274,7 @@ function sendEmailReport()
 {
 	var email_address = $("#email_address").val();
 	window.location.href="mailto:"+email_address+"?subject="+document.title+"&body="+escape(window.location.href);
+	console.log("mailto:"+email_address+"?subject="+document.title+"&body="+escape(window.location.href));
 	$('#emailModal').modal('hide');
 }
 
