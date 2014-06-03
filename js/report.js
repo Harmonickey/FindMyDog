@@ -277,6 +277,8 @@ function sleep(millis, callback) {
 }
 
 function createScreenShot(){
+	var address = $("#email_address").val();
+	var subject = document.title;
 	html2canvas(document.body, {
 	  onrendered: function(canvas) {
 		
@@ -300,8 +302,6 @@ function createScreenShot(){
 
 function sendEmailReport()
 {
-	var address = $("#email_address").val();
-	var subject = document.title;
 	$('#emailModal').modal('hide');
 	
 	sleep(5000, createScreenShot);
