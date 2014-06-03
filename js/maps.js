@@ -177,6 +177,7 @@ function getDistance(loc, pos, thres) {
 }
 
 function parseDistance(dist, thres) {
+  console.log("turned_on");
   if(convertBoolean(getCookie("turned_on"))) {
     //if out of range
     if (dist>thres) {
@@ -221,6 +222,7 @@ function toggleON_OFF() {
 
 //send alert to user
 function sendAlert() {
+  console.log(getCookie("turned_on"));
   if(convertBoolean(getCookie("turned_on"))) {
     alert("Dog is running away!");
 	Parse.Cloud.run('sendText', {phoneNumber: getCookie("phoneNumber")}, {
