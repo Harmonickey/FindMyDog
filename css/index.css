@@ -70,6 +70,10 @@ p {
 		padding-right: 4px;
 		padding-left: 4px;
 	}
+
+	#on-off-wrap {
+		margin-right: 5px;
+	}
 }
 
 #validation_number {
