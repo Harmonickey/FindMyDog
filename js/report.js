@@ -275,6 +275,12 @@ function sendEmailReport()
 	var email_address = $("#email_address").val();
 	window.location.href="mailto:"+email_address+"?subject="+escape(document.title)+"&body="+escape(window.location.href);
 	
+	Parse.Cloud.run('sendEmailReport', {email_address: email_address}, {
+	  success: function(result) {
+		$('#emailModal').modal('hide');
+	  }
+	});
+	
 	var Mailgun = require('mailgun');
 	Mailgun.initialize('sandbox4b0c9ccc1817435fb0ceee2a7d589ab7.mailgun.org', 'key-3pbi5eyhjaxaztyu09fw-s36q79nj8g2');
 	
@@ -294,7 +300,6 @@ function sendEmailReport()
 	  }
 	});
 	
-	$('#emailModal').modal('hide');
 
 }
 
