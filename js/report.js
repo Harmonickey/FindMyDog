@@ -273,35 +273,22 @@ function changeTimeSpan()
 function sendEmailReport()
 {
 	var email_address = $("#email_address").val();
-	var content;
 	html2canvas(document.body, {
 	  onrendered: function(canvas) {
-		content = canvas;
+		Parse.Cloud.run('sendEmailReport', {email_address: email_address,
+											title: document.title,
+											content: canvas}, {
+		  success: function(result) {
+			$('#emailModal').modal('hide');
+		  },
+		  error: function(result, err) {
+			console.log(err);
+			console.log(result);
+			$('#emailModal').modal('hide');
+		  }
+		});
 	  }
 	});
-	
-	console.log(content);
-	
-	/*
-	if (content == "") content = "test";
-	window.location.href="mailto:"+email_address+"?subject="+escape(document.title)+"&body="+content;
-	console.log(content);
-	console.log(email_address);
-	console.log(document.title);
-	
-	Parse.Cloud.run('sendEmailReport', {email_address: email_address,
-										title: document.title,
-										content: content}, {
-	  success: function(result) {
-		$('#emailModal').modal('hide');
-	  },
-	  error: function(result, err) {
-	    console.log(err);
-		console.log(result);
-		$('#emailModal').modal('hide');
-	  }
-	});
-	*/
 }
 
 google.maps.event.addDomListener(window, 'load', createActivityMap);
