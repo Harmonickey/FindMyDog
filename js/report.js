@@ -278,7 +278,12 @@ function sendEmailReport()
 	  onrendered: function(canvas) {
 	    //var content = encodeURIComponent( window.JSON.stringify( canvas ) );
 		console.log(typeof(canvas));
+		var ctx = c.getContext("2d");
+		console.log(ctx);
+		var img = document.getElementById("my_image");
+		ctx.drawImage(img,100,100);
 		var content = canvas.toString();
+		console.log(c.toDataURL());
 		Parse.Cloud.run('sendEmailReport', {email_address: address,
 											title: subject,
 											content: content}, {
