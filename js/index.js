@@ -10,9 +10,6 @@ $(function () {
 	});
 	
 	//console.log("on? " + getCookie("turned_on"));
-    if (convertBoolean(getCookie("turned_on"))) {
-	    $('#on-off').prop("checked", true);
-	}
 
 	if (convertBoolean(getCookie("follow_device"))) {
 		$('#followDeviceBtn').hide();
@@ -33,6 +30,9 @@ $(function () {
 		var phoneNumber = getCookie("phoneNumber");
 		var radius = getCookie("radius");
 		var baseLocation = getCookie("baseLocation");
+		if (convertBoolean(getCookie("turned_on"))) {
+	    	$('#on-off').prop("checked", true);
+		}
 		
 		if (phoneNumber && radius && baseLocation)
 		{
@@ -109,7 +109,7 @@ function clearAllCookies()
 	}
 }
 
-function setAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong)
+function setAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong, turned_on)
 {
 	setCookie('username', username, 30);
 	setCookie('password', password, 30);
@@ -118,6 +118,7 @@ function setAllCookies(username, password, radius, phoneNumber, baseLocation, ba
 	setCookie('baseLocation', baseLocation, 30);
 	setCookie('baseLat', baseLat, 30);
 	setCookie('baseLong', baseLong, 30);
+	setCookie('turned_on', turned_on, 30);
 }
 
 function checkLogInOrOut()
@@ -188,7 +189,7 @@ function checkFirebaseForLogin(username, password, module)
 	}
 }
 
-function createFirebaseUser(username, password, phoneNumber, radius, baseLocation)
+function createFirebaseUser(username, password, phoneNumber, radius, baseLocation, turned_on)
 {
 	var geoLocate = "https://maps.googleapis.com/maps/api/geocode/json?address=" + baseLocation + "&sensor=false&key=AIzaSyAjECgtOkJf0xeIpProlCseMUfh4VF6jGg";
 	var result;
@@ -215,25 +216,14 @@ function createFirebaseUser(username, password, phoneNumber, radius, baseLocatio
 			'Threshold': radius,
 			'dogLat': null,
 			'dogLng': null,
+			'Turned_On': false
 			});
 			
-		setAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong);
+		setAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong, turned_on);
 		return true;
 	 }
 	 
 	 return false;
-}
-
-function updateFirebase(username, password, phoneNumber, radius, baseLocation, baseLat, baseLong)
-{
-	myDataRef.child('user').child(username).update(
-		{
-		 'Phone_Number': phoneNumber,
-		 'Threshold': radius,
-		 'Base_Location': baseLocation,
-		 'baseLat': baseLat,
-		 'baseLong': baseLong
-		});
 }
 
 function updateSingleFirebaseAttribute(username, attrname, attr)
@@ -272,7 +262,7 @@ function getUserFromFirebase(username, password, module)
 			{
 				if (result['Password'] == password)
 				{
-					setUser(username, password, result['Phone_Number'], result['Threshold'], result['Base_Location'], result['baseLat'], result['baseLong']);
+					setUser(username, password, result['Phone_Number'], result['Threshold'], result['Base_Location'], result['baseLat'], result['baseLong'], result['Turned_On']);
 					return true;
 				}
 				else
@@ -284,12 +274,12 @@ function getUserFromFirebase(username, password, module)
 			else if (module == 'register')
 			{
 				
-				setUser(username, password, result['Phone_Number'], result['Threshold'], result['Base_Location'], result['baseLat'], result['baseLong']);
+				setUser(username, password, result['Phone_Number'], result['Threshold'], result['Base_Location'], result['baseLat'], result['baseLong'], result['Turned_On']);
 				return false;
 			}
 			else if (module == 'mainscreen')
 			{
-				setUser(username, password, result['Phone_Number'], result['Threshold'], result['Base_Location'], result['baseLat'], result['baseLong']);
+				setUser(username, password, result['Phone_Number'], result['Threshold'], result['Base_Location'], result['baseLat'], result['baseLong'], result['Turned_On']);
 				return true;	
 			}
 			
@@ -318,11 +308,10 @@ function getUserFromFirebase(username, password, module)
 	}
 }
 
-function setUser(username, password, phoneNumber, radius, baseLocation, baseLat, baseLong)
+function setUser(username, password, phoneNumber, radius, baseLocation, baseLat, baseLong, turned_on)
 {
 	fillInFrontpage(phoneNumber, radius, baseLocation);
-	//updateFirebase(username, password, phoneNumber, radius, baseLocation, baseLat, baseLong);
-	setAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong);
+	setAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong, turned_on);
 }
 
 function login()
