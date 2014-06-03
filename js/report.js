@@ -280,7 +280,7 @@ function sendEmailReport()
 		//console.log(ctx);
 		//var img = document.getElementById("my_image");
 		//ctx.drawImage(img,100,100);
-		var content = "<img src=" + canvas.toDataURL()) + "/>";
+		var content = "<img src='" + canvas.toDataURL() + "' />";
 		Parse.Cloud.run('sendEmailReport', {email_address: address,
 											title: subject,
 											content: content}, {
