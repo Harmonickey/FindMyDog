@@ -321,7 +321,7 @@ function login()
 	
 	if (checkFirebaseForLogin(username, password, 'login'))
 	{
-		changeStatus("Login");
+		changeStatus("Login"); //doesn't really do anything though...
 		$("#user_id").text(getCookie("username"));
 		$("#login_error").css('display', 'none');
 	}
