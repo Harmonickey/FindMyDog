@@ -273,13 +273,16 @@ function changeTimeSpan()
 function sendEmailReport()
 {
 	var email_address = $("#email_address").val();
-	var content = "";
+	var content;
 	html2canvas(document.body, {
 	  onrendered: function(canvas) {
 		content = canvas;
 	  }
 	});
 	
+	console.log(content);
+	
+	/*
 	if (content == "") content = "test";
 	window.location.href="mailto:"+email_address+"?subject="+escape(document.title)+"&body="+content;
 	console.log(content);
@@ -298,6 +301,7 @@ function sendEmailReport()
 		$('#emailModal').modal('hide');
 	  }
 	});
+	*/
 }
 
 google.maps.event.addDomListener(window, 'load', createActivityMap);
