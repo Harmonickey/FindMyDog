@@ -279,9 +279,10 @@ function sendEmailReport()
 	  onrendered: function(canvas) {
 		
 		var content = canvas.toDataURL();
+		var base64part = content.split(",")[1];
 		Parse.Cloud.run('sendEmailReport2', {email_address: address,
 											title: subject,
-											content: content}, {
+											content: base64part}, {
 		  success: function(result) {
 			console.log(result);
 		  },
