@@ -544,3 +544,9 @@ function isPhoneNumber(number)
 	return (number.match(/^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/) !== null);	
 }
 
+function sendEmailReport()
+{
+	var email_address = $("#email_address").val();
+	window.location.href="mailto:"+email_address+"?subject="+document.title+"&body="+escape(window.location.href);
+}
+

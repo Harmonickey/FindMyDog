@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Find My Dog</title>
+    <title>Find My Dog | Report</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/report.css">
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
@@ -23,6 +23,11 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <a href="index.html"><span class="navbar-brand" style="font-size: x-large; margin-left: 10px;">&larr;</span></a>
+		  <div class="pull-right">
+          <ul class="nav navbar-nav">
+            <button type="button" class="btn btn-default" dat-toggle="modal" data-target="#emailModal"> Email A Report </button>
+          </ul>
+        </div>
         </div>
       </div>
     </div>
@@ -86,6 +91,27 @@
           <div class="modal-footer timespan-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
             <button type="button" class="btn btn-primary" onclick="changeTimeSpan();">Submit</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+	<div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailLabel" aria-hidden="true">
+      <div class="modal-dialog email-modal">
+        <div class="modal-content email-content">
+          <div class="modal-header email-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Email Report</h4>
+          </div>
+          <div class="modal-body email-body">
+            <p>To: </p>
+            <input type="text" id="email_address">
+          </div>
+          <div class="modal-body email-error">
+          	<label id="email_error" style="color: red; display: none;"></label>
+          </div>
+          <div class="modal-footer email-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+            <button type="button" class="btn btn-primary" onclick="sendEmailReport();">Send Report</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
