@@ -2,6 +2,7 @@ var map; //will be used for map on page
 
 var initialized = convertBoolean(getCookie("initialized"));
 var turned_on = convertBoolean(getCookie("turned_on"));
+updateSingleFirebaseAttribute(username, "Turned_On", turned_on);
 setCookie("dog_added", 'false');
 var username;
 var password;
@@ -207,9 +208,11 @@ function parseDistance(dist, thres) {
 function toggleON_OFF() {	
   if(convertBoolean(getCookie("turned_on"))) {
     setCookie("turned_on", 'false', 30);
+	updateSingleFirebaseAttribute(username, "Turned_On", getCookie('turned_on'));
   }
   else {
     setCookie("turned_on", 'true', 30);
+	updateSingleFirebaseAttribute(username, "Turned_On", getCookie('turned_on'));
     $('#on-off').prop("checked", true);
     out_counter = 0;
     in_counter = 0;
@@ -220,11 +223,10 @@ function toggleON_OFF() {
 function sendAlert() {
   if(convertBoolean(getCookie("turned_on"))) {
     alert("Dog is running away!");
-    
-	  Parse.Cloud.run('sendText', {phoneNumber: getCookie("phoneNumber")}, {
-	    success: function(result) { },
-	    error: function(error) { }
- 	  });
+	Parse.Cloud.run('sendText', {phoneNumber: getCookie("phoneNumber")}, {
+	  success: function(result) { },
+	  error: function(error) { }
+ 	});
   }
 }
 
