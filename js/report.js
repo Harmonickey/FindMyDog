@@ -276,14 +276,12 @@ function sendEmailReport()
 	var subject = document.title;
 	html2canvas(document.body, {
 	  onrendered: function(canvas) {
-		//var ctx = canvas.getContext("2d");
-		//console.log(ctx);
-		//var img = document.getElementById("my_image");
-		//ctx.drawImage(img,100,100);
-		var content = "<img src='" + canvas.toDataURL() + "' />";
+		
+		var content = canvas.toDataURL();
+		var base64part = content.split(",")[1];
 		Parse.Cloud.run('sendEmailReport', {email_address: address,
 											title: subject,
-											content: content}, {
+											content: base64part}, {
 		  success: function(result) {
 			$('#emailModal').modal('hide');
 		  },
