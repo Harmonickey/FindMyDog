@@ -283,15 +283,21 @@ function sleep(millis, callback) {
 
 function createScreenShot(){
 	var address = $("#email_address").val();
+	var body = $("#email_body").val().trim();
+	if (body == "") body = "(no body)";
 	var subject = document.title;
-	html2canvas(document.body, {
+	var stats = document.getElementById("stats");
+	html2canvas(stats, {
+	  proxy: "html2canvas-proxy-node/server.js",
+	  useCORS: true,
 	  onrendered: function(canvas) {
 		
 		var content = canvas.toDataURL();
 		var base64part = content.split(",")[1];
-		Parse.Cloud.run('sendEmailReport2', {email_address: address,
-											title: subject,
-											content: base64part}, {
+		Parse.Cloud.run('sendEmailReport', {email_address: address,
+											 title: subject,
+											 body: body,
+											 content: base64part}, {
 		  success: function(result) {
 			console.log(result);
 		  },
@@ -309,6 +315,7 @@ function sendEmailReport()
 {
 	$('#emailModal').modal('hide');
 	
+	//need to sleep 5 seconds to wait for the modal to fade out so screenshot is natural
 	sleep(5000, createScreenShot);
 }
 
