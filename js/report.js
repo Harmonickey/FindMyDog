@@ -87,7 +87,7 @@ function getReportInfo(minTime, maxTime)
 	var mapOptions = {
 		zoom: 17,
 		center: start_marker,
-		panControl: true,
+		panControl: false,
 		zoomControl: true,
 		scaleControl: false,
 		scrollwheel: false,
@@ -95,6 +95,7 @@ function getReportInfo(minTime, maxTime)
 		mapTypeControl: false,
 		scaleControl: false,
 		draggable: false,
+		keyboardShortcuts: false,
 		disableDoubleClickZoom: true,
 		streetViewControl: false
 	}
