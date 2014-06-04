@@ -187,6 +187,8 @@ function createActivityMap() {
 	//to create the map, I am getting the today's report
 	getTodayReport();
 	
+	var width = $($(".quick-stat")[0]).width();
+	$("#centered").width(width * 2);
 	return;
 }
 
