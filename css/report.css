@@ -22,6 +22,12 @@ body {
   margin-bottom: 20px;
   padding-left: 0px;
   width: 220px;
+  float: left;
+}
+
+#centered {
+	width: 450px;
+	margin: 0 auto;
 }
 
 .stat-circle {
