@@ -322,6 +322,10 @@ function UnfollowDevice() {
   owner_circle.setVisible(false);
 }
 
+function setBaseAsCurrentLocation() {
+
+}
+
 
 
 
