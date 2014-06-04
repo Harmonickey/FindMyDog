@@ -283,9 +283,10 @@ function sleep(millis, callback) {
 }
 
 function createScreenShot(){
-	var address = $("#email_address").val();
+	var address = $("#email_address").val().trim();
 	var body = $("#email_body").val().trim();
 	if (body == "") body = "(no body)";
+	if (address == "") return;
 	var subject = document.title;
 	var stats = document.getElementById("stats");
 	html2canvas(stats, {
