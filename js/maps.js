@@ -17,6 +17,7 @@ var line;
 var owner_marker;
 var owner_circle;
 var owner_location;
+var current_location;
 
 function initialize() {
   username = getCookie('username');
@@ -323,7 +324,21 @@ function UnfollowDevice() {
 }
 
 function setBaseAsCurrentLocation() {
-
+  if(getCookie("username")) {
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        hideModal("#baseLocationModal");
+        $("#pac-input").val("");
+        updateSingleFirebaseAttribute(username, "baseLocation", "");
+        updateSingleFirebaseAttribute(username, "baseLat", position.coords.latitude);
+        updateSingleFirebaseAttribute(username, "baseLong", position.coords.longitude);
+        initialize();
+      });
+    }
+  }
+  else {
+    window.location = "index.html";
+  }
 }
 
 
