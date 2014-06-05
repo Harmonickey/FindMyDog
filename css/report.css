@@ -153,7 +153,6 @@ body {
 }
 
 .email-modal {
-	width: 320px;
 	border-radius: 5px;
 }
 
@@ -183,9 +182,6 @@ body {
 	border: none;
 }
 
-
-
-
 .message-box {
 	margin-top: 0px;
 	border: 1px solid transparent;
@@ -201,4 +197,20 @@ body {
 	font-size: 15px;
 	font-weight: 300;
 	text-overflow: ellipsis;
+}
+
+#email_body {
+	margin-top: 0px;
+	border: 1px solid transparent;
+	border-radius: 2px 0 0 2px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	outline: none;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	width: 100%;
+	background-color: #fff;
+	padding: 0 11px 0 13px;
+	font-size: 15px;
+	font-weight: 300;
+	text-overflow: ellipsis;	
 }
