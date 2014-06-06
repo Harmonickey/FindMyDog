@@ -7203,8 +7203,11 @@ function hasOwnProperty(obj, prop) {
 var url = require('url');
 var http = require('http');
 var request = require('request');
+var process = require('process');
 
-},{"http":12,"request":42,"url":38}],42:[function(require,module,exports){
+},{"http":12,"process":42,"request":43,"url":38}],42:[function(require,module,exports){
+module.exports=require(19)
+},{}],43:[function(require,module,exports){
 (function (process){
 // Copyright 2010-2012 Mikeal Rogers
 //
@@ -7366,7 +7369,7 @@ request.cookie = function (str) {
 }
 
 }).call(this,require("XdUbuP"))
-},{"./lib/cookies":43,"./lib/copy":44,"./request":53,"XdUbuP":19,"util":40}],43:[function(require,module,exports){
+},{"./lib/cookies":44,"./lib/copy":45,"./request":54,"XdUbuP":19,"util":40}],44:[function(require,module,exports){
 var optional = require('./optional')
   , tough = optional('tough-cookie')
   , Cookie = tough && tough.Cookie
@@ -7404,7 +7407,7 @@ exports.jar = function() {
   return new RequestJar();
 };
 
-},{"./optional":47}],44:[function(require,module,exports){
+},{"./optional":48}],45:[function(require,module,exports){
 module.exports =
 function copy (obj) {
   var o = {}
@@ -7413,7 +7416,7 @@ function copy (obj) {
   })
   return o
 }
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 (function (process){
 var util = require('util')
 
@@ -7424,7 +7427,7 @@ function debug () {
 }
 
 }).call(this,require("XdUbuP"))
-},{"XdUbuP":19,"util":40}],46:[function(require,module,exports){
+},{"XdUbuP":19,"util":40}],47:[function(require,module,exports){
 // Safe toJSON
 module.exports =
 function getSafe (self, uuid) {
@@ -7459,14 +7462,14 @@ function getSafe (self, uuid) {
 
   return safe
 }
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 module.exports = function(module) {
   try {
     return require(module);
   } catch (e) {}
 };
 
-},{}],48:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 module.exports = ForeverAgent
 ForeverAgent.SSL = ForeverAgentSSL
 
@@ -7587,7 +7590,7 @@ function createConnectionSSL (port, host, options) {
   return tls.connect(options);
 }
 
-},{"http":12,"https":16,"net":1,"tls":1,"util":40}],49:[function(require,module,exports){
+},{"http":12,"https":16,"net":1,"tls":1,"util":40}],50:[function(require,module,exports){
 module.exports = stringify;
 
 function getSerialize (fn, decycle) {
@@ -7628,7 +7631,7 @@ function stringify(obj, fn, spaces, decycle) {
 
 stringify.getSerialize = getSerialize;
 
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 (function (process,__dirname){
 var path = require('path');
 var fs = require('fs');
@@ -7746,7 +7749,7 @@ mime.charsets = {
 module.exports = mime;
 
 }).call(this,require("XdUbuP"),"/node_modules\\request\\node_modules\\mime")
-},{"XdUbuP":19,"fs":1,"path":18}],51:[function(require,module,exports){
+},{"XdUbuP":19,"fs":1,"path":18}],52:[function(require,module,exports){
 (function (Buffer){
 //     uuid.js
 //
@@ -7995,7 +7998,7 @@ module.exports = mime;
 }).call(this);
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":2,"crypto":6}],52:[function(require,module,exports){
+},{"buffer":2,"crypto":6}],53:[function(require,module,exports){
 /**
  * Object#toString() ref for stringify().
  */
@@ -8363,7 +8366,7 @@ function decode(str) {
   }
 }
 
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 (function (process,Buffer){
 var optional = require('./lib/optional')
   , http = require('http')
@@ -9729,4 +9732,4 @@ Request.prototype.toJSON = toJSON
 module.exports = Request
 
 }).call(this,require("XdUbuP"),require("buffer").Buffer)
-},{"./lib/cookies":43,"./lib/copy":44,"./lib/debug":45,"./lib/getSafe":46,"./lib/optional":47,"XdUbuP":19,"buffer":2,"crypto":6,"forever-agent":48,"http":12,"json-stringify-safe":49,"mime":50,"net":1,"node-uuid":51,"qs":52,"querystring":23,"stream":37,"url":38,"util":40}]},{},[41])
+},{"./lib/cookies":44,"./lib/copy":45,"./lib/debug":46,"./lib/getSafe":47,"./lib/optional":48,"XdUbuP":19,"buffer":2,"crypto":6,"forever-agent":49,"http":12,"json-stringify-safe":50,"mime":51,"net":1,"node-uuid":52,"qs":53,"querystring":23,"stream":37,"url":38,"util":40}]},{},[41])
