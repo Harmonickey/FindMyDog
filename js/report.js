@@ -292,6 +292,7 @@ function createScreenShot(){
 	html2canvas(stats, {
 	  proxy: "html2canvas-proxy-node/server.js",
 	  useCORS: true,
+	  logging: true,
 	  onrendered: function(canvas) {
 		
 		var content = canvas.toDataURL();
