@@ -289,29 +289,54 @@ function createScreenShot(){
 	if (address == "") return;
 	var subject = document.title;
 	var stats = document.getElementById("stats");
-	html2canvas(stats, {
-	  proxy: "html2canvas-proxy-node/server.js",
-	  useCORS: true,
-	  logging: true,
-	  onrendered: function(canvas) {
-		
-		var content = canvas.toDataURL();
-		var base64part = content.split(",")[1];
-		Parse.Cloud.run('sendEmailReport', {email_address: address,
-											 title: subject,
-											 body: body,
-											 content: base64part}, {
-		  success: function(result) {
-			console.log(result);
-		  },
-		  error: function(result, err) {
-			console.log(err);
-			console.log(result);
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		html2canvas(stats, {
+		  onrendered: function(canvas) {
+			
+			var content = canvas.toDataURL();
+			var base64part = content.split(",")[1];
+			Parse.Cloud.run('sendEmailReport', {email_address: address,
+												 title: subject,
+												 body: body,
+												 content: base64part}, {
+			  success: function(result) {
+				console.log(result);
+			  },
+			  error: function(result, err) {
+				console.log(err);
+				console.log(result);
+			  }
+			});
+			
 		  }
 		});
-		
-	  }
-	});
+	}
+	else
+	{
+		html2canvas(stats, {
+		  proxy: "html2canvas-proxy-node/server.js",
+		  useCORS: true,
+		  logging: true,
+		  onrendered: function(canvas) {
+			
+			var content = canvas.toDataURL();
+			var base64part = content.split(",")[1];
+			Parse.Cloud.run('sendEmailReport', {email_address: address,
+												 title: subject,
+												 body: body,
+												 content: base64part}, {
+			  success: function(result) {
+				console.log(result);
+			  },
+			  error: function(result, err) {
+				console.log(err);
+				console.log(result);
+			  }
+			});
+			
+		  }
+		});
+	}
 };
 
 function sendEmailReport()
