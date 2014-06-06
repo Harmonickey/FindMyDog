@@ -6,9 +6,9 @@
 //request = require('request');
 
 // Don't crash when an error occurs, instead log it
-process.on('uncaughtException', function(err){
-	console.log(err);
-});
+//process.on('uncaughtException', function(err){
+//	console.log(err);
+//});
 
 // Create our server
 var server;
