@@ -1,9 +1,9 @@
 // Require
-var url, http, request;
+//var url, http, request;
 //var request;
-url = require('url');
-http = require('http');
-request = require('request');
+//url = require('url');
+//http = require('http');
+//request = require('request');
 
 // Don't crash when an error occurs, instead log it
 process.on('uncaughtException', function(err){
