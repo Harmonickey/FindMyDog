@@ -300,7 +300,6 @@ function createScreenShot(){
 												 body: body,
 												 content: base64part}, {
 			  success: function(result) {
-				alert(result);
 				console.log(result);
 			  },
 			  error: function(result, err) {
