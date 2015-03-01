@@ -3,6 +3,14 @@ var error_modules = ['#register_error', '#login_error', '#phonenumber_error', '#
 
 $(function () {
 	
+	$( document ).keypress(function(e) {
+		if ($.cookies() == "" &&
+			e.which == 13) {)
+		{
+			login();
+		}
+	});
+	
 	$( "#settings-toggle" ).click(function() {
 	  $( "#settings-hide" ).animate({ height: "toggle" }, 500);
 	});
