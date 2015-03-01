@@ -4,8 +4,7 @@ var error_modules = ['#register_error', '#login_error', '#phonenumber_error', '#
 $(function () {
 	
 	$( document ).keypress(function(e) {
-		if ($.cookies() == "" &&
-			e.which == 13) {)
+		if ($.cookies() == "" && e.which == 13)
 		{
 			login();
 		}
