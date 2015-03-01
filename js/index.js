@@ -406,8 +406,8 @@ function updateBaseLocation()
 		dataType: "json",
 		url: geoLocate,
 		success: function(data) {
-			var baseLat = result['results'][0]['geometry']['location']['lat'];
-			var baseLong = result['results'][0]['geometry']['location']['lng'];
+			var baseLat = data['results'][0]['geometry']['location']['lat'];
+			var baseLong = data['results'][0]['geometry']['location']['lng'];
 
 			if (!baseLat || !baseLong)
 			{
