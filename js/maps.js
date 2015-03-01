@@ -25,15 +25,13 @@ function initialize() {
   getUserFromFirebase(username, password, 'login');
 
   var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
-  var result;
   $.ajax ({
     dataType: "json",
     url: firebaseAPI,
-    async: false,
     success: function(data) {
-      result = data;
-      static_loc = new google.maps.LatLng(result['baseLat'], result['baseLong']);
-      threshold = result['Threshold'];
+		
+      static_loc = new google.maps.LatLng(data['baseLat'], data['baseLong']);
+      threshold = data['Threshold'];
 
       //options for the displayed map
       var mapOptions = {
@@ -43,7 +41,7 @@ function initialize() {
       //create the map
       map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
-      setCookie("initialized", 'true');
+      $.cookie("initialized", 'true');
 
       //set a marker for the home location
       var static_marker = new google.maps.Marker({
@@ -101,10 +99,11 @@ function initialize() {
         icon: "images/male.png"
       });
     }
+	
+	if(data['dogLat'] != null) {
+		addDog(data['dogLat'], data['dogLng']);
+	}
   });
-  if(result['dogLat']!=null) {
-    addDog(result['dogLat'], result['dogLng']);
-  }
 }
 
 function addDog(lat, lng) {

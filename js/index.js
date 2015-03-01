@@ -405,34 +405,31 @@ function updateBaseLocation()
 	$.ajax ({
 		dataType: "json",
 		url: geoLocate,
-		async: false,
 		success: function(data) {
-			result = data
+			var baseLat = result['results'][0]['geometry']['location']['lat'];
+			var baseLong = result['results'][0]['geometry']['location']['lng'];
+
+			if (!baseLat || !baseLong)
+			{
+				setError(true, '#baselocation_error', "Please input a valid address");
+				return;	
+			}
+			$("#baselocation_error").css('display', 'none');
+			var username = $.cookie("username");
+			var password = $.cookie("password");
+			
+			updateSingleFirebaseAttribute(username, "Base_Location", baseLocation);
+			updateSingleFirebaseAttribute(username, "baseLat", baseLat);
+			updateSingleFirebaseAttribute(username, "baseLong", baseLong);
+			
+			$.cookie("baseLocation", baseLocation, {expires: 30} );
+			$.cookie('baseLat', baseLat, {expires: 30});
+			$.cookie('baseLong', baseLong, {expires: 30});
+			
+			hideModal("#baseLocationModal");	
+			initialize();
 		}
 	});
-
-	var baseLat = result['results'][0]['geometry']['location']['lat'];
-	var baseLong = result['results'][0]['geometry']['location']['lng'];
-
-    if (!baseLat || !baseLong)
-	{
-		setError(true, '#baselocation_error', "Please input a valid address");
-		return;	
-	}
-	$("#baselocation_error").css('display', 'none');
-	var username = $.cookie("username");
-	var password = $.cookie("password");
-	
-	updateSingleFirebaseAttribute(username, "Base_Location", baseLocation);
-	updateSingleFirebaseAttribute(username, "baseLat", baseLat);
-	updateSingleFirebaseAttribute(username, "baseLong", baseLong);
-	
-	$.cookie("baseLocation", baseLocation, {expires: 30} );
-	$.cookie('baseLat', baseLat, {expires: 30});
-	$.cookie('baseLong', baseLong, {expires: 30});
-	
-	hideModal("#baseLocationModal");	
-	initialize();
 }
 
 function updatePhoneNumber(num)
