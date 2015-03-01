@@ -1,18 +1,14 @@
 var myDataRef = new Firebase('https://findmydeardog.firebaseio.com/');
+var error_modules = ['#register_error', '#login_error', '#phonenumber_error', '#radius_error', '#personal_radius_error', '#baselocation_error'];
 
 $(function () {
 	$( "#settings-toggle" ).click(function() {
-	  $( "#settings-hide" ).animate({
-	    height: "toggle"
-	  }, 500, function() {
-	    // Animation complete.
-	  });
+	  $( "#settings-hide" ).animate({ height: "toggle" }, 500);
 	});
 	
-	//console.log("on? " + getCookie("turned_on"));
-  if (convertBoolean(getCookie("turned_on"))) {
-    $('#on-off').prop("checked", true);
-  }
+	if (convertBoolean(getCookie("turned_on"))) {
+		$('#on-off').prop("checked", true);
+	}
 
 	if (convertBoolean(getCookie("follow_device"))) {
 		$('#followDeviceBtn').hide();
@@ -20,19 +16,20 @@ $(function () {
 	}
 
 	$('.on-off :checkbox').iphoneStyle();
+	
 	Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
 	
 	//if there is a username and password, then there must be a phonenumber, radius, and baselocation
-	var username = getCookie("username");
-	var password = getCookie("password");
+	var username = $.cookie('username');
+	var password = $.cookie('password');
 
 	if (getUserFromFirebase(username, password, 'mainscreen'))
 	{
-		$("#user_id").text(getCookie("username"));
+		$("#user_id").text(username);
 		initialize();
-		var phoneNumber = getCookie("phoneNumber");
-		var radius = getCookie("radius");
-		var baseLocation = getCookie("baseLocation");
+		var phoneNumber = $.cookie("phoneNumber");
+		var radius = $.cookie("radius");
+		var baseLocation = $.cookie("baseLocation");
 		
 		if (phoneNumber && radius && baseLocation)
 		{
@@ -54,31 +51,10 @@ $(function () {
 function setOnOff() {
 	if (getUserFromFirebase(username, password, 'mainscreen'))
 	{
-		if (convertBoolean(getCookie("turned_on"))) {
+		if ($.cookie("turned_on", Boolean)) {
 	    	$('#on-off').prop("checked", true);
 		}
 	} 
-}
-
-function getCookie(cname)
-{
-	var name = cname + "=";
-	var ca = document.cookie.split(';');
-	for(var i=0; i<ca.length; i++) 
-	{
-		var c = ca[i].trim();
-		if (c.indexOf(name) == 0) 
-			return c.substring(name.length,c.length);
-	}
-	return null;
-}
-
-function setCookie(cname,cvalue,exdays)
-{
-	var d = new Date();
-	d.setTime(d.getTime()+(exdays*24*60*60*1000));
-	var expires = "expires="+d.toGMTString();
-	document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
 }
 
 function changeStatus(status)
@@ -92,81 +68,43 @@ function changeStatus(status)
 
 function clearAllCookies()
 {
-	for (var i = 0; i < 3; i++)
-	{
-		setCookie('username', "", -1);
-		setCookie('password', "", -1);
-		setCookie('radius', "", -1);
-		setCookie('phoneNumber', "", -1);
-		setCookie('baseLocation', "", -1);
-		setCookie('baseLat', "", -1);
-		setCookie('baseLong', "", -1);
-		setCookie('dog_added', "", -1);
-		setCookie('initialized', "", -1);
-		setCookie('turned_on', "", -1);
-	}
+	$.removeCookie('username');
+	$.removeCookie('password');
+	$.removeCookie('radius');
+	$.removeCookie('phoneNumber');
+	$.removeCookie('baseLocation');
+	$.removeCookie('baseLat');
+	$.removeCookie('baseLong');
+	$.removeCookie('dog_added');
+	$.removeCookie('initialized');
+	$.removeCookie('turned_on');
 }
 
 function setAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong, turned_on)
 {
-	setCookie('username', username, 30);
-	setCookie('password', password, 30);
-	setCookie('radius', radius, 30);
-	setCookie('phoneNumber', phoneNumber, 30);
-	setCookie('baseLocation', baseLocation, 30);
-	setCookie('baseLat', baseLat, 30);
-	setCookie('baseLong', baseLong, 30);
-	setCookie('turned_on', turned_on, 30);
+	$.cookie('username', username, { expires: 30 });
+	$.cookie('password', password, { expires: 30 });
+	$.cookie('radius', radius, { expires: 30 });
+	$.cookie('phoneNumber', phoneNumber, { expires: 30 });
+	$.cookie('baseLocation', baseLocation, { expires: 30 });
+	$.cookie('baseLat', baseLat, { expires: 30 });
+	$.cookie('baseLong', baseLong, { expires: 30 });
+	$.cookie('turned_on', turned_on, { expires: 30 });
 }
 
 function checkLogInOrOut()
 {
-	var username = getCookie("username");
+	var username = $.cookie("username");
 	
 	if (!username)
 	{
-		//means it's showing "Login"
+		//means the webpage was showing "Login"
 		showModal('#loginModal');	
 	}
 	else
 	{
-		//means it's showing "Logout"
+		//means the webpage was showing "Logout"
 		logout();
-	}
-}
-
-function checkLogInOrOut2()
-{
-	var username = getCookie("username");
-	
-	if (!username)
-	{
-		//means it's showing "Login"
-		showModal('#loginModal');	
-	}
-	else
-	{
-		//means it's showing "Logout"
-		loadUser();
-	}
-}
-
-function loadUser(page)
-{
-	var username = getCookie("username");
-	
-	if (!username)
-	{
-		if (page == 'main')
-			showModal('#loginModal');
-		else
-			window.location.href = 'index.html';
-	}
-	else
-	{
-		$("#user_id").text(username);
-		changeStatus("Login");
-		initialize();
 	}
 }
 
@@ -180,12 +118,13 @@ function checkFirebaseForLogin(username, password, module)
 		{
 			hideModal('#loginModal');
 		}
-		return true;
 	}
 	else
 	{
 		return false;
 	}
+	
+	return true;
 }
 
 function createFirebaseUser(username, password, phoneNumber, radius, baseLocation, turned_on)
@@ -241,10 +180,10 @@ function fillInFrontpage(phoneNumber, radius, baseLocation)
 
 function getUserFromFirebase(username, password, module)
 {
-	if (username && password && module)
+	if (username && password)
 	{
 		//check firebase for the user
-		var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username+ ".json";
+		var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
 		var result;
 		$.ajax ({
 			dataType: "json",
@@ -262,11 +201,10 @@ function getUserFromFirebase(username, password, module)
 				if (result['Password'] == password)
 				{
 					setUser(username, password, result['Phone_Number'], result['Threshold'], result['Base_Location'], result['baseLat'], result['baseLong'], result['Turned_On']);
-					return true;
 				}
 				else
 				{
-					setError('no_pass', module);
+					setError(true, module, "Password incorrect");
 					return false;
 				}
 			}
@@ -278,33 +216,46 @@ function getUserFromFirebase(username, password, module)
 			}
 			else if (module == 'mainscreen')
 			{
-				setUser(username, password, result['Phone_Number'], result['Threshold'], result['Base_Location'], result['baseLat'], result['baseLong'], result['Turned_On']);
-				return true;	
+				setUser(username, password, result['Phone_Number'], result['Threshold'], result['Base_Location'], result['baseLat'], result['baseLong'], result['Turned_On']);	
 			}
 			
 		}
 		else
 		{
-			if (module == 'login')
+			if (module == '#login_error')
 			{
-				setError('no_user', module);
-				return false;
+				setError(true, module, "Username not found");
 			}
-			else if (module == 'register') 
+			else if (module == '#register_error') 
 			{
-				return true;
+				setError(true, module, "Username already taken");
 			}
-			else if (module == 'mainscreen')
+			else if (module == '#phonenumber_error')
 			{
-				return false;
+				setError(true, module, "Invalid phone number");
 			}
+			
+			return false;			
 		}
 	} 
 	else 
 	{
-		setError('no_user', module);
+		if (module == '#login_error')
+		{
+			setError(true, module, "Username not found");
+		}
+		else if (module == '#register_error') 
+		{
+			setError(true, module, "Username already taken");
+		}
+		else if (module == '#phonenumber_error')
+		{
+			setError(true, module, "Invalid phone number");
+		}
 		return false;	
 	}
+	
+	return true;
 }
 
 function setUser(username, password, phoneNumber, radius, baseLocation, baseLat, baseLong, turned_on)
@@ -321,8 +272,8 @@ function login()
 	if (checkFirebaseForLogin(username, password, 'login'))
 	{
 		changeStatus("Login"); //doesn't really do anything though...
-		$("#user_id").text(getCookie("username"));
-		$("#login_error").css('display', 'none');
+		$("#user_id").text(username);
+		setError(false, '#login_error');
 	}
 }
 
@@ -354,31 +305,31 @@ function register()
 
 	var isANumber = (isNaN(radius) === false);
 	if(!isANumber || radius == "") {
-		setError('no_radius', 'register');
+		setError(true, '#register_error', 'Please enter a valid radius');
 		return;
 	}
 	
 	if (!isPhoneNumber(phoneNumber) || phoneNumber == "")
 	{
-		setError('no_num', 'register');
+		setError(true, '#register_error', 'Please enter a valid phone number');
 		return;
 	}
 	
 	if (username == "")
 	{
-		setError('no_username', 'register');
+		setError(true, '#register_error', 'Please enter a valid username');
 		return;
 	}
 	
 	if (password == "")
 	{
-		setError('no_password', 'register');
+		setError(true, '#register_error', 'Please enter a valid password');
 		return;
 	}
 	
 	if (baseLocation == "")
 	{
-		setError('no_location', 'register');
+		setError(true, '#register_error', 'Please enter a valid location');
 		return;
 	}
 	
@@ -389,58 +340,43 @@ function register()
 	}
 	else
 	{
-		setError('no_user', 'register');
+		setError(true, '#register_error', 'Username Not Found''register');
 		return;
 	}
 	
-	$("#register_error").css('display', 'none');
+	setError(false, '#register_error');
 }
 
 function showModal(modal)
 {
+	clearErrors();
 	$(modal).modal('show');
 }
 
 function hideModal(modal)
 {
-	$(modal).modal('hide');	
+	$(modal).modal('hide');
 }
 
-function setError(error, module)
+function clearErrors()
 {
-	switch (module) {
-		case 'login':
-			$("#login_error").css('display', 'block');
-			if (error == 'no_user')
-				$("#login_error").html("Username not found");
-			else if (error == 'no_pass')
-				$("#login_error").html("Password not correct");		
-		case 'register':
-			$("#register_error").css('display', 'block');
-			if (error == 'no_user')
-				$("#register_error").html("Username already taken");
-			if (error == 'no_radius')
-				$("#register_error").html("Invalid radius");
-			if (error == 'no_num')
-				$("#register_error").html("Invalid phone number");
-			if (error == 'no_username')
-				$("#register_error").html("Please enter a username");
-			if (error == 'no_password')
-				$("#register_error").html("Please enter a password");
-			if (error == 'no_location')
-				$("#register_error").html("Please enter a location");
-		case 'mainscreen':
-		case 'pn_modal':
-			$("#phonenumber_error").css('display', 'block');
-			$("#phonenumber_error").html("Invalid Phone Number");
-		case 'rad_modal':
-			$("#radius_error").css('display', 'block');
-			$("#radius_error").html("Invalid Radius");
-			$("#personal_radius_error").css('display', 'block');
-			$("#personal_radius_error").html("Invalid Radius");
-		case 'base_modal':
-			$("#baselocation_error").css('display', 'block');
-			$("#baselocation_error").html("Invalid Base Location");
+	for (var i = 0; i < error_modules.length; i++)
+	{
+		setError(false, error_modules[i]);
+	}
+}
+
+function setError(isError, module, message)
+{
+	if (isError)
+	{
+		$(module).removeClass("hidden");
+		$(module).html(message);
+	}
+	else
+	{
+		$(module).addClass("hidden");
+		$(module).html("");
 	}
 }
 
@@ -452,10 +388,10 @@ function updateRadius()
 		setError(null, 'rad_modal');
 		return;
 	}
-	$("#radius_error").css('display', 'none');
-	var username = getCookie("username");
+	setError(false, '#radius_error');
+	var username = $.cookie("username");
 	updateSingleFirebaseAttribute(username, "Threshold", parseInt(radius));
-	setCookie("radius", radius, 30);
+	$.cookie("radius", radius, { expires: 30 });
 	hideModal("#radiusModal");
 	initialize();
 }
@@ -484,14 +420,17 @@ function updateBaseLocation()
 		return;	
 	}
 	$("#baselocation_error").css('display', 'none');
-	var username = getCookie("username");
-	var password = getCookie("password");
+	var username = $.cookie("username");
+	var password = $.cookie("password");
+	
 	updateSingleFirebaseAttribute(username, "Base_Location", baseLocation);
 	updateSingleFirebaseAttribute(username, "baseLat", baseLat);
 	updateSingleFirebaseAttribute(username, "baseLong", baseLong);
-	setCookie("baseLocation", baseLocation, 30);
-	setCookie('baseLat', baseLat, 30);
-	setCookie('baseLong', baseLong, 30);
+	
+	$.cookie("baseLocation", baseLocation, {expires: 30} );
+	$.cookie('baseLat', baseLat, {expires: 30});
+	$.cookie('baseLong', baseLong, {expires: 30});
+	
 	hideModal("#baseLocationModal");	
 	initialize();
 }
@@ -514,12 +453,14 @@ function updatePhoneNumber(num)
 	
 	if (!isPhoneNumber(phoneNumber))
 	{
-		setError(null, 'pn_modal');
+		setError(true, '#phonenumber_error', "Please enter valid phone number");
 		return;
 	}
-	$("#phonenumber_error").css('display', 'none');
-	updateSingleFirebaseAttribute(getCookie("username"), "Phone_Number", phoneNumber);
-	setCookie("phoneNumber", phoneNumber, 30);
+	
+	setError(false, "#phonenumber_error");
+	updateSingleFirebaseAttribute($.cookie("username"), "Phone_Number", phoneNumber);
+	$.cookie("phoneNumber", phoneNumber, {expires: 30});
+	
 	if (num === null) hideModal("#phoneNumberModal");	
 }
 
