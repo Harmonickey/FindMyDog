@@ -47,7 +47,7 @@ function initialize() {
 	  
 	  $.cookie("initialized", 'true');
       
-	  if (!map) return;
+	  if ($("#map-canvas") == []) return;
 	  
       //set a marker for the home location
       var static_marker = new google.maps.Marker({
