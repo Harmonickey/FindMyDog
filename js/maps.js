@@ -146,7 +146,8 @@ function trackLocation() {
 		else 
 		{
 			pullDogLocation();
-			pet_marker.setPosition(static_dog); //update the dog's position on the map
+			if (pet_marker)
+				pet_marker.setPosition(static_dog); //update the dog's position on the map
 			line.setPath([static_loc, static_dog]); //update the line on the map
 			getDistance(static_loc, static_dog, threshold); //get the distance between the home location and the dog
 		}
