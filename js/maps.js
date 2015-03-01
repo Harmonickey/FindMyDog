@@ -133,7 +133,7 @@ function addDog(lat, lng) {
 setInterval(trackLocation, 3000); //regularly update the position of the dog on the map
 
 function trackLocation() {
-  if(convertBoolean(getCookie("initialized"))) {
+  if($.cookie("initialized", Boolean)) {
     if($.cookie("username")) {
       if($.cookie("follow_device", Boolean)) {
         getUserLocation();
@@ -236,53 +236,59 @@ window.onload = function() {
 function pullDogLocation() {
   if($.cookie("username")) {
     var userInfo = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
-    var result;
     $.ajax ({
       dataType: "json",
       url: userInfo,
-      async: false,
-      success: function(data) {
-        result = data;
+      success: function(data) 
+	  {
+		if (data != 'null' && data != null) 
+		{
+			if(data['Password'] == password) 
+			{
+				if(data['dogLat'] != null &&
+				   data['dogLat'] != 'null' && 
+				   !$.cookie("dog_added", Boolean)) 
+				{
+					addDog(data['dogLat'], data['dogLng']);
+				}
+
+				if(data['dogLat'] != null && data['dogLat'] != 'null') {
+					var long1 = data['dogLng'];
+					var lat1 = data['dogLat'];
+					static_dog = new google.maps.LatLng(lat1, long1);
+				} else {
+					console.log("No dog");
+				}
+			}
+		}
+		else {
+			console.log("fail");
+		}
       }
     });
-
-    if (result!='null' && result!=null) {
-      if(result['Password']==password) {
-        if(result['dogLat']!=null && result['dogLat']!='null' && !$.cookie("dog_added", Boolean)) {
-          addDog(result['dogLat'], result['dogLng']);
-        }
-		
-        if(result['dogLat']!=null && result['dogLat']!='null') {
-          var long1 = result['dogLng'];
-          var lat1 = result['dogLat'];
-          static_dog = new google.maps.LatLng(lat1, long1);
-        } else {
-          console.log("No dog");
-        }
-      }
-    }
-    else {
-      console.log("fail");
-    }
   }
   else {
     window.location.href = "index.html";
   }
 }
 
-function getUserLocation() {
-  if(getCookie("username")) {
+function getUserLocation() 
+{
+  if(getCookie("username")) 
+  {
     var result;
-    if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        owner_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        map.setCenter(owner_location);
-        owner_marker.setPosition(owner_location);
-        line.setPath([owner_location, static_dog]);
-        var r = parseFloat(getCookie("personal_radius"));
-        r = r/3.28084;
-        owner_circle.set('radius', r);
-        owner_circle.bindTo('center', owner_marker, 'position');
+    if(navigator.geolocation) 
+	{
+      navigator.geolocation.getCurrentPosition(function(position) 
+	  {
+		owner_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		map.setCenter(owner_location);
+		owner_marker.setPosition(owner_location);
+		line.setPath([owner_location, static_dog]);
+		var r = parseFloat(getCookie("personal_radius"));
+		r = r/3.28084;
+		owner_circle.set('radius', r);
+		owner_circle.bindTo('center', owner_marker, 'position');
       });
     }
   }
