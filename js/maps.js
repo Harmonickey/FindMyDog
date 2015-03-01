@@ -135,7 +135,7 @@ setInterval(trackLocation, 3000); //regularly update the position of the dog on 
 function trackLocation() {
   if($.cookie("initialized", Boolean)) {
     if($.cookie("username")) {
-		if($.cookie("follow_device", Boolean))) {
+		if($.cookie("follow_device", Boolean)) {
 			getUserLocation();
 			pullDogLocation();
 			if (pet_marker)
