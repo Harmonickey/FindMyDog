@@ -10,25 +10,25 @@ var line1, line2, line3, line4;
 
 function initializeTracker() {
   //get original geolocation
-  if(getCookie("username")) {
+  if($.cookie("username")) {
 	  if(navigator.geolocation) {
 	  	navigator.geolocation.getCurrentPosition(function(position) {
 	  		lat = position.coords.latitude;
 	  		lng = position.coords.longitude;
 	  		updateFirebaseLocation(lat, lng);
-	  		$("#user_id").text(getCookie("username"));
+	  		$("#user_id").text(username);
 	  	});
 	  }
   }
   else {
-  	window.location = "index.html";
+  	window.location.href = "index.html";
   }
 }
 
 setInterval(trackLocation, 1000);
 
 function trackLocation() {
-	if(getCookie("username")) {
+	if($.cookie("username")) {
 		navigator.geolocation.getCurrentPosition(function(position) {
 			var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 			if(position.coords.latitude && position.coords.longitude) {	
@@ -44,13 +44,13 @@ function trackLocation() {
 		});
 	}
 	else {
-		window.location = "index.html";
+		window.location.hrefs = "index.html";
 	}
 }
 
 function updateFirebaseLocation(lat, lng) {
 	console.log(lat + ',' + lng);
-	myDataRef.child('user').child(getCookie("username")).update({
+	myDataRef.child('user').child($.cookie("username")).update({
 		'dogLat': lat,
 		'dogLng': lng
 	});
@@ -83,7 +83,7 @@ function storeDogLocation(lat, lng)
 	var dogLocation = new DogLocation();
 	var location = new Parse.GeoPoint(lat, lng);
 	dogLocation.save({
-		Username: getCookie("username"),
+		Username: $.cookie("username"),
 		Location: location,
 		Time: time
 	}, {
@@ -134,52 +134,15 @@ function deleteLocations(fromTime)
 {
 	var objectIds = getRecordIds(fromTime);
 	
-	/*
-	curl -X POST \
-	  -H "X-Parse-Application-Id: H4zb5P2LW0xRtP21SlKaWBFCuR2Cvwkd73OLlIyn" \
-	  -H "X-Parse-Master-Key: XFvgotn8KdcFeNfB19JAU7uPDxBWsHsXrx9gOpbC" \
-	  -H "Content-Type: application/json" \
-	  -d '{"plan":"paid"}' \
-	  https://api.parse.com/1/jobs/userMigration
-	*/
-	
 	Parse.Cloud.run('removeTwoWeeksAgo', {objectIds: objectIds}, {
 	  success: function(result) { },
 	  error: function(error) { }
 	});
 	
-	/*
-	for (var i = 0; i < objectIds.length; i++)
-	{
-		var DogLocation = Parse.Object.extend("Dog_Location");
-		var query = new Parse.Query(DogLocation);
-		var doglocationobj;
-		query.get(objectIds[i], {
-		  success: function(object) {
-			doglocationobj = object;
-		  },
-		  error: function(object, error) {
-			// The object was not retrieved successfully.
-			// error is a Parse.Error with an error code and description.
-		  }
-		});	
-		doglocationobj.destroy({
-		  success: function(myObject) {
-			// The object was deleted from the Parse Cloud.
-		  },
-		  error: function(myObject, error) {
-			// The delete failed.
-			// error is a Parse.Error with an error code and description.
-		  }
-		});
-		
-		doglocationobj.save();
-	}
-	*/
 }
 
-username = getCookie("username");
-password = getCookie("password");
+username = $.cookie("username");
+password = $.cookie("password");
 getUserFromFirebase(username, password, 'login');
 
 
