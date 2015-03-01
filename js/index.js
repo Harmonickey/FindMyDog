@@ -340,7 +340,7 @@ function register()
 	}
 	else
 	{
-		setError(true, '#register_error', 'Username Not Found''register');
+		setError(true, '#register_error', 'Username Already Taken');
 		return;
 	}
 	

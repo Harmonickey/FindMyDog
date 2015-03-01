@@ -1,8 +1,8 @@
 var map; //will be used for map on page
 
-var initialized = convertBoolean(getCookie("initialized"));
-var turned_on = convertBoolean(getCookie("turned_on"));
-setCookie("dog_added", 'false');
+var initialized = $.cookie("initialized", Boolean);
+var turned_on = $.cookie("turned_on", Boolean);
+$.cookie("dog_added", 'false');
 var username;
 var password;
 
@@ -20,8 +20,8 @@ var owner_location;
 var current_location;
 
 function initialize() {
-  username = getCookie('username');
-  password = getCookie('password');
+  username = $.cookie('username');
+  password = $.cookie('password');
   getUserFromFirebase(username, password, 'login');
 
   var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
@@ -127,32 +127,31 @@ function addDog(lat, lng) {
   });
   //put the line on the map
   line.setMap(map);
-  setCookie("dog_added", 'true');
+  $.cookie("dog_added", 'true');
 }
 
 setInterval(trackLocation, 3000); //regularly update the position of the dog on the map
 
 function trackLocation() {
   if(convertBoolean(getCookie("initialized"))) {
-    if(getCookie("username")) {
-      if(convertBoolean(getCookie("follow_device"))) {
+    if($.cookie("username")) {
+      if($.cookie("follow_device", Boolean)) {
         getUserLocation();
-        console.log(owner_location);
-        pullDogLocation();
-        pet_marker.setPosition(static_dog); //update the dog's position on the map
         line.setPath([owner_location, static_dog]);
         var personal_radius = parseInt(getCookie("personal_radius"));
         getDistance(owner_location, static_dog, personal_radius);
       }
       else {
-        pullDogLocation();
-        pet_marker.setPosition(static_dog); //update the dog's position on the map
         line.setPath([static_loc, static_dog]); //update the line on the map
         getDistance(static_loc, static_dog, threshold); //get the distance between the home location and the dog
       }
+	  
+	  //update the dog's position on the map
+	  pet_marker.setPosition(static_dog);
+	  pullDogLocation();
     }
     else {
-      window.location = "index.html";
+      window.location.href = "index.html";
     }
   }
 }
@@ -166,7 +165,7 @@ function trackLocation() {
 */
 var out_counter = 0;
 var in_counter = 0;
-var alerted = convertBoolean(getCookie("alerted"));
+var alerted = $.cookie("alerted", Boolean);
 
 function getDistance(loc, pos, thres) {
   //calculate distance in meters
@@ -177,7 +176,7 @@ function getDistance(loc, pos, thres) {
 }
 
 function parseDistance(dist, thres) {
-  if(convertBoolean(getCookie("turned_on"))) {
+  if($.cookie("turned_on", Boolean)) {
     //if out of range
     if (dist>thres) {
       //remove in-range counter
@@ -186,9 +185,9 @@ function parseDistance(dist, thres) {
       out_counter++;
       //if has been out of range 3 times consecutively
       if (out_counter==3) {
-        if(!convertBoolean(getCookie("alerted"))) {
+        if(!$.cookie("alerted", Boolean)) {
           sendAlert();
-          setCookie("alerted", "true");
+          $.cookie("alerted", "true");
         }
       }
     }
@@ -199,20 +198,20 @@ function parseDistance(dist, thres) {
       //increment in range counter
       in_counter++;
       if (in_counter==3) {
-        setCookie("alerted", "false");
+        $.cookie("alerted", "false");
       }
     }
   }
 }
 
 function toggleON_OFF() {	
-  if(convertBoolean(getCookie("turned_on"))) {
-    setCookie("turned_on", 'false', 30);
+  if($.cookie("turned_on", Boolean)) {
+    $.cookie("turned_on", 'false', {expires: 30});
 	  updateSingleFirebaseAttribute(username, "Turned_On", false);
   }
   else {
-    setCookie("turned_on", 'true', 30);
-	  updateSingleFirebaseAttribute(username, "Turned_On", true);
+    $.cookie("turned_on", 'true', {expires: 30});
+	updateSingleFirebaseAttribute(username, "Turned_On", true);
     $('#on-off').prop("checked", true);
     out_counter = 0;
     in_counter = 0;
@@ -221,9 +220,9 @@ function toggleON_OFF() {
 
 //send alert to user
 function sendAlert() {
-  if(convertBoolean(getCookie("turned_on"))) {
+  if($.cookie("turned_on", Boolean)) {
     alert("Dog is running away!");
-	Parse.Cloud.run('sendText', {phoneNumber: getCookie("phoneNumber")}, {
+	Parse.Cloud.run('sendText', {phoneNumber: $.cookie("phoneNumber")}, {
 	  success: function(result) { },
 	  error: function(error) { }
  	});
@@ -235,7 +234,7 @@ window.onload = function() {
 };
 
 function pullDogLocation() {
-  if(getCookie("username")) {
+  if($.cookie("username")) {
     var userInfo = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
     var result;
     $.ajax ({
@@ -249,17 +248,15 @@ function pullDogLocation() {
 
     if (result!='null' && result!=null) {
       if(result['Password']==password) {
-        if(result['dogLat']!=null && result['dogLat']!='null' && convertBoolean(getCookie("dog_added"))!=true) {
-          console.log("Add dog");
+        if(result['dogLat']!=null && result['dogLat']!='null' && !$.cookie("dog_added", Boolean)) {
           addDog(result['dogLat'], result['dogLng']);
         }
+		
         if(result['dogLat']!=null && result['dogLat']!='null') {
-          console.log("Update dog");
           var long1 = result['dogLng'];
           var lat1 = result['dogLat'];
           static_dog = new google.maps.LatLng(lat1, long1);
-        }
-        else {
+        } else {
           console.log("No dog");
         }
       }
@@ -269,7 +266,7 @@ function pullDogLocation() {
     }
   }
   else {
-    window.location = "index.html";
+    window.location.href = "index.html";
   }
 }
 
@@ -298,16 +295,15 @@ function FollowDevice() {
   var new_radius = $("#new_person_radius").val();
   var isANumber = isNaN(new_radius) === false;
   if (!isANumber) {
-    setError(null, 'rad_modal');
+    setError(true, "#personal_radius", "Please input a valid radius");
     return
   }
 
   $("#followDeviceBtn").hide();
   $("#unfollowDeviceBtn").show();
-  setCookie("follow_device", true, 1);
-  setCookie("personal_radius", new_radius, 30);
+  $.cookie("follow_device", true, {expires: 1});
+  $.cookie("personal_radius", new_radius, {expires: 30});
   hideModal("#followDeviceModal");
-  console.log("following: true");
   owner_marker.setVisible(true);
   owner_circle.setVisible(true);
 }
@@ -316,15 +312,14 @@ function UnfollowDevice() {
   map.setCenter(static_loc);
   $("#followDeviceBtn").show();
   $("#unfollowDeviceBtn").hide();
-  setCookie("personal_radius", "", 0);
-  setCookie("follow_device", false, 1);
-  console.log("following: false");
+  $.removeCookie("personal_radius");
+  $.removeCookie("follow_device");
   owner_marker.setVisible(false);
   owner_circle.setVisible(false);
 }
 
 function setBaseAsCurrentLocation() {
-  if(getCookie("username")) {
+  if($.cookie("username")) {
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         hideModal("#baseLocationModal");
@@ -337,7 +332,7 @@ function setBaseAsCurrentLocation() {
     }
   }
   else {
-    window.location = "index.html";
+    window.location.href = "index.html";
   }
 }
 
