@@ -6,11 +6,11 @@ $(function () {
 	  $( "#settings-hide" ).animate({ height: "toggle" }, 500);
 	});
 	
-	if (convertBoolean(getCookie("turned_on"))) {
+	if ($.cookie("turned_on", Boolean)) {
 		$('#on-off').prop("checked", true);
 	}
 
-	if (convertBoolean(getCookie("follow_device"))) {
+	if ($.cookie("follow_device", Boolean)) {
 		$('#followDeviceBtn').hide();
 		$('#unfollowDeviceBtn').show();
 	}
