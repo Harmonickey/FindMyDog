@@ -135,20 +135,22 @@ setInterval(trackLocation, 3000); //regularly update the position of the dog on 
 function trackLocation() {
   if($.cookie("initialized", Boolean)) {
     if($.cookie("username")) {
-      if($.cookie("follow_device", Boolean)) {
-        getUserLocation();
-        line.setPath([owner_location, static_dog]);
-        var personal_radius = $.cookie("personal_radius", Number);
-        getDistance(owner_location, static_dog, personal_radius);
-      }
-      else {
-        line.setPath([static_loc, static_dog]); //update the line on the map
-        getDistance(static_loc, static_dog, threshold); //get the distance between the home location and the dog
-      }
+		//update the dog's position on the map
+	    pullDogLocation();
+	    pet_marker.setPosition(static_dog);
+		
+		if($.cookie("follow_device", Boolean)) {
+			getUserLocation();
+			line.setPath([owner_location, static_dog]);
+			getDistance(owner_location, static_dog, $.cookie("personal_radius", Number));
+		}
+		else 
+		{
+			line.setPath([static_loc, static_dog]); //update the line on the map
+			getDistance(static_loc, static_dog, threshold); //get the distance between the home location and the dog
+		}
 	  
-	  //update the dog's position on the map
-	  pullDogLocation();
-	  pet_marker.setPosition(static_dog);
+	  
     }
     else {
       window.location.href = "index.html";
