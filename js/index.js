@@ -464,6 +464,29 @@ function updatePhoneNumber(num)
 	if (num === null) hideModal("#phoneNumberModal");	
 }
 
+function loadUser(page)
+{
+	var username = $.cookie("username");
+	
+	if (!username)
+	{
+		if (page == 'main')
+		{
+			showModal('#loginModal');
+		}
+		else
+		{
+			window.location.href = 'index.html';
+		}
+	}
+	else
+	{
+		$("#user_id").text(username);
+		changeStatus("Login");
+		initialize();
+	}
+}
+
 function convertBoolean(str)
 {
 	return (str == 'true' ? true : false);
