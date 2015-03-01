@@ -39,10 +39,16 @@ function initialize() {
         center: static_loc
       }
       //create the map
-      map = new google.maps.Map(document.getElementById('map-canvas'),
-        mapOptions);
-      $.cookie("initialized", 'true');
-
+	  if ($("#map-canvas") != [])
+	  {
+		map = new google.maps.Map(document.getElementById('map-canvas'),
+			mapOptions);
+	  }
+	  
+	  $.cookie("initialized", 'true');
+      
+	  if (!map) return;
+	  
       //set a marker for the home location
       var static_marker = new google.maps.Marker({
         position: static_loc,
@@ -99,9 +105,9 @@ function initialize() {
         icon: "images/male.png"
       });
 	
-		if(data['dogLat'] != null) {
-			addDog(data['dogLat'], data['dogLng']);
-		}
+	  if(data['dogLat'] != null) {
+		addDog(data['dogLat'], data['dogLng']);
+	  }
 	}
   });
 }
