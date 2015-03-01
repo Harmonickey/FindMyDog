@@ -3,10 +3,6 @@ var error_modules = ['#register_error', '#login_error', '#phonenumber_error', '#
 
 $(function () {
 	
-	$('.modal-body input').change(function() {
-		clearErrors();
-	});
-	
 	$( "#settings-toggle" ).click(function() {
 	  $( "#settings-hide" ).animate({ height: "toggle" }, 500);
 	});
