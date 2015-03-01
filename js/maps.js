@@ -98,10 +98,10 @@ function initialize() {
         title: "Owner's Location",
         icon: "images/male.png"
       });
-    }
 	
-	if(data['dogLat'] != null) {
-		addDog(data['dogLat'], data['dogLng']);
+		if(data['dogLat'] != null) {
+			addDog(data['dogLat'], data['dogLng']);
+		}
 	}
   });
 }
