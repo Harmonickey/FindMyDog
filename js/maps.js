@@ -198,7 +198,8 @@ function parseDistance(dist, thres) {
       //increment out of range counter
       out_counter++;
       //if has been out of range 3 times consecutively
-      if (out_counter==3) {
+      if (out_counter==3) 
+	  {
         if(!$.cookie("alerted", Boolean)) {
           sendAlert();
           $.cookie("alerted", "true");
@@ -235,10 +236,9 @@ function toggleON_OFF() {
 //send alert to user
 function sendAlert() {
   if($.cookie("turned_on", Boolean)) {
-    alert("Dog is running away!");
 	Parse.Cloud.run('sendText', {phoneNumber: $.cookie("phoneNumber")}, {
 	  success: function(result) { },
-	  error: function(error) { }
+	  error: function(error) { alert("Dog is running away!"); }
  	});
   }
 }
