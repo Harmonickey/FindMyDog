@@ -138,7 +138,8 @@ function trackLocation() {
 		if($.cookie("follow_device", Boolean))) {
 			getUserLocation();
 			pullDogLocation();
-			pet_marker.setPosition(static_dog); //update the dog's position on the map
+			if (pet_marker)
+				pet_marker.setPosition(static_dog); //update the dog's position on the map
 			line.setPath([owner_location, static_dog]);
 			getDistance(owner_location, static_dog, $.cookie("personal_radius", Number));
 		}

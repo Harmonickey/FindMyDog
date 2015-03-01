@@ -385,7 +385,7 @@ function updateRadius()
 	var radius = $("#new_radius").val();
 	var isANumber = isNaN(radius) === false;
 	if (!isANumber) {
-		setError(null, 'rad_modal');
+		setError(true, '#radius_modal', "Please input valid radius");
 		return;
 	}
 	setError(false, '#radius_error');
@@ -416,7 +416,7 @@ function updateBaseLocation()
 
     if (!baseLat || !baseLong)
 	{
-		setError(null, 'base_modal');
+		setError(true, '#baselocation_error', "Please input a valid address");
 		return;	
 	}
 	$("#baselocation_error").css('display', 'none');
