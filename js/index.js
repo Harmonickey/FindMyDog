@@ -114,7 +114,7 @@ function checkFirebaseForLogin(username, password, module)
 	if(getUserFromFirebase(username, password, module))
 	{
 		//if good then change the Login to Logout and set variables, close loginModal
-		if (module == 'login')
+		if (module == '#login_error')
 		{
 			hideModal('#loginModal');
 		}
@@ -143,7 +143,7 @@ function createFirebaseUser(username, password, phoneNumber, radius, baseLocatio
 	var baseLat = result['results'][0]['geometry']['location']['lat'];
 	var baseLong = result['results'][0]['geometry']['location']['lng'];
 
-	 if (checkFirebaseForLogin(username, password, 'register'))
+	 if (checkFirebaseForLogin(username, password, '#register_error'))
 	 {
 	 	myDataRef.child('user').child(username).set({
 			'Password': password, 
@@ -196,7 +196,7 @@ function getUserFromFirebase(username, password, module)
 		
 		if (result != 'null' && result != null)
 		{
-			if (module == 'login')
+			if (module == '#login_error')
 			{
 				if (result['Password'] == password)
 				{
@@ -204,11 +204,13 @@ function getUserFromFirebase(username, password, module)
 				}
 				else
 				{
+					console.log("got here");
+					console.log(module);
 					setError(true, module, "Password incorrect");
 					return false;
 				}
 			}
-			else if (module == 'register')
+			else if (module == '#register_error')
 			{
 				
 				setUser(username, password, result['Phone_Number'], result['Threshold'], result['Base_Location'], result['baseLat'], result['baseLong'], result['Turned_On']);
@@ -269,7 +271,7 @@ function login()
 	var username = $("#username").val();
 	var password = $("#password").val();
 	
-	if (checkFirebaseForLogin(username, password, 'login'))
+	if (checkFirebaseForLogin(username, password, '#login_error'))
 	{
 		changeStatus("Login"); //doesn't really do anything though...
 		$("#user_id").text(username);
@@ -287,7 +289,7 @@ function loginTracker() {
 	var username = $("#username").val();
 	var password = $("#password").val();
 	
-	if (checkFirebaseForLogin(username, password, 'login'))
+	if (checkFirebaseForLogin(username, password, '#login_error'))
 	{
 		changeStatus("Login");
 		initializeTracker();	
