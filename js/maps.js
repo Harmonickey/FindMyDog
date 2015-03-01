@@ -138,7 +138,7 @@ function trackLocation() {
       if($.cookie("follow_device", Boolean)) {
         getUserLocation();
         line.setPath([owner_location, static_dog]);
-        var personal_radius = parseInt(getCookie("personal_radius"));
+        var personal_radius = $.cookie("personal_radius", Number);
         getDistance(owner_location, static_dog, personal_radius);
       }
       else {
@@ -147,8 +147,8 @@ function trackLocation() {
       }
 	  
 	  //update the dog's position on the map
-	  pet_marker.setPosition(static_dog);
 	  pullDogLocation();
+	  pet_marker.setPosition(static_dog);
     }
     else {
       window.location.href = "index.html";
