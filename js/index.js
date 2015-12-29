@@ -455,13 +455,16 @@ function updatePhoneNumber(num)
 	//use Twilio verification here...
 	//send request with phoneNumber
 	Parse.Cloud.run('verifyPhoneNumber', {phoneNumber: phoneNumber}, {
-	  success: function(result) {;
+	  success: function(result) {
 		  if (result.validationCode)
 		  {
 			  $("#validation_number").html(result.validationCode);
 			  showModal("#validation");
 		  }
-	  }
+	  },
+      error: function(result) {
+          console.log(result);
+      }
 	});
 	
 	if (!isPhoneNumber(phoneNumber))
