@@ -1,5 +1,5 @@
-var myDataRef = new Firebase('https://findmydeardog.firebaseio.com/');
-Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
+var myDataRef = new Firebase('https://scorching-heat-5834.firebaseio.com/');
+Parse.initialize('6XtVFSuV1G2P1eL5QpPhSbLrBfeW2clg8JTnqM35', 'ZPXgG3m0RSrCzbgCs4cL1jKiTZbeflfPp6ElwQeo');
 
 var map; //will be used for map on page
 

@@ -24,7 +24,7 @@ function initialize() {
   password = $.cookie('password');
   getUserFromFirebase(username, password, 'login');
 
-  var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
+  var firebaseAPI = "https://scorching-heat-5834.firebaseio.com/user/" + username + ".json";
   $.ajax ({
     dataType: "json",
     url: firebaseAPI,
@@ -249,7 +249,7 @@ window.onload = function() {
 
 function pullDogLocation() {
   if($.cookie("username")) {
-    var userInfo = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
+    var userInfo = "https://scorching-heat-5834.firebaseio.com/user/" + username + ".json";
     $.ajax ({
       dataType: "json",
       url: userInfo,

@@ -1,4 +1,4 @@
-var myDataRef = new Firebase('https://findmydeardog.firebaseio.com/');
+var myDataRef = new Firebase('https://scorching-heat-5834.firebaseio.com/');
 var error_modules = ['#register_error', '#login_error', '#phonenumber_error', '#radius_error', '#personal_radius_error', '#baselocation_error'];
 
 $(function () {
@@ -25,7 +25,7 @@ $(function () {
 
 	$('.on-off :checkbox').iphoneStyle();
 	
-	Parse.initialize('5PiDj5mmWu0MlMbqRrSBhqafp4nome88BqM0uvJs', 'ScrtuaWOtSQ2sCpnEPEh8BjpCJhUxSHAm6MLEoMc');
+	Parse.initialize('6XtVFSuV1G2P1eL5QpPhSbLrBfeW2clg8JTnqM35', 'ZPXgG3m0RSrCzbgCs4cL1jKiTZbeflfPp6ElwQeo');
 	
 	//if there is a username and password, then there must be a phonenumber, radius, and baselocation
 	var username = $.cookie('username');
@@ -191,7 +191,7 @@ function getUserFromFirebase(username, password, module)
 	if (username && password)
 	{
 		//check firebase for the user
-		var firebaseAPI = "https://findmydeardog.firebaseio.com/user/" + username + ".json";
+		var firebaseAPI = "https://scorching-heat-5834.firebaseio.com/user/" + username + ".json";
 		var result;
 		$.ajax ({
 			dataType: "json",
