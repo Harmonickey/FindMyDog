@@ -183,10 +183,13 @@ var alerted = $.cookie("alerted", Boolean);
 
 function getDistance(loc, pos, thres) {
   //calculate distance in meters
-  var d = google.maps.geometry.spherical.computeDistanceBetween(loc, pos);
-  d = 3.28084*d; //convert to feet
-  //console.log("Distance: " + String(d));
-  parseDistance(d, thres);
+  if (google.maps.geometry)
+  {
+      var d = google.maps.geometry.spherical.computeDistanceBetween(loc, pos);
+      d = 3.28084*d; //convert to feet
+      //console.log("Distance: " + String(d));
+      parseDistance(d, thres);
+  }
 }
 
 function parseDistance(dist, thres) {

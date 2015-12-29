@@ -154,13 +154,13 @@ function createFirebaseUser(username, password, phoneNumber, radius, baseLocatio
 			result = data
 		}
 	});
-    console.log("GOT GEO LOCATION");
+    
 	var baseLat = result['results'][0]['geometry']['location']['lat'];
 	var baseLong = result['results'][0]['geometry']['location']['lng'];
 
 	 if (!checkFirebaseForLogin(username, password, '#register_error'))
 	 {
-        console.log("DID NOT FIND USER");
+         
 	 	myDataRef.child('user').child(username).set({
 			'Password': password, 
 			'Base_Location': baseLocation,
@@ -176,7 +176,7 @@ function createFirebaseUser(username, password, phoneNumber, radius, baseLocatio
 		setAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong, turned_on);
 		return true;
 	 }
-	 console.log("FOUND USER");
+     
 	 return false;
 }
 
@@ -209,7 +209,7 @@ function getUserFromFirebase(username, password, module)
 				result = data
 			}
 		});
-		console.log("USER SEARCH RESULT: " + result);
+        
 		if (result != 'null' && result != null)
 		{
 			if (module == '#login_error')
@@ -220,8 +220,6 @@ function getUserFromFirebase(username, password, module)
 				}
 				else
 				{
-					console.log("got here");
-					console.log(module);
 					setError(true, module, "Password incorrect");
 					return false;
 				}
