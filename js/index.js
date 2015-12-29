@@ -158,7 +158,7 @@ function createFirebaseUser(username, password, phoneNumber, radius, baseLocatio
 	var baseLat = result['results'][0]['geometry']['location']['lat'];
 	var baseLong = result['results'][0]['geometry']['location']['lng'];
 
-	 if (checkFirebaseForLogin(username, password, '#register_error'))
+	 if (!checkFirebaseForLogin(username, password, '#register_error'))
 	 {
         console.log("DID NOT FIND USER");
 	 	myDataRef.child('user').child(username).set({
@@ -246,7 +246,7 @@ function getUserFromFirebase(username, password, module)
 			}
 			else if (module == '#register_error') 
 			{
-				setError(true, module, "Username already taken");
+				//setError(true, module, "Username already taken");
 			}
 			else if (module == '#phonenumber_error')
 			{
