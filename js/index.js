@@ -1,6 +1,13 @@
 var myDataRef = new Firebase('https://scorching-heat-5834.firebaseio.com/');
 var error_modules = ['#register_error', '#login_error', '#phonenumber_error', '#radius_error', '#personal_radius_error', '#baselocation_error'];
 
+$.ajaxSetup({
+    error: function(err, res) {
+        console.log(err);
+        console.log(res);
+    }
+});
+
 $(function () {
 	
 	$( document ).keypress(function(e) {
@@ -147,12 +154,13 @@ function createFirebaseUser(username, password, phoneNumber, radius, baseLocatio
 			result = data
 		}
 	});
-
+    console.log("GOT GEO LOCATION");
 	var baseLat = result['results'][0]['geometry']['location']['lat'];
 	var baseLong = result['results'][0]['geometry']['location']['lng'];
 
 	 if (checkFirebaseForLogin(username, password, '#register_error'))
 	 {
+        console.log("DID NOT FIND USER");
 	 	myDataRef.child('user').child(username).set({
 			'Password': password, 
 			'Base_Location': baseLocation,
@@ -168,7 +176,7 @@ function createFirebaseUser(username, password, phoneNumber, radius, baseLocatio
 		setAllCookies(username, password, radius, phoneNumber, baseLocation, baseLat, baseLong, turned_on);
 		return true;
 	 }
-	 
+	 console.log("FOUND USER");
 	 return false;
 }
 
@@ -201,7 +209,7 @@ function getUserFromFirebase(username, password, module)
 				result = data
 			}
 		});
-		
+		console.log("USER SEARCH RESULT: " + result);
 		if (result != 'null' && result != null)
 		{
 			if (module == '#login_error')
