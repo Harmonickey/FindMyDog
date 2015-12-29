@@ -137,7 +137,7 @@ function checkFirebaseForLogin(username, password, module)
 
 function createFirebaseUser(username, password, phoneNumber, radius, baseLocation, turned_on)
 {
-	var geoLocate = "https://maps.googleapis.com/maps/api/geocode/json?address=" + baseLocation + "&sensor=false&key=AIzaSyAjECgtOkJf0xeIpProlCseMUfh4VF6jGg";
+	var geoLocate = "https://maps.googleapis.com/maps/api/geocode/json?address=" + baseLocation + "&key=AIzaSyAjECgtOkJf0xeIpProlCseMUfh4VF6jGg";
 	var result;
 	$.ajax ({
 		dataType: "json",
@@ -410,7 +410,7 @@ function updateBaseLocation()
 {
 	var baseLocation = $("#pac-input").val();
 
-	var geoLocate = "https://maps.googleapis.com/maps/api/geocode/json?address=" + baseLocation + "&sensor=false&key=AIzaSyAjECgtOkJf0xeIpProlCseMUfh4VF6jGg";
+	var geoLocate = "https://maps.googleapis.com/maps/api/geocode/json?address=" + baseLocation + "&key=AIzaSyAjECgtOkJf0xeIpProlCseMUfh4VF6jGg";
 	var result;
 	$.ajax ({
 		dataType: "json",
